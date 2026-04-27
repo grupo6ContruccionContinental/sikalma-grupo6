@@ -1,0 +1,160 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    /* Fundamental para el cálculo de tamaños */
+}
+
+body {
+    width: 100%;
+    height: 100%;
+}
+
+header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    border-bottom: 2px solid #82766c;
+}
+
+.logo,
+.iniciar-sesion {
+    flex: 1;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+
+    padding: 0px 15px;
+}
+
+.logo-img {
+    width: 5em;
+    height: auto;
+
+}
+
+.secciones {
+    flex: 4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    height: 100%;
+
+}
+
+.secciones ul {
+    display: flex;
+    align-items: center;
+    gap: 7em;
+
+    list-style: none;
+}
+
+.secciones a {
+    text-decoration: none;
+    color: #82766c;
+}
+
+
+.iniciar-sesion {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.iniciar-sesion a {
+    display: block;
+    padding: 0.5em 1.5em;
+
+    background-color: #82766c;
+    color: white;
+    text-decoration: none;
+
+    border-radius: 1em;
+}
+
+/* diseño de la seccion teperaputa */
+
+.doctores h1 {
+    padding: 1em 2em;
+
+    text-align: center;
+
+    color: #a59485;
+}
+
+.especialistas {
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    gap: 2em;
+
+    padding: 2em;
+
+}
+
+.especialista-fila {
+    display: flex;
+    align-items: center;
+
+    gap: 6em;
+
+}
+
+
+
+.especialista {
+    display: flex;
+    flex-direction: column;
+
+    gap: 2em;
+
+    padding: 2em;
+
+    text-align: center;
+
+    border: 1px solid #82766c;
+    border-radius: 2em;
+}
+
+.especialista h3 {
+
+    color: #a59485;
+
+}
+
+.especialista img {
+
+    width: 20em;
+    height: 20em;
+    object-fit: cover;
+    border-radius: 10em;
+}
+
+
+
+/* diseño del footer */
+
+footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 0.5em 2em;
+    background-color: #a59485;
+
+    color: #f5f3f1;
+}
+
+footer img {
+    width: 12em;
+    height: auto;
+
+}

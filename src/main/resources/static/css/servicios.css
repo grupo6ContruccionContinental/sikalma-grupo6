@@ -1,0 +1,184 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    /* Fundamental para el cálculo de tamaños */
+}
+
+body {
+    width: 100%;
+    height: 100%;
+}
+
+header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    border-bottom: 2px solid #82766c;
+}
+
+.logo,
+.iniciar-sesion {
+    flex: 1;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+
+    padding: 0px 15px;
+}
+
+.logo-img {
+    width: 5em;
+    height: auto;
+
+}
+
+.secciones {
+    flex: 4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    height: 100%;
+
+}
+
+.secciones ul {
+    display: flex;
+    align-items: center;
+    gap: 7em;
+
+    list-style: none;
+}
+
+.secciones a {
+    text-decoration: none;
+    color: #82766c;
+}
+
+
+.iniciar-sesion {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.iniciar-sesion a {
+    display: block;
+    padding: 0.5em 1.5em;
+
+    background-color: #82766c;
+    color: white;
+    text-decoration: none;
+
+    border-radius: 1em;
+}
+
+/* DISEÑO DE SERVICIOS */
+
+.servicio-texto {
+    background-color: #f5f3f1;
+    padding: 3em 6em;
+    text-align: center;
+}
+
+.servicio-texto h1 {
+    color: #82766c;
+    font-size: 1.8em;
+    margin-bottom: 0.6em;
+}
+
+.servicio-texto p {
+    color: #6b6b6b;    
+}
+
+.servicios-contenido {
+    display: flex;
+    flex-direction: column;
+    padding: 3em 6em;
+}
+
+.servicio-fila {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 3em;
+
+    padding: 1em;
+}
+
+.servicio {
+    flex: 1;
+    max-width: 300px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1em;
+    padding: 2em 1.5em;
+    border: 1px solid #e8dede;
+    border-radius: 0.8em;
+    text-align: center;
+    background-color: white;
+}
+
+.servicio img {
+    width: 5em;
+    height: auto;
+}
+
+.servicio h3 {
+    color: #5a4e4e;
+    font-size: 1em;
+}
+
+.servicio ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4em;
+}
+
+.servicio ul li {
+    font-size: 0.85em;
+    color: #6b6b6b;
+}
+
+.costo {
+    font-weight: bold;
+    color: #a59485;
+    font-size: 0.95em;
+}
+
+.servicio a {
+    display: inline-block;
+    padding: 0.4em 1.5em;
+    border: 1px solid #a59485;
+    background-color: #a59485;
+    color: white;
+    text-decoration: none;
+    border-radius: 0.4em;
+    font-size: 0.85em;
+}
+
+
+/* diseño del footer */
+
+footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 0.5em 2em;
+    background-color: #a59485;
+
+    color: #f5f3f1;
+}
+
+footer img {
+    width: 12em;
+    height: auto;
+
+}
