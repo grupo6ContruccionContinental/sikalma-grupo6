@@ -10,19 +10,19 @@
     <link rel="stylesheet" href="../css/eliminar.css">
 </head>
 <body class="modal-eliminar">
-    <div class="modal-card">
-        <div class="icono-alerta">⚠️</div>
-        <h2>¿Eliminar este doctor?</h2>
-        <p>
-            Estás a punto de eliminar el registro de <strong>Aracely Ramos</strong>
-            (DNI: 12345678). Si existen citas o atenciones asociadas, podrían verse afectadas.
-            <br><br>
-            Esta acción no puede deshacerse.
-        </p>
-        <div class="modal-acciones">
-            <a href="Gestion-personal.jsp" class="btn-secundario">Volver</a>
-            <a href="Gestion-personal.jsp" class="btn-danger">Sí, eliminar</a>
-        </div>
+<div class="modal-card">
+    <div class="icono-alerta">⚠️</div>
+    <h2>¿Eliminar este doctor?</h2>
+    <p>
+        Estás a punto de eliminar el registro del Dr(a). <strong>${doctor.nombre}</strong>
+        (DNI: ${doctor.dni}). Si existen citas o atenciones asociadas, estas podrían quedar sin personal asignado para su atención.
+        <br><br>
+        ESTA ACCIOÓN NO PUEDE DESHACERSE.
+    </p>
+    <div class="modal-acciones">
+        <a href="/doctor/gestion" class="btn-secundario">Volver</a>
+        <a href="/doctor/eliminar?id=${doctor.id}" class="btn-danger">Sí, eliminar</a>
     </div>
+</div>
 </body>
 </html>
