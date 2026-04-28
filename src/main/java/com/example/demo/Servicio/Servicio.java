@@ -1,20 +1,29 @@
 package com.example.demo.Servicio;
 
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-
-@Controller
-@RequestMapping("/servicios")
 public class Servicio {
 
-    @GetMapping("/g-servicios")
-    public String mostrarServicios(Model model){
+    private int id;
+    private String nombre;
 
-        model.addAttribute("paginaActiva" , "servicios");
+    public Servicio() {}
 
-        return "Gestion-servicios";
+    public Servicio(String nombre) {
+        this.nombre = nombre;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
 }
