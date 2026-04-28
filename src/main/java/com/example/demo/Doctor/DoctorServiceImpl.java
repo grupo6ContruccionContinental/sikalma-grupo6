@@ -1,44 +1,44 @@
 package com.example.demo.Doctor;
 
 import org.springframework.stereotype.Service;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class DoctorServiceImpl implements DoctorService {
 
-    private final DoctorDAO doctorDAO;
+    // Lista temporal en memoria
+    private static List<Doctor> listaDoctores = new ArrayList<>();
+    private static int contadorId = 1;
 
-    public DoctorServiceImpl(DoctorDAO doctorDAO) {
-        this.doctorDAO = doctorDAO;
+    @Override
+    public List<Doctor> obtenerTodos() {
+        return listaDoctores;
     }
 
     @Override
-    public void agregar(Doctor d) {
-        doctorDAO.save(d);
-    }
-
-    @Override
-    public List<Doctor> listar() {
-        return doctorDAO.findAll();
+    public void agregar(Doctor doctor) {
+        doctor.setId(contadorId++);
+        listaDoctores.add(doctor);
     }
 
     @Override
     public Doctor buscarPorId(int id) {
-        return doctorDAO.findById(id);
+        return listaDoctores.stream().filter(d -> d.getId() == id).findFirst().orElse(null);
     }
 
     @Override
-    public void actualizar(Doctor d) {
-        doctorDAO.update(d);
+    public void actualizar(Doctor doctor) {
+        for (int i = 0; i < listaDoctores.size(); i++) {
+            if (listaDoctores.get(i).getId() == doctor.getId()) {
+                listaDoctores.set(i, doctor);
+                break;
+            }
+        }
     }
 
     @Override
     public void eliminar(int id) {
-        doctorDAO.delete(id);
-    }
-
-    @Override
-    public List<Doctor> buscarPorDni(String dni) {
-        return doctorDAO.findByDni(dni);
+        listaDoctores.removeIf(d -> d.getId() == id);
     }
 }

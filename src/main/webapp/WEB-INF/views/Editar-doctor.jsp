@@ -27,7 +27,7 @@
     <div class="formulario-card">
         <h2>Datos del Doctor — ID: #D${doctor.id}</h2>
 
-        <form action="/doctor/editar" method="post">
+        <form action="/doctor/actualizar" method="post">
             <input type="hidden" name="id" value="${doctor.id}">
 
             <div class="campo">
@@ -52,10 +52,6 @@
             </div>
 
             <div class="fila-form">
-                <div>
-                    <label>ID de Usuario</label>
-                    <input type="number" name="id_usuario" value="${doctor.id_usuario}" required>
-                </div>
                 <div>
                     <label>Fecha de nacimiento</label>
                     <input type="date" name="fechaNacimiento" value="${doctor.fechaNacimiento}" required>

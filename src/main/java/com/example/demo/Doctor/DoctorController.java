@@ -3,49 +3,53 @@ package com.example.demo.Doctor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
+import java.time.LocalDate;
 
 @Controller
 @RequestMapping("/doctor")
 public class DoctorController {
 
-    private final DoctorService doctorService;
-
-    public DoctorController(DoctorService doctorService) {
-        this.doctorService = doctorService;
-    }
+    private final DoctorService doctorService = new DoctorServiceImpl();
 
     @GetMapping("/gestion")
-    public String gestionDoctor(Model model) {
-        List<Doctor> doctores = doctorService.listar();
-        model.addAttribute("doctores", doctores);
-        model.addAttribute("paginaActiva", "doctor");
+    public String listar(Model model) {
+        model.addAttribute("paginaActiva", "personal");
+        model.addAttribute("doctores", doctorService.obtenerTodos());
         return "Gestion-doctores";
     }
 
     @GetMapping("/nuevo")
-    public String nuevoDoctor(Model model) {
-        model.addAttribute("paginaActiva", "doctor");
+    public String formularioNuevo() {
         return "Registrar-doctor";
     }
 
-    @PostMapping("/registrar")
-    public String registrarDoctor(@ModelAttribute Doctor d) {
-        doctorService.agregar(d);
+    @PostMapping("/guardar")
+    public String guardar(@RequestParam String nombre,
+                          @RequestParam String dni,
+                          @RequestParam String especialidad,
+                          @RequestParam String telefono,
+                          @RequestParam String fechaNacimiento) {
+        // Se crea el objeto sin id_usuario
+        Doctor nuevo = new Doctor(0, nombre, dni, especialidad, telefono, LocalDate.parse(fechaNacimiento));
+        doctorService.agregar(nuevo);
         return "redirect:/doctor/gestion";
     }
 
     @GetMapping("/editar")
-    public String editarDoctor(@RequestParam int id, Model model) {
+    public String editar(@RequestParam int id, Model model) {
         model.addAttribute("doctor", doctorService.buscarPorId(id));
-        model.addAttribute("paginaActiva", "doctor");
         return "Editar-doctor";
     }
 
-    @PostMapping("/editar")
-    public String cambiarDoctor(@ModelAttribute Doctor d) {
-        doctorService.actualizar(d);
+    @PostMapping("/actualizar")
+    public String actualizar(@RequestParam int id,
+                             @RequestParam String nombre,
+                             @RequestParam String dni,
+                             @RequestParam String especialidad,
+                             @RequestParam String telefono,
+                             @RequestParam String fechaNacimiento) {
+        Doctor editado = new Doctor(id, nombre, dni, especialidad, telefono, LocalDate.parse(fechaNacimiento));
+        doctorService.actualizar(editado);
         return "redirect:/doctor/gestion";
     }
 
@@ -56,15 +60,8 @@ public class DoctorController {
     }
 
     @GetMapping("/eliminar")
-    public String eliminarDoctor(@RequestParam int id) {
+    public String eliminar(@RequestParam int id) {
         doctorService.eliminar(id);
         return "redirect:/doctor/gestion";
-    }
-
-    @GetMapping("/buscar")
-    public String buscarDoctor(@RequestParam String dni, Model model) {
-        model.addAttribute("doctores", doctorService.buscarPorDni(dni));
-        model.addAttribute("paginaActiva", "doctor");
-        return "Gestion-doctores";
     }
 }

@@ -3,10 +3,9 @@ package com.example.demo.Doctor;
 import java.util.List;
 
 public interface DoctorService {
-    void agregar(Doctor d);
-    List<Doctor> listar();
+    List<Doctor> obtenerTodos();
+    void agregar(Doctor doctor);
     Doctor buscarPorId(int id);
-    void actualizar(Doctor d);
+    void actualizar(Doctor doctor);
     void eliminar(int id);
-    List<Doctor> buscarPorDni(String dni);
 }

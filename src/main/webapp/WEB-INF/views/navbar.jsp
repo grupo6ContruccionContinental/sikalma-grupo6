@@ -10,6 +10,7 @@
         <li><a href="/atencion/g-atenciones" class="${paginaActiva == 'atenciones' ? 'activo' : ''}">Gestión de Atenciones</a></li>
         <li><a href="/servicios/g-servicios" class="${paginaActiva == 'servicios' ? 'activo' : ''}">Servicios</a></li>
         <li><a href="/paciente/gestion" class="${paginaActiva == 'paciente' ? 'activo' : ''}">Pacientes</a></li>
-        <li><a href="/doctor/g-doctores" class="${paginaActiva == 'personal' ? 'activo' : ''}">Personal</a></li>
+
+        <li><a href="/doctor/gestion" class="${paginaActiva == 'personal' ? 'activo' : ''}">Personal</a></li>
     </ul>
 </section>
