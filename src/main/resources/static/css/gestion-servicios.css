@@ -1,0 +1,19 @@
+.agregar-servicio {
+    display: flex;
+    gap: 0.8em;
+    padding: 1em 1.5em;
+    border-bottom: 1px solid #f0e9e8;
+    align-items: flex-end;
+}
+
+.campo {
+    flex: 1;
+    margin-bottom: 0;
+}
+
+.campo-corto {
+    flex: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4em;
+}

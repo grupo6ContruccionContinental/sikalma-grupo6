@@ -1,0 +1,112 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    display: flex;
+    height: 100vh;
+    background-color: #f5f3f1;
+}
+
+.login-izquierda {
+    flex: 1;
+    background-color: #a59485;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5em;
+    padding: 3em;
+}
+
+.login-izquierda img {
+    width: 10em;
+    height: auto;
+}
+
+.login-izquierda h2 {
+    color: white;
+    font-size: 1.3em;
+    text-align: center;
+}
+
+.login-izquierda p {
+    color: white;
+    text-align: center;
+    font-size: 0.9em;
+}
+
+.login-derecha {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2em;
+}
+
+.login {
+    background-color: white;
+    border-radius: 1em;
+    padding: 2.5em;
+    width: 100%;
+}
+
+.login h1 {
+    color: #322418;
+    font-size: 1.3em;
+    
+}
+
+.login p {
+    color: #9a8a88;
+    font-size: 0.88em;
+    padding: 1em 0em;
+}
+
+.campo {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4em;
+    padding: 1em 0em;
+}
+
+label {
+    font-size: 0.85em;
+    color: #5a4e4e;
+    font-weight: bold;
+}
+
+input {
+    padding: 0.65em 0.9em;
+    border: 1px solid #ddd5d4;
+    border-radius: 0.4em;
+    font-size: 0.9em;
+    color: #322418;
+}
+
+
+.btn-login {
+    display: block;
+    width: 100%;
+    padding: 0.75em;
+    background-color: #a59485;
+    color: white;
+    border-radius: 0.4em;
+    font-size: 0.95em;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    
+}
+
+.retorno {
+    display: block;
+    text-align: center;
+    margin-top: 1.2em;
+    font-size: 0.85em;
+    color: #a28575;
+    text-decoration: none;
+}
+

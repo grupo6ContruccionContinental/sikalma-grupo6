@@ -1,0 +1,28 @@
+.cita-origen {
+    background-color: #f9f5f5;
+    border: 1px solid #e8dede;
+    border-left: 4px solid #a28575;
+    border-radius: 0.6em;
+    padding: 1.2em 1.5em;
+    margin-bottom: 1.5em;
+}
+
+.cita-origen h3 {
+    font-size: 0.85em;
+    color: #a28575;
+    margin-bottom: 0.6em;
+}
+
+.cita-origen-datos {
+    display: flex;
+    gap: 2em;
+}
+
+.cita-origen-datos span {
+    font-size: 0.88em;
+    color: #5a4e4e;
+}
+
+.cita-origen-datos strong {
+    color: #322418;
+}
