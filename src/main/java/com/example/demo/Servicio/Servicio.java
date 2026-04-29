@@ -1,11 +1,17 @@
 package com.example.demo.Servicio;
 
+import com.example.demo.Cita.Cita;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class Servicio {
 
     private int id;
     private String nombre;
     private String descripcion;
     private double costo;
+    private List<Cita> citas = new ArrayList<>();
 
     public Servicio(String nombre, String descripcion, double costo) {
         this.nombre = nombre;
@@ -29,6 +35,10 @@ public class Servicio {
         return costo;
     }
 
+    public List<Cita> getCitas() {
+        return citas;
+    }
+
     public void setId(int id) {
         this.id = id;
     }
@@ -45,4 +55,7 @@ public class Servicio {
         this.costo = costo;
     }
 
+    public void setCitas(List<Cita> citas) {
+        this.citas = citas;
+    }
 }
