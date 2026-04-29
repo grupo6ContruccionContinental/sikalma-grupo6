@@ -8,44 +8,39 @@ import java.util.stream.Collectors;
 @Service
 public class DoctorServiceImpl implements DoctorService {
 
-    private static List<Doctor> listaDoctores = new ArrayList<>();
-    private static int contadorId = 1;
+    private final DoctorDAO doctorDAO;
+
+    public DoctorServiceImpl(DoctorDAO doctorDAO) {
+        this.doctorDAO = doctorDAO;
+    }
 
     @Override
     public List<Doctor> obtenerTodos() {
-        return listaDoctores;
+        return doctorDAO.findAll();
     }
 
     @Override
     public void agregar(Doctor doctor) {
-        doctor.setId(contadorId++);
-        listaDoctores.add(doctor);
+        doctorDAO.save(doctor);
     }
 
     @Override
     public Doctor buscarPorId(int id) {
-        return listaDoctores.stream().filter(d -> d.getId() == id).findFirst().orElse(null);
+        return doctorDAO.findById(id);
     }
 
     @Override
     public void actualizar(Doctor doctor) {
-        for (int i = 0; i < listaDoctores.size(); i++) {
-            if (listaDoctores.get(i).getId() == doctor.getId()) {
-                listaDoctores.set(i, doctor);
-                break;
-            }
-        }
+        doctorDAO.update(doctor);
     }
 
     @Override
     public void eliminar(int id) {
-        listaDoctores.removeIf(d -> d.getId() == id);
+        doctorDAO.delete(id);
     }
 
     @Override
     public List<Doctor> buscarPorDni(String dni) {
-        return listaDoctores.stream()
-                .filter(d -> d.getDni().equals(dni))
-                .collect(Collectors.toList());
+        return doctorDAO.findByDni(dni);
     }
 }

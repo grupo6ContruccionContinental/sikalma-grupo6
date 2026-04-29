@@ -8,6 +8,6 @@ public interface DoctorService {
     Doctor buscarPorId(int id);
     void actualizar(Doctor doctor);
     void eliminar(int id);
-    // Nuevo método para el buscador
+    // Nuevo metodo para el buscador
     List<Doctor> buscarPorDni(String dni);
 }
