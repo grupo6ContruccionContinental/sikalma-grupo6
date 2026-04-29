@@ -3,11 +3,11 @@ package com.example.demo.Doctor;
 import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class DoctorServiceImpl implements DoctorService {
 
-    // Lista temporal en memoria
     private static List<Doctor> listaDoctores = new ArrayList<>();
     private static int contadorId = 1;
 
@@ -40,5 +40,12 @@ public class DoctorServiceImpl implements DoctorService {
     @Override
     public void eliminar(int id) {
         listaDoctores.removeIf(d -> d.getId() == id);
+    }
+
+    @Override
+    public List<Doctor> buscarPorDni(String dni) {
+        return listaDoctores.stream()
+                .filter(d -> d.getDni().equals(dni))
+                .collect(Collectors.toList());
     }
 }

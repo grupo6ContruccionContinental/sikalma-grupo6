@@ -4,15 +4,11 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="../images/logo-policlinico.png">
-    <title>Gestión de Doctores - SIKALMA</title>
+    <title>Gestión de Personal - SIKALMA</title>
     <link rel="stylesheet" href="../css/admin.css">
-    <link rel="stylesheet" href="../css/gestion-servicios.css">
 </head>
 <body>
     <%@ include file="navbar.jsp" %>
-
     <main>
         <div class="encabezado">
             <div class="encabezado-texto">
@@ -20,6 +16,15 @@
                 <p>Visualice y administre la información de los doctores registrados</p>
             </div>
             <a href="/doctor/nuevo" class="btn-primario">+ Registrar Doctor</a>
+        </div>
+
+        <div class="buscador-seccion" style="margin: 20px 0; background: #fff; padding: 15px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
+            <form action="/doctor/buscar" method="get" style="display: flex; gap: 10px; align-items: center;">
+                <input type="text" name="dni" placeholder="Ingrese DNI del doctor..."
+                       style="padding: 10px; border: 1px solid #ddd; border-radius: 5px; width: 300px;" required>
+                <button type="submit" class="btn-primario">Buscar por DNI</button>
+                <a href="/doctor/gestion" class="btn-secundario" style="text-decoration: none;">Limpiar</a>
+            </form>
         </div>
 
         <div class="tabla-contenedor">
@@ -42,7 +47,7 @@
                             <td>${doc.dni}</td>
                             <td>${doc.especialidad}</td>
                             <td>${doc.telefono}</td>
-                            <td class="td-acciones">
+                            <td class="acciones-celda">
                                 <a href="/doctor/editar?id=${doc.id}" class="btn-editar">Editar</a>
                                 <a href="/doctor/advertir?id=${doc.id}" class="btn-eliminar">Eliminar</a>
                             </td>

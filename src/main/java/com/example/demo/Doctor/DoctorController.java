@@ -3,7 +3,7 @@ package com.example.demo.Doctor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import java.time.LocalDate;
+import java.util.List;
 
 @Controller
 @RequestMapping("/doctor")
@@ -18,20 +18,22 @@ public class DoctorController {
         return "Gestion-doctores";
     }
 
+    @GetMapping("/buscar")
+    public String buscar(@RequestParam("dni") String dni, Model model) {
+        model.addAttribute("paginaActiva", "personal");
+        List<Doctor> resultados = doctorService.buscarPorDni(dni);
+        model.addAttribute("doctores", resultados);
+        return "Gestion-doctores";
+    }
+
     @GetMapping("/nuevo")
     public String formularioNuevo() {
         return "Registrar-doctor";
     }
 
     @PostMapping("/guardar")
-    public String guardar(@RequestParam String nombre,
-                          @RequestParam String dni,
-                          @RequestParam String especialidad,
-                          @RequestParam String telefono,
-                          @RequestParam String fechaNacimiento) {
-        // Se crea el objeto sin id_usuario
-        Doctor nuevo = new Doctor(0, nombre, dni, especialidad, telefono, LocalDate.parse(fechaNacimiento));
-        doctorService.agregar(nuevo);
+    public String guardar(@ModelAttribute Doctor doctor) {
+        doctorService.agregar(doctor);
         return "redirect:/doctor/gestion";
     }
 
@@ -42,14 +44,8 @@ public class DoctorController {
     }
 
     @PostMapping("/actualizar")
-    public String actualizar(@RequestParam int id,
-                             @RequestParam String nombre,
-                             @RequestParam String dni,
-                             @RequestParam String especialidad,
-                             @RequestParam String telefono,
-                             @RequestParam String fechaNacimiento) {
-        Doctor editado = new Doctor(id, nombre, dni, especialidad, telefono, LocalDate.parse(fechaNacimiento));
-        doctorService.actualizar(editado);
+    public String actualizar(@ModelAttribute Doctor doctor) {
+        doctorService.actualizar(doctor);
         return "redirect:/doctor/gestion";
     }
 

@@ -12,7 +12,7 @@
     <div class="encabezado">
         <div class="encabezado-texto">
             <h1>Registrar Nuevo Doctor</h1>
-            <p>Ingrese los datos personales y de especialidad del médico</p>
+            <p>Complete el perfil profesional del médico</p>
         </div>
     </div>
     <div class="formulario-card">
@@ -24,7 +24,7 @@
             <div class="fila-form">
                 <div class="campo">
                     <label>DNI</label>
-                    <input type="text" name="dni" required>
+                    <input type="text" name="dni" maxlength="8" required>
                 </div>
                 <div class="campo">
                     <label>Especialidad</label>
