@@ -8,9 +8,9 @@
         <li><a href="/cita/g-citas" class="${paginaActiva == 'citas' ? 'activo' : ''}">Gestión de Citas</a></li>
         <li><a href="/cita/r-citas" class="${paginaActiva == 'r-citas' ? 'activo' : ''}">Registrar Cita</a></li>
         <li><a href="/atencion/g-atenciones" class="${paginaActiva == 'atenciones' ? 'activo' : ''}">Gestión de Atenciones</a></li>
-        <li><a href="/servicio/gestion" class="${paginaActiva == 'servicios' ? 'activo' : ''}">Servicios</a></li>
+        <li><a href="/servicios/g-servicios" class="${paginaActiva == 'servicios' ? 'activo' : ''}">Servicios</a></li>
         <li><a href="/paciente/gestion" class="${paginaActiva == 'paciente' ? 'activo' : ''}">Pacientes</a></li>
-
-        <li><a href="/doctor/gestion" class="${paginaActiva == 'personal' ? 'activo' : ''}">Personal</a></li>
+        <li><a href="/doctor/g-doctores" class="${paginaActiva == 'personal' ? 'activo' : ''}">Personal</a></li>
+        <li><a href="/usuario/gestion" class="${paginaActiva == 'usuario' ? 'activo' : ''}">Usuarios</a></li>
     </ul>
 </section>

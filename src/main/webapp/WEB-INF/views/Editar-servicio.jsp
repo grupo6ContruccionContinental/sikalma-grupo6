@@ -4,58 +4,49 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="/images/logo-policlinico.png">
+    <link rel="icon" href="../images/logo-policlinico.png">
     <title>Editar Servicio - SIKALMA</title>
-    <link rel="stylesheet" href="/css/admin.css">
+    <link rel="stylesheet" href="../css/admin.css">
 </head>
 <body>
-<%@ include file="navbar.jsp" %>
+    <%@ include file="navbar.jsp" %>
 
-<main>
-    <div class="encabezado">
-        <div class="encabezado-texto">
-            <div class="retorno">
-                <a href="/servicio/gestion">Servicios</a>
-                <span>›</span>
-                <span>Editar Servicio #S0${servicio.id}</span>
+    <main>
+        <div class="encabezado">
+            <div class="encabezado-texto">
+                <div class="retorno">
+                    <a href="Gestion-servicios.jsp">Servicios</a>
+                    <span>›</span>
+                    <span>Editar Servicio #S01</span>
+                </div>
+                <h1>Editar Servicio</h1>
+                <p>Modifica el nombre, descripción o costo del servicio</p>
             </div>
-            <h1>Editar Servicio</h1>
-            <p>Modifica el nombre, descripción o costo del servicio</p>
         </div>
-    </div>
 
-    <div class="formulario-card">
-        <h2>Datos del Servicio — ID: #S0${servicio.id}</h2>
+        <div class="formulario-card">
+            <h2>Datos del Servicio — ID: #S01</h2>
 
-        <form action="/servicio/editar" method="post">
+            <form>
+                <div class="campo">
+                    <label>Nombre del servicio</label>
+                    <input type="text" value="Medicina General">
+                </div>
+                <div class="campo">
+                    <label>Descripción</label>
+                    <textarea rows="3">Consulta general, diagnóstico y control de enfermedades comunes</textarea>
+                </div>
+                <div class="campo">
+                    <label>Costo (S/)</label>
+                    <input type="number" value="60">
+                </div>
 
-            <input type="hidden" name="id" value="${servicio.id}">
-
-            <div class="campo">
-                <label>Nombre del servicio</label>
-                <input type="text" value="${servicio.nombre}" name="nombre" required>
-            </div>
-
-            <div class="campo">
-                <label>Descripción</label>
-                <textarea rows="3" name="descripcion" required>${servicio.descripcion}</textarea>
-            </div>
-
-            <div class="campo">
-                <label>Costo (S/)</label>
-                <input type="number" value="${servicio.costo}" name="costo" step="0.01" min="0" required>
-            </div>
-
-            <div class="form-acciones">
-                <a href="/servicio/gestion" class="btn-secundario">Cancelar</a>
-                <button type="submit" class="btn-primario">Guardar Cambios</button>
-            </div>
-        </form>
-    </div>
-</main>
+                <div class="form-acciones">
+                    <a href="Gestion-servicios.jsp" class="btn-secundario">Cancelar</a>
+                    <button type="submit" class="btn-primario">Guardar Cambios</button>
+                </div>
+            </form>
+        </div>
+    </main>
 </body>
 </html>
-
-
-
-.
