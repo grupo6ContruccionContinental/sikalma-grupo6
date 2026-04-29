@@ -1,44 +1,56 @@
 package com.example.demo.Servicio;
 
+import org.springframework.stereotype.Repository;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
+@Repository
 public class ServicioRepository implements ServicioDAO {
 
     private List<Servicio> lista = new ArrayList<>();
-    private int contadorId = 1;
+    private int contador = 1;
 
     @Override
-    public List<Servicio> listar() {
+    public void save(Servicio s) {
+        s.setId(contador++);
+        lista.add(s);
+    }
+
+    @Override
+    public List<Servicio> findAll() {
         return lista;
     }
 
     @Override
-    public void guardar(Servicio servicio) {
-        servicio.setId(contadorId++);
-        lista.add(servicio);
+    public Servicio findById(int id) {
+        return lista.stream()
+                .filter(s -> s.getId() == id)
+                .findFirst()
+                .orElse(null);
     }
 
     @Override
-    public Servicio buscarPorId(int id) {
-        for (Servicio s : lista) {
-            if (s.getId() == id) return s;
-        }
-        return null;
-    }
-
-    @Override
-    public void actualizar(Servicio servicio) {
+    public void update(Servicio s) {
         for (int i = 0; i < lista.size(); i++) {
-            if (lista.get(i).getId() == servicio.getId()) {
-                lista.set(i, servicio);
-                break;
+            if (lista.get(i).getId() == s.getId()) {
+                lista.set(i, s);
+                return;
             }
         }
     }
 
     @Override
-    public void eliminar(int id) {
+    public void delete(int id) {
         lista.removeIf(s -> s.getId() == id);
     }
+
+    @Override
+    public List<Servicio> findByNombre(String nombre) {
+        return lista.stream()
+                .filter(s -> s.getNombre().toLowerCase().contains(nombre.toLowerCase()))
+                .collect(Collectors.toList());
+    }
+
 }

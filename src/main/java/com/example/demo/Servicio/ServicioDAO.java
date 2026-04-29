@@ -4,9 +4,16 @@ import java.util.List;
 
 public interface ServicioDAO {
 
-    List<Servicio> listar();
-    void guardar(Servicio servicio);
-    Servicio buscarPorId(int id);
-    void actualizar(Servicio servicio);
-    void eliminar(int id);
+    void save(Servicio s);
+
+    List<Servicio> findAll();
+
+    Servicio findById(int id);
+
+    void update(Servicio s);
+
+    void delete(int id);
+
+    List<Servicio> findByNombre(String nombre);
+
 }
