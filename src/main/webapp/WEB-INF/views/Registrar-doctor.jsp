@@ -3,70 +3,50 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="../images/logo-policlinico.png">
-    <title>Registrar Paciente - SIKALMA</title>
+    <title>Registrar Doctor - SIKALMA</title>
     <link rel="stylesheet" href="../css/admin.css">
 </head>
 <body>
-    <%@ include file="navbar.jsp" %>
-
-    <main>
-        <div class="encabezado">
-            <div class="encabezado-texto">
-                <div class="retorno">
-                    <a href="Gestion-personal.jsp">Personal</a>
-                    <span>›</span>
-                    <span>Registrar Doctor</span>
-                </div>
-                <h1>Registrar Nuevo Doctor</h1>
-                <p>Complete el formulario para agregar un nuevo doctor al sistema</p>
-            </div>
+<%@ include file="navbar.jsp" %>
+<main>
+    <div class="encabezado">
+        <div class="encabezado-texto">
+            <h1>Registrar Nuevo Doctor</h1>
+            <p>Complete el perfil profesional del médico</p>
         </div>
-
-        <div class="formulario-card">
-            <h2>Datos del Doctor</h2>
-
-            <form>
-                <div class="campo">
-                    <label>Nombre completo</label>
-                    <input type="text" placeholder="Ej: María García López">
-                </div>
-
+    </div>
+    <div class="formulario-card">
+        <form action="/doctor/guardar" method="post">
+            <div class="campo">
+                <label>Nombre Completo</label>
+                <input type="text" name="nombre" required>
+            </div>
+            <div class="fila-form">
                 <div class="campo">
                     <label>DNI</label>
-                    <input type="text" placeholder="12345678" maxlength="8">
-                    <span class="indicacion">Debe contener exactamente 8 dígitos.</span>
+                    <input type="text" name="dni" maxlength="8" required>
                 </div>
-
-                <div class="fila-form">
-                    <div>
-                        <label>Especialiad</label>
-                        <input type="number" placeholder="Medicina General" >
-                    </div>
-                    <div>
-                        <label>Teléfono</label>
-                        <input type="text" placeholder="987 654 321">
-                    </div>
+                <div class="campo">
+                    <label>Especialidad</label>
+                    <input type="text" name="especialidad" required>
                 </div>
-
-                <div class="fila-form">
-                    <div>
-                        <label>Correo electrónico</label>
-                        <input type="email" placeholder="ejemplo@correo.com">
-                    </div>
-                    <div>
-                        <label>Fecha de nacimiento</label>
-                        <input type="date">
-                    </div>
+            </div>
+            <div class="fila-form">
+                <div class="campo">
+                    <label>Teléfono</label>
+                    <input type="text" name="telefono" required>
                 </div>
-
-                <div class="form-acciones">
-                    <a href="Gestion-personal.jsp" class="btn-secundario">Cancelar</a>
-                    <button type="submit" class="btn-primario">Registrar Doctor</button>
+                <div class="campo">
+                    <label>Fecha de Nacimiento</label>
+                    <input type="date" name="fechaNacimiento" required>
                 </div>
-            </form>
-        </div>
-    </main>
+            </div>
+            <div class="form-acciones">
+                <a href="/doctor/gestion" class="btn-secundario">Cancelar</a>
+                <button type="submit" class="btn-primario">Registrar Doctor</button>
+            </div>
+        </form>
+    </div>
+</main>
 </body>
 </html>
