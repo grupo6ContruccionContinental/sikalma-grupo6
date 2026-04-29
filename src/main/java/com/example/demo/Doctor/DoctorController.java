@@ -9,17 +9,22 @@ import java.util.List;
 @RequestMapping("/doctor")
 public class DoctorController {
 
-    private final DoctorService doctorService = new DoctorServiceImpl();
+    private final DoctorService doctorService;
+
+    public DoctorController (DoctorService doctorService) {
+        this.doctorService = doctorService;
+    }
 
     @GetMapping("/gestion")
     public String listar(Model model) {
+
         model.addAttribute("paginaActiva", "personal");
         model.addAttribute("doctores", doctorService.obtenerTodos());
         return "Gestion-doctores";
     }
 
     @GetMapping("/buscar")
-    public String buscar(@RequestParam("dni") String dni, Model model) {
+    public String buscar(@RequestParam String dni, Model model) {
         model.addAttribute("paginaActiva", "personal");
         List<Doctor> resultados = doctorService.buscarPorDni(dni);
         model.addAttribute("doctores", resultados);
@@ -27,7 +32,10 @@ public class DoctorController {
     }
 
     @GetMapping("/nuevo")
-    public String formularioNuevo() {
+    public String formularioNuevo(Model model) {
+
+        model.addAttribute("paginaActiva", "personal");
+
         return "Registrar-doctor";
     }
 
@@ -40,6 +48,7 @@ public class DoctorController {
     @GetMapping("/editar")
     public String editar(@RequestParam int id, Model model) {
         model.addAttribute("doctor", doctorService.buscarPorId(id));
+        model.addAttribute("paginaActiva", "personal");
         return "Editar-doctor";
     }
 
