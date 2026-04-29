@@ -1,20 +1,61 @@
 package com.example.demo.Servicio;
 
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import com.example.demo.Cita.Cita;
 
-@Controller
-@RequestMapping("/servicios")
+import java.util.ArrayList;
+import java.util.List;
+
 public class Servicio {
 
-    @GetMapping("/g-servicios")
-    public String mostrarServicios(Model model){
+    private int id;
+    private String nombre;
+    private String descripcion;
+    private double costo;
+    private List<Cita> citas = new ArrayList<>();
 
-        model.addAttribute("paginaActiva" , "servicios");
-
-        return "Gestion-servicios";
+    public Servicio(String nombre, String descripcion, double costo) {
+        this.nombre = nombre;
+        this.descripcion = descripcion;
+        this.costo = costo;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public double getCosto() {
+        return costo;
+    }
+
+    public List<Cita> getCitas() {
+        return citas;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
+    public void setCosto(double costo) {
+        this.costo = costo;
+    }
+
+    public void setCitas(List<Cita> citas) {
+        this.citas = citas;
+    }
 }
