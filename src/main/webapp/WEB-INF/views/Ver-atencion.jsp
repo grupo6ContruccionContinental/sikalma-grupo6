@@ -1,103 +1,98 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri="jakarta.tags.core" prefix="c" %>
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="../images/logo-policlinico.png">
-    <title>Gestión de Atenciones - SIKALMA</title>
-    <link rel="stylesheet" href="../css/admin.css">
+    <link rel="icon" href="/images/logo-policlinico.png">
+    <title>Ver Atención - SIKALMA</title>
+    <link rel="stylesheet" href="/css/admin.css">
 </head>
-
 <body>
-
     <%@ include file="navbar.jsp" %>
 
     <main>
-
         <div class="encabezado">
             <div class="encabezado-texto">
+                <div class="retorno">
+                    <a href="/atencion/gestion">Gestión de Atenciones</a>
+                    <span>›</span>
+                    <span>Ver Atención #A0${atencion.id}</span>
+                </div>
                 <h1>Ver Atención</h1>
-                <p>Visualize toda la información de sus atenciones</p>
+                <p>Visualiza toda la información de la atención médica</p>
             </div>
         </div>
 
-
-
         <div class="formulario-card">
-            <h2>Datos de la Atención — ID: #A001 / Cita origen: #001</h2>
+            <h2>Datos de la Atención — ID: #A0${atencion.id} / Cita origen: #${atencion.idCita}</h2>
 
             <form>
                 <div class="fila-form">
                     <div>
                         <label>Paciente</label>
-                        <input type="text" value="Adrial Gavidia" readonly>
+                        <input type="text" value="${atencion.nombrePaciente}" readonly>
                     </div>
                     <div>
                         <label>Doctor</label>
-                        <input type="text" value="Dra. Fernández" readonly>
+                        <input type="text" value="${atencion.nombreDoctor}" readonly>
                     </div>
                 </div>
 
                 <div class="fila-form">
                     <div>
                         <label>Servicio</label>
-                        <input type="text" value="Medicina General" readonly>
+                        <input type="text" value="${atencion.nombreServicio}" readonly>
                     </div>
                     <div>
                         <label>Fecha de atención</label>
-                        <input type="date" value="2026-04-05" readonly>
+                        <input type="text" value="${atencion.fechaAtencion}" readonly>
                     </div>
                 </div>
 
                 <div class="fila-form">
                     <div>
                         <label>Hora de inicio</label>
-                        <input type="time" value="09:00" readonly>
+                        <input type="text" value="${atencion.horaInicio}" readonly>
                     </div>
                     <div>
                         <label>Hora de fin</label>
-                        <input type="time" value="09:30" readonly>
+                        <input type="text" value="${atencion.horaFin}" readonly>
                     </div>
                 </div>
 
                 <div class="campo">
                     <label>Diagnóstico</label>
-                    <textarea rows="3" readonly>Resfriado común con congestión nasal leve.</textarea>
+                    <textarea rows="3" readonly>${atencion.diagnostico}</textarea>
                 </div>
 
                 <div class="campo">
                     <label>Tratamiento indicado</label>
-                    <textarea rows="3" readonly>Paracetamol 500mg cada 8 horas por 3 días. Reposo y abundante líquido.</textarea>
+                    <textarea rows="3" readonly>${atencion.tratamiento}</textarea>
                 </div>
 
                 <div class="fila-form">
                     <div>
                         <label>Costo del servicio (S/)</label>
-                        <input type="text" value="60.00" readonly>
+                        <input type="text" value="${atencion.costo}" readonly>
                     </div>
                     <div>
-                        <label >Estado de la atención</label>
-                        <input type="text" value="Completada" readonly>
+                        <label>Estado de la atención</label>
+                        <input type="text" value="${atencion.estado}" readonly>
                     </div>
                 </div>
 
                 <div class="campo">
                     <label>Observaciones adicionales</label>
-                    <textarea rows="2" readonly>Paciente recomienda control en 7 días si persisten síntomas.</textarea>
+                    <textarea rows="2" readonly>${atencion.observaciones}</textarea>
                 </div>
 
                 <div class="form-acciones">
-                    <a href="Gestion-atenciones.jsp" class="btn-secundario">Volver</a>
+                    <a href="/atencion/gestion" class="btn-secundario">Volver</a>
                 </div>
             </form>
         </div>
-
-
-
     </main>
-
 </body>
-
 </html>
