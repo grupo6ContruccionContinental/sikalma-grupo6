@@ -1,6 +1,7 @@
 package com.example.demo.Cita;
 
 import com.example.demo.Paciente.Paciente;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -11,28 +12,40 @@ public class Cita {
 
     private int id;
     private Paciente paciente;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate fecha;
+
+    @DateTimeFormat(pattern = "HH:mm")
     private LocalTime hora;
+
     private String estado;
 
-    public Cita (Paciente paciente, LocalDate fecha, LocalTime hora, String estado){
-        this.id = contador ++;
+    // 🔥 CONSTRUCTOR VACÍO (IMPORTANTE PARA SPRING)
+    public Cita() {
+        this.id = contador++;
+    }
+
+    // Constructor con parámetros
+    public Cita(Paciente paciente, LocalDate fecha, LocalTime hora, String estado){
+        this.id = contador++;
         this.paciente = paciente;
         this.fecha = fecha;
         this.hora = hora;
         this.estado = estado;
     }
 
-    public int getId () {
-        return this.id;
+    // GETTERS
+    public int getId() {
+        return id;
     }
 
     public Paciente getPaciente() {
         return paciente;
     }
 
-    public LocalDate getFecha (){
-        return this.fecha;
+    public LocalDate getFecha() {
+        return fecha;
     }
 
     public LocalTime getHora() {
@@ -43,6 +56,12 @@ public class Cita {
         return estado;
     }
 
+    // 🔥 SETTER DE ID (IMPORTANTE PARA EDITAR)
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    // SETTERS
     public void setPaciente(Paciente paciente) {
         this.paciente = paciente;
     }
