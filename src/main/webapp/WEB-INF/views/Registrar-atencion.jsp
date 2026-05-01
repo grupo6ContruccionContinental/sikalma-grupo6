@@ -6,8 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="../images/logo-policlinico.png">
     <title>Registrar Atención - SIKALMA</title>
-    <link rel="stylesheet" href="../css/admin.css">
-    <link rel="stylesheet" href="../css/registrar-atencion.css">
+    <link rel="stylesheet" href="/css/admin.css">
+    <link rel="stylesheet" href="/css/registrar-atencion.css">
 </head>
 <body>
     <%@ include file="navbar.jsp" %>
@@ -16,7 +16,7 @@
         <div class="encabezado">
             <div class="encabezado-texto">
                 <div class="retorno">
-                    <a href="Gestion-citas.jsp">Gestión de Citas</a>
+                    <a href="/cita/g-citas">Gestión de Citas</a>
                     <span>›</span>
                     <a href="Gestion-atenciones.jsp">Gestión de Atenciones</a>
                     <span>›</span>
@@ -29,14 +29,14 @@
 
         <!-- Cita de origen (datos pre-cargados) -->
         <div class="cita-origen">
-            <h3>CITA DE ORIGEN — #001</h3>
+            <h3>CITA DE ORIGEN — #00${cita.id}</h3>
             <div class="cita-origen-datos">
-                <span><strong>Paciente:</strong> Adrial Gavidia</span>
-                <span><strong>Servicio:</strong> Medicina General</span>
-                <span><strong>Doctor:</strong> Dra. Fernández</span>
-                <span><strong>Fecha:</strong> 05/04/2026</span>
-                <span><strong>Hora:</strong> 09:00 AM</span>
-                <span><strong>Estado de cita:</strong> <span class="badge badge-confirmado">Confirmada</span></span>
+                <span><strong>Paciente:</strong>${cita.paciente.nombres}</span>
+                <span><strong>Servicio:</strong>${cita.servicio.nombre}</span>
+                <span><strong>Doctor:</strong> ${cita.doctor.nombre}</span>
+                <span><strong>Fecha:</strong>${cita.fecha}</span>
+                <span><strong>Hora:</strong>${cita.hora}</span>
+                <span><strong>Estado de cita:</strong> <span class="badge badge-confirmado">${cita.estado}</span></span>
             </div>
         </div>
 
