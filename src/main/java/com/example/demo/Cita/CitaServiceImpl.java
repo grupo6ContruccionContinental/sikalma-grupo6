@@ -6,7 +6,6 @@ import com.example.demo.Paciente.Paciente;
 import com.example.demo.Paciente.PacienteService;
 import com.example.demo.Servicio.Servicio;
 import com.example.demo.Servicio.ServicioService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;

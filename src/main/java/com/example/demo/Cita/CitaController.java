@@ -3,7 +3,6 @@ package com.example.demo.Cita;
 import com.example.demo.Doctor.DoctorService;
 import com.example.demo.Paciente.PacienteService;
 import com.example.demo.Servicio.ServicioService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -55,7 +54,6 @@ public class CitaController {
         return "redirect:/cita/g-citas";
     }
 
-    // 👉 EDITAR
     @GetMapping("/editar")
     public String editar(@RequestParam int id , Model model){
 
@@ -86,9 +84,6 @@ public class CitaController {
         return "Registrar-atencion";
     }
 
-
-
-
     @GetMapping("/cancelar")
     public String cancelar(@RequestParam int id, Model model){
 
@@ -97,7 +92,7 @@ public class CitaController {
         return "Cancelar-cita";
     }
 
-    // 👉 ELIMINAR
+    
     @GetMapping("/eliminar")
     public String eliminar(@RequestParam int id){
         citaService.eliminar(id);

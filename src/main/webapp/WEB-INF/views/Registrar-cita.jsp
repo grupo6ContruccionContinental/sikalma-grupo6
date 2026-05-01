@@ -1,12 +1,13 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri="jakarta.tags.core" prefix="c"%>
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="../images/logo-policlinico.png">
+    <link rel="icon" href="/images/logo-policlinico.png">
     <title>Registrar Cita - SIKALMA</title>
-    <link rel="stylesheet" href="../css/admin.css">
+    <link rel="stylesheet" href="/css/admin.css">
 </head>
 <body>
     <%@ include file="navbar.jsp" %>
@@ -15,7 +16,7 @@
         <div class="encabezado">
             <div class="encabezado-texto">
                 <div class="retorno">
-                    <a href="Gestion-citas.jsp">Gestión de Citas</a>
+                    <a href="/cita/g-citas">Gestión de Citas</a>
                     <span>›</span>
                     <span>Registrar Cita</span>
                 </div>
@@ -27,19 +28,15 @@
         <div class="formulario-card">
             <h2>Datos de la Cita</h2>
 
-            <form>
+            <form action="/cita/guardar" method="post">
                 <!-- Datos del paciente -->
                 <div class="campo">
                     <label>Paciente</label>
                     <select name="paciente">
                         <option value="">— Seleccione un paciente —</option>
-                        <option>María García López</option>
-                        <option>Juan Pérez Torres</option>
-                        <option>Ana Rodríguez Silva</option>
-                        <option>Carlos Mendoza Rivera</option>
-                        <option>Lucía Flores Castillo</option>
-                        <option>Roberto Vásquez Huanca</option>
-                        <option>Patricia Quispe Mamani</option>
+                        <c:forEach var="paciente" items="${pacientes}" >
+                        <option value="${paciente.id}">${paciente.nombres}</option>
+                        </c:forEach>
                     </select>
                 </div>
 
@@ -49,23 +46,18 @@
                         <label>Servicio (Especialidad)</label>
                         <select name="servicio">
                             <option value="">— Seleccione un servicio —</option>
-                            <option>Medicina General — S/60</option>
-                            <option>Odontología — S/80</option>
-                            <option>Pediatría — S/80</option>
-                            <option>Psicología / Terapias — S/100</option>
-                            <option>Ginecología — S/90</option>
-                            <option>Traumatología — S/90</option>
+                            <c:forEach var="servicio" items="${servicios}" >
+                            <option value="${servicio.id}">${servicio.nombre}</option>
+                            </c:forEach>
                         </select>
                     </div>
                     <div>
                         <label>Doctor Asignado</label>
                         <select name="doctor">
                             <option value="">— Seleccione un doctor —</option>
-                            <option>Dra. Aracely Ramos — Psicología</option>
-                            <option>Dra. Viviana Sánchez — Odontología</option>
-                            <option>Dr. Marcos López — Traumatología</option>
-                            <option>Dra. Carla Torres — Pediatría</option>
-                            <option>Dra. Fernández — Medicina General</option>
+                            <c:forEach var="doctor" items="${doctores}" >
+                            <option value="${doctor.id}"> ${doctor.nombre}</option>
+                            </c:forEach>
                         </select>
                     </div>
                 </div>
@@ -74,11 +66,11 @@
                 <div class="fila-form">
                     <div>
                         <label>Fecha de la Cita</label>
-                        <input type="date" name="fecha">
+                        <input type="date" name="fecha" required>
                     </div>
                     <div>
                         <label>Hora de la Cita</label>
-                        <input type="time" name="hora">
+                        <input type="time" name="hora" required>
                     </div>
                 </div>
 
@@ -93,7 +85,7 @@
                 </div>
 
                 <div class="form-acciones">
-                    <a href="Gestion-citas.jsp" class="btn-secundario">Cancelar</a>
+                    <a href="/cita/g-citas" class="btn-secundario">Cancelar</a>
                     <button type="submit" class="btn-primario">Registrar Cita</button>
                 </div>
             </form>

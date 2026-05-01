@@ -4,9 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="../images/logo-policlinico.png">
+    <link rel="icon" href="/images/logo-policlinico.png">
     <title>Editar Cita - SIKALMA</title>
-    <link rel="stylesheet" href="../css/admin.css">
+    <link rel="stylesheet" href="/css/admin.css">
 </head>
 <body>
     <%@ include file="navbar.jsp" %>
@@ -14,53 +14,50 @@
         <div class="encabezado">
             <div class="encabezado-texto">
                 <div class="retorno">
-                    <a href="Gestion-citas.jsp">Gestión de Citas</a>
+                    <a href="/cita/g-citas">Gestión de Citas</a>
                     <span>›</span>
-                    <span>Editar Cita #002</span>
+                    <span>Editar Cita #00${cita.id}</span>
                 </div>
                 <h1>Editar Cita</h1>
                 <p>Modifica los datos de la cita de forma rápida y precisa</p>
             </div>
-            <span class="estado estado-pendiente">Pendiente</span>
+            <span class="estado estado-pendiente">${cita.estado}</span>
         </div>
 
         <div class="formulario-card">
-            <h2>Datos del Paciente — ID Cita: #002</h2>
+            <h2>Datos del Paciente — ID Cita: #00${cita.id}</h2>
 
-            <form>
+            
+
+            <form action="/cita/actualizar" method="post" >
+
+                <input type="hidden" name="id" value="${cita.id}">
+                
                 <div class="campo">
                     <label>Paciente</label>
-                    <select name="paciente">
-                        <option selected>Naya Ramos</option>
-                        <option>María García López</option>
-                        <option>Juan Pérez Torres</option>
-                        <option>Ana Rodríguez Silva</option>
-                        <option>Carlos Mendoza Rivera</option>
-                        <option>Lucía Flores Castillo</option>
-                        <option>Roberto Vásquez Huanca</option>
-                    </select>
+                    <input type="text" value="${cita.paciente.nombres}" readonly>
+                    <input type="hidden" name="paciente" value="${cita.paciente.id}">
                 </div>
 
                 <div class="fila-form">
                     <div>
                         <label>Servicio (Especialidad)</label>
                         <select name="servicio">
-                            <option selected>Psicología / Terapias — S/100</option>
-                            <option>Medicina General — S/60</option>
-                            <option>Odontología — S/80</option>
-                            <option>Pediatría — S/80</option>
-                            <option>Ginecología — S/90</option>
-                            <option>Traumatología — S/90</option>
+
+                            <option selected value="${cita.servicio.id}">${cita.servicio.nombre}</option>
+                            <c:forEach var="servicio" items="${servicios}" >
+                            <option value="${servicio.id}">${servicio.nombre}</option>
+                            </c:forEach>
+
                         </select>
                     </div>
                     <div>
                         <label>Doctor Asignado</label>
                         <select name="doctor">
-                            <option selected>Dra. Aracely Ramos — Psicología</option>
-                            <option>Dra. Viviana Sánchez — Odontología</option>
-                            <option>Dr. Marcos López — Traumatología</option>
-                            <option>Dra. Carla Torres — Pediatría</option>
-                            <option>Dra. Fernández — Medicina General</option>
+                            <option selected value="${cita.doctor.id}">${cita.doctor.nombre}</option>
+                            <c:forEach var="doctor" items="${doctores}" >
+                            <option value="${doctor.id}">${doctor.nombre}</option>
+                            </c:forEach>
                         </select>
                     </div>
                 </div>
@@ -68,25 +65,25 @@
                 <div class="fila-form">
                     <div>
                         <label>Fecha de la Cita</label>
-                        <input type="date" name="fecha" value="2026-04-06">
+                        <input type="date" name="fecha" value="${cita.fecha}" required>
                     </div>
                     <div>
                         <label>Hora de la Cita</label>
-                        <input type="time" name="hora" value="09:00">
+                        <input type="time" name="hora" value="${cita.hora}" required>
                     </div>
                 </div>
 
                 <div class="campo">
                     <label>Estado</label>
                     <select name="estado">
-                        <option selected>Pendiente</option>
+                        <option selected>${cita.estado}</option>
                         <option>Confirmada</option>
                         <option>Cancelada</option>
                     </select>
                 </div>
 
                 <div class="form-acciones">
-                    <a href="Gestion-citas.jsp" class="btn-secundario">Cancelar</a>
+                    <a href="/cita/g-citas" class="btn-secundario">Cancelar</a>
                     <button type="submit" class="btn-primario">Guardar Cambios</button>
                 </div>
             </form>
