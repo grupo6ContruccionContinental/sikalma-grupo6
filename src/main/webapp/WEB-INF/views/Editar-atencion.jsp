@@ -23,28 +23,16 @@
                 <h1>Editar Atención</h1>
                 <p>Modifica los datos clínicos de la atención registrada</p>
             </div>
-            <c:choose>
-                <c:when test="${atencion.estado == 'Completada'}">
-                    <span class="estado estado-atendido">${atencion.estado}</span>
-                </c:when>
-                <c:when test="${atencion.estado == 'En curso'}">
-                    <span class="estado estado-confirmado">${atencion.estado}</span>
-                </c:when>
-                <c:otherwise>
-                    <span class="estado estado-pendiente">${atencion.estado}</span>
-                </c:otherwise>
-            </c:choose>
+            <span class="estado estado-atendido">${atencion.estado}</span>
         </div>
 
         <div class="formulario-card">
-            <h2>Datos de la Atención — ID: #A0${atencion.id} / Cita origen: #${atencion.idCita}</h2>
+            <h2>Datos de la Atención — ID: #A0${atencion.id} / Cita origen: #${atencion.cita.id}</h2>
 
             <form action="/atencion/actualizar" method="post">
 
-                <!-- ID oculto para identificar el registro en el POST -->
                 <input type="hidden" name="id" value="${atencion.id}">
 
-                <!-- Campos readonly heredados de la Cita (se mandan como hidden para no perderlos) -->
                 <div class="fila-form">
                     <div>
                         <label>Paciente</label>

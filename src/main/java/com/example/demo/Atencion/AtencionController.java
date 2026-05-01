@@ -4,6 +4,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalTime;
 import java.util.List;
 
 @Controller
@@ -16,7 +17,7 @@ public class AtencionController {
         this.atencionService = atencionService;
     }
 
-    // ── GET /atencion/gestion ─────────────────────────────────────────────────
+    
     @GetMapping("/gestion")
     public String listar(Model model) {
         List<Atencion> atenciones = atencionService.obtenerTodos();
@@ -25,7 +26,15 @@ public class AtencionController {
         return "Gestion-atenciones";
     }
 
-    // ── GET /atencion/ver?id=X ────────────────────────────────────────────────
+    @PostMapping("/nuevo")
+    public String registrarAtencion(@RequestParam int citaId , @RequestParam LocalTime horaInicio, @RequestParam LocalTime horaFin, @RequestParam String diagnostico, @RequestParam String tratamiento, @RequestParam String estado) {
+
+        atencionService.agregar(citaId,horaInicio,horaFin,diagnostico,tratamiento,estado);
+
+        return "redirect:/atencion/gestion";
+    }
+
+
     @GetMapping("/ver")
     public String ver(@RequestParam int id, Model model) {
         model.addAttribute("atencion", atencionService.buscarPorId(id));
@@ -33,7 +42,7 @@ public class AtencionController {
         return "Ver-atencion";
     }
 
-    // ── GET /atencion/editar?id=X ─────────────────────────────────────────────
+    
     @GetMapping("/editar")
     public String editar(@RequestParam int id, Model model) {
         model.addAttribute("atencion", atencionService.buscarPorId(id));
@@ -41,17 +50,12 @@ public class AtencionController {
         return "Editar-atencion";
     }
 
-    // ── POST /atencion/actualizar ─────────────────────────────────────────────
+    
     @PostMapping("/actualizar")
-    public String actualizar(@ModelAttribute Atencion atencion) {
-        atencionService.actualizar(atencion);
+    public String actualizar(@RequestParam int id, @RequestParam int citaId , @RequestParam LocalTime horaInicio, @RequestParam LocalTime horaFin, @RequestParam String diagnostico, @RequestParam String tratamiento, @RequestParam String estado) {
+        atencionService.actualizar(id, citaId, horaInicio,horaFin,diagnostico,tratamiento,estado);
         return "redirect:/atencion/gestion";
     }
 
-    // ── GET /atencion/eliminar?id=X ───────────────────────────────────────────
-    @GetMapping("/eliminar")
-    public String eliminar(@RequestParam int id) {
-        atencionService.eliminar(id);
-        return "redirect:/atencion/gestion";
-    }
+    
 }
