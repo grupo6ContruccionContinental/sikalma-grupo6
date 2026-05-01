@@ -26,28 +26,28 @@
         </div>
 
         <div class="formulario-card">
-            <h2>Datos de la Atención — ID: #A0${atencion.id} / Cita origen: #${atencion.idCita}</h2>
+            <h2>Datos de la Atención — ID: #A0${atencion.id} / Cita origen: #${atencion.cita.id}</h2>
 
             <form>
                 <div class="fila-form">
                     <div>
                         <label>Paciente</label>
-                        <input type="text" value="${atencion.nombrePaciente}" readonly>
+                        <input type="text" value="${atencion.cita.paciente.nombres}" readonly>
                     </div>
                     <div>
                         <label>Doctor</label>
-                        <input type="text" value="${atencion.nombreDoctor}" readonly>
+                        <input type="text" value="${atencion.cita.doctor.nombre}" readonly>
                     </div>
                 </div>
 
                 <div class="fila-form">
                     <div>
                         <label>Servicio</label>
-                        <input type="text" value="${atencion.nombreServicio}" readonly>
+                        <input type="text" value="${atencion.cita.servicio.nombre}" readonly>
                     </div>
                     <div>
                         <label>Fecha de atención</label>
-                        <input type="text" value="${atencion.fechaAtencion}" readonly>
+                        <input type="text" value="${atencion.cita.fecha}" readonly>
                     </div>
                 </div>
 
@@ -75,17 +75,12 @@
                 <div class="fila-form">
                     <div>
                         <label>Costo del servicio (S/)</label>
-                        <input type="text" value="${atencion.costo}" readonly>
+                        <input type="text" value="${atencion.cita.servicio.costo}" readonly>
                     </div>
                     <div>
                         <label>Estado de la atención</label>
                         <input type="text" value="${atencion.estado}" readonly>
                     </div>
-                </div>
-
-                <div class="campo">
-                    <label>Observaciones adicionales</label>
-                    <textarea rows="2" readonly>${atencion.observaciones}</textarea>
                 </div>
 
                 <div class="form-acciones">
