@@ -6,8 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="../images/logo-policlinico.png">
     <title>Registrar Atención - SIKALMA</title>
-    <link rel="stylesheet" href="../css/admin.css">
-    <link rel="stylesheet" href="../css/registrar-atencion.css">
+    <link rel="stylesheet" href="/css/admin.css">
+    <link rel="stylesheet" href="/css/registrar-atencion.css">
 </head>
 <body>
     <%@ include file="navbar.jsp" %>
@@ -16,7 +16,7 @@
         <div class="encabezado">
             <div class="encabezado-texto">
                 <div class="retorno">
-                    <a href="Gestion-citas.jsp">Gestión de Citas</a>
+                    <a href="/cita/g-citas">Gestión de Citas</a>
                     <span>›</span>
                     <a href="Gestion-atenciones.jsp">Gestión de Atenciones</a>
                     <span>›</span>
