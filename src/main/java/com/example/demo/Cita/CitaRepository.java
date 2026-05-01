@@ -1,31 +1,27 @@
 package com.example.demo.Cita;
 
 import org.springframework.stereotype.Repository;
-
 import java.util.ArrayList;
 import java.util.List;
 
 @Repository
 public class CitaRepository implements CitaDAO {
 
-    private List<Cita> listaCitas = new ArrayList<>();
+    private List<Cita> lista = new ArrayList<>();
 
-    // LISTAR
     @Override
     public List<Cita> listar() {
-        return listaCitas;
+        return lista;
     }
 
-    // GUARDAR
     @Override
     public void guardar(Cita cita) {
-        listaCitas.add(cita);
+        lista.add(cita);
     }
 
-    // BUSCAR POR ID
     @Override
     public Cita buscarPorId(int id) {
-        for (Cita c : listaCitas) {
+        for (Cita c : lista) {
             if (c.getId() == id) {
                 return c;
             }
@@ -33,22 +29,21 @@ public class CitaRepository implements CitaDAO {
         return null;
     }
 
-    // ELIMINAR
     @Override
     public void eliminar(int id) {
-        listaCitas.removeIf(c -> c.getId() == id);
+        lista.removeIf(c -> c.getId() == id);
     }
 
-    // ACTUALIZAR
     @Override
     public void actualizar(Cita cita) {
-        Cita existente = buscarPorId(cita.getId());
-
-        if (existente != null) {
-            existente.setPaciente(cita.getPaciente());
-            existente.setFecha(cita.getFecha());
-            existente.setHora(cita.getHora());
-            existente.setEstado(cita.getEstado());
+        Cita c = buscarPorId(cita.getId());
+        if (c != null) {
+            c.setPaciente(cita.getPaciente());
+            c.setDoctor(cita.getDoctor());
+            c.setServicio(cita.getServicio());
+            c.setFecha(cita.getFecha());
+            c.setHora(cita.getHora());
+            c.setEstado(cita.getEstado());
         }
     }
 }
