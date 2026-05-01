@@ -1,63 +1,105 @@
 package com.example.demo.Cita;
 
+import com.example.demo.Doctor.DoctorService;
+import com.example.demo.Paciente.PacienteService;
+import com.example.demo.Servicio.ServicioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+
 @Controller
 @RequestMapping("/cita")
-public class    CitaController {
+public class CitaController {
 
-    @Autowired
-    private CitaService citaService;
+    private final CitaService citaService;
+    private final PacienteService pacienteService;
+    private final DoctorService doctorService;
+    private final ServicioService servicioService;
 
-    // 👉 GESTION (LISTAR)
-    @GetMapping("/g-citas")
-    public String mostrarCitas(Model model){
-        model.addAttribute("paginaActiva", "citas");
-        model.addAttribute("citas", citaService.listar()); // 🔥 IMPORTANTE
-        return "Gestion-citas";
+    public CitaController(CitaService citaService, PacienteService pacienteService,DoctorService doctorService, ServicioService servicioService ){
+        this.citaService = citaService;
+        this.pacienteService = pacienteService;
+        this.doctorService = doctorService;
+        this.servicioService = servicioService;
     }
 
-    // 👉 IR A REGISTRAR
+
+    @GetMapping("/g-citas")
+    public String mostrarCitas(Model model){
+
+        model.addAttribute("paginaActiva", "citas");
+        model.addAttribute("citas", citaService.listar());
+        return "Gestion-citas";
+
+    }
+
+
     @GetMapping("/r-citas")
     public String registrarCita(Model model){
         model.addAttribute("paginaActiva", "r-citas");
+        model.addAttribute("pacientes" , pacienteService.listar());
+        model.addAttribute("doctores" , doctorService.obtenerTodos());
+        model.addAttribute("servicios" , servicioService.listar());
+
         return "Registrar-cita";
     }
 
-    // 👉 GUARDAR
+
     @PostMapping("/guardar")
-    public String guardar(@ModelAttribute Cita cita){
-        citaService.guardar(cita);
+    public String guardar(@RequestParam int paciente, @RequestParam int doctor, @RequestParam int servicio, @RequestParam LocalDate fecha, @RequestParam LocalTime hora, @RequestParam String estado){
+        citaService.guardar(paciente,doctor,servicio,fecha,hora,estado);
         return "redirect:/cita/g-citas";
     }
 
     // 👉 EDITAR
-    @GetMapping("/editar/{id}")
-    public String editar(@PathVariable int id, Model model){
-        model.addAttribute("cita", citaService.buscarPorId(id));
+    @GetMapping("/editar")
+    public String editar(@RequestParam int id , Model model){
+
+        model.addAttribute("cita" , citaService.buscarPorId(id));
+        model.addAttribute("servicios" , servicioService.listar());
+        model.addAttribute("doctores" , doctorService.obtenerTodos());
+        model.addAttribute("paginaActiva" , "r-citas");
+
         return "Editar-cita";
     }
 
-    // 👉 ACTUALIZAR
+
     @PostMapping("/actualizar")
-    public String actualizar(@ModelAttribute Cita cita){
-        citaService.actualizar(cita);
+    public String actualizar(@RequestParam int id, @RequestParam int paciente, @RequestParam int doctor, @RequestParam int servicio, @RequestParam LocalDate fecha, @RequestParam LocalTime hora, @RequestParam String estado){
+
+        citaService.actualizar(id,paciente,doctor,servicio,fecha,hora,estado);
         return "redirect:/cita/g-citas";
+
     }
 
-    // 👉 CANCELAR (mostrar modal JSP)
-    @GetMapping("/cancelar/{id}")
-    public String cancelar(@PathVariable int id, Model model){
+    @GetMapping("/atender")
+    public String atenderCita(@RequestParam int id, Model model){
+
+
+        model.addAttribute( "cita" , citaService.buscarPorId(id));
+        model.addAttribute("paginaActiva", "citas");
+
+        return "Registrar-atencion";
+    }
+
+
+
+
+    @GetMapping("/cancelar")
+    public String cancelar(@RequestParam int id, Model model){
+
         model.addAttribute("cita", citaService.buscarPorId(id));
+
         return "Cancelar-cita";
     }
 
     // 👉 ELIMINAR
-    @GetMapping("/eliminar/{id}")
-    public String eliminar(@PathVariable int id){
+    @GetMapping("/eliminar")
+    public String eliminar(@RequestParam int id){
         citaService.eliminar(id);
         return "redirect:/cita/g-citas";
     }
