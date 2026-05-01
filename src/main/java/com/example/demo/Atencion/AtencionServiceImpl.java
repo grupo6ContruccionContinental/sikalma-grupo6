@@ -30,7 +30,7 @@ public class AtencionServiceImpl implements AtencionService {
 
         Atencion a = new Atencion(c, horaInicio,horaFin,diagnostico,tratamiento,estado);
 
-        atencionDAO.save(atencion);
+        atencionDAO.save(a);
     }
 
     @Override
@@ -46,7 +46,7 @@ public class AtencionServiceImpl implements AtencionService {
         Atencion a = new Atencion(c, horaInicio,horaFin,diagnostico,tratamiento,estado);
         a.setId(id);
 
-        atencionDAO.update(atencion);
+        atencionDAO.update(a);
     }
 
     @Override
