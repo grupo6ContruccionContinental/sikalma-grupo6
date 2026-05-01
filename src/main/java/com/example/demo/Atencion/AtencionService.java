@@ -1,11 +1,12 @@
 package com.example.demo.Atencion;
 
+import java.time.LocalTime;
 import java.util.List;
 
 public interface AtencionService {
     List<Atencion> obtenerTodos();
-    void agregar(Atencion atencion);
+    void agregar(int CitaId , LocalTime horaInicio, LocalTime horaFin , String diagnostico, String tratamiento , String estado );
     Atencion buscarPorId(int id);
-    void actualizar(Atencion atencion);
+    void actualizar(int id , int citaId , LocalTime horaInicio, LocalTime horaFin , String diagnostico, String tratamiento , String estado);
     void eliminar(int id);
 }

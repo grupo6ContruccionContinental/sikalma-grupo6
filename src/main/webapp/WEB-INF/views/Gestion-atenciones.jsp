@@ -46,25 +46,13 @@
                     <c:forEach var="atencion" items="${atenciones}">
                         <tr>
                             <td>#A0${atencion.id}</td>
-                            <td>#${atencion.idCita}</td>
-                            <td>${atencion.nombrePaciente}</td>
-                            <td>${atencion.nombreServicio}</td>
-                            <td>${atencion.nombreDoctor}</td>
-                            <td>${atencion.fechaAtencion}</td>
+                            <td>#${atencion.cita.id}</td>
+                            <td>${atencion.cita.paciente.nombres}</td>
+                            <td>${atencion.cita.servicio.nombre}</td>
+                            <td>${atencion.cita.doctor.nombre}</td>
+                            <td>${atencion.cita.fecha}</td>
                             <td>${atencion.diagnostico}</td>
-                            <td>
-                                <c:choose>
-                                    <c:when test="${atencion.estado == 'Completada'}">
-                                        <span class="estado estado-atendido">${atencion.estado}</span>
-                                    </c:when>
-                                    <c:when test="${atencion.estado == 'En curso'}">
-                                        <span class="estado estado-confirmado">${atencion.estado}</span>
-                                    </c:when>
-                                    <c:otherwise>
-                                        <span class="estado estado-pendiente">${atencion.estado}</span>
-                                    </c:otherwise>
-                                </c:choose>
-                            </td>
+                            <td><span class="estado estado-atendido">${atencion.estado}</span></td>
                             <td class="td-acciones">
                                 <div class="acciones">
                                     <a href="/atencion/ver?id=${atencion.id}" class="btn-ver">Ver</a>
