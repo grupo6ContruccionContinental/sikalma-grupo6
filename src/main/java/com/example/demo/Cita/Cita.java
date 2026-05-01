@@ -21,9 +21,9 @@ public class Cita {
 
     private String estado;
 
-    // 🔥 CONSTRUCTOR VACÍO (IMPORTANTE PARA SPRING)
+
     public Cita() {
-        this.id = contador++;
+
     }
 
     // Constructor con parámetros
