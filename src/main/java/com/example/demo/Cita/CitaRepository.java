@@ -12,7 +12,7 @@ public class CitaRepository implements CitaDAO {
 
     @Override
     public List<Cita> listar() {
-        return lista;
+        return listaCitas;
     }
 
     @Override
@@ -32,7 +32,7 @@ public class CitaRepository implements CitaDAO {
 
     @Override
     public void eliminar(int id) {
-        lista.removeIf(c -> c.getId() == id);
+        listaCitas.removeIf(c -> c.getId() == id);
     }
 
     @Override
