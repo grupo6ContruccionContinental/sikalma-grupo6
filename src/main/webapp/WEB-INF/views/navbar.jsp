@@ -7,7 +7,7 @@
         <li><a href="/metricas/g-metricas" class="${paginaActiva == 'metricas' ? 'activo' : ''}">Métricas</a></li>
         <li><a href="/cita/g-citas" class="${paginaActiva == 'citas' ? 'activo' : ''}">Gestión de Citas</a></li>
         <li><a href="/cita/r-citas" class="${paginaActiva == 'r-citas' ? 'activo' : ''}">Registrar Cita</a></li>
-        <li><a href="/atencion/g-atenciones" class="${paginaActiva == 'atenciones' ? 'activo' : ''}">Gestión de Atenciones</a></li>
+        <li><a href="/atencion/gestion" class="${paginaActiva == 'atenciones' ? 'activo' : ''}">Gestión de Atenciones</a></li>
         <li><a href="/servicio/gestion" class="${paginaActiva == 'servicios' ? 'activo' : ''}">Servicios</a></li>
         <li><a href="/paciente/gestion" class="${paginaActiva == 'paciente' ? 'activo' : ''}">Pacientes</a></li>
 

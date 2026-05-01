@@ -33,7 +33,7 @@
             <div class="cita-origen-datos">
                 <span><strong>Paciente:</strong>${cita.paciente.nombres}</span>
                 <span><strong>Servicio:</strong>${cita.servicio.nombre}</span>
-                <span><strong>Doctor:</strong> ${cita.doctor.nombre}</span>
+                <span><strong>Doctor:</strong>${cita.doctor.nombre}</span>
                 <span><strong>Fecha:</strong>${cita.fecha}</span>
                 <span><strong>Hora:</strong>${cita.hora}</span>
                 <span><strong>Estado de cita:</strong> <span class="badge badge-confirmado">${cita.estado}</span></span>
@@ -43,27 +43,29 @@
         <div class="formulario-card">
             <h2>Datos de la Atención</h2>
 
-            <form>
+            <form action="/atencion/nuevo" method="post">
                 <!-- Datos heredados de la cita (bloqueados) -->
+                <input type="hidden" name="citaId" value="${cita.id}">
+
                 <div class="fila-form">
                     <div>
                         <label>Paciente</label>
-                        <input type="text" value="Adrial Gavidia" readonly style="background-color:#f5f0f0; color:#9a8a88;">
+                        <input type="text" value="${cita.paciente.nombres}" readonly style="background-color:#f5f0f0; color:#9a8a88;">
                     </div>
                     <div>
                         <label>Doctor que atiende</label>
-                        <input type="text" value="Dra. Fernández" readonly style="background-color:#f5f0f0; color:#9a8a88;">
+                        <input type="text" value="${cita.doctor.nombre}" readonly style="background-color:#f5f0f0; color:#9a8a88;">
                     </div>
                 </div>
 
                 <div class="fila-form">
                     <div>
                         <label>Servicio</label>
-                        <input type="text" value="Medicina General" readonly style="background-color:#f5f0f0; color:#9a8a88;">
+                        <input type="text" value="${cita.servicio.nombre}" readonly style="background-color:#f5f0f0; color:#9a8a88;">
                     </div>
                     <div>
                         <label>Fecha de atención</label>
-                        <input type="date" name="fecha" value="2026-04-05">
+                        <input type="date" name="fecha" value="${cita.fecha}" readonly style="background-color:#f5f0f0; color:#9a8a88;">
                     </div>
                 </div>
 
@@ -71,11 +73,11 @@
                 <div class="fila-form">
                     <div>
                         <label>Hora de inicio</label>
-                        <input type="time" name="hora_inicio" value="09:00">
+                        <input type="time" name="horaInicio" value="${cita.hora}">
                     </div>
                     <div>
                         <label>Hora de fin</label>
-                        <input type="time" name="hora_fin">
+                        <input type="time" name="horaFin">
                     </div>
                 </div>
 
@@ -92,7 +94,7 @@
                 <div class="fila-form">
                     <div>
                         <label>Costo del servicio (S/)</label>
-                        <input type="text" value="60.00" name="costo">
+                        <input type="text" value="${cita.servicio.costo}" name="costo">
                     </div>
                     <div>
                         <label>Estado de la atención</label>
@@ -103,13 +105,8 @@
                     </div>
                 </div>
 
-                <div class="campo">
-                    <label>Observaciones adicionales</label>
-                    <textarea name="observaciones" rows="2" placeholder="Notas adicionales (opcional)..."></textarea>
-                </div>
-
                 <div class="form-acciones">
-                    <a href="Gestion-citas.jsp" class="btn-secundario">Cancelar</a>
+                    <a href="/atencion/gestion" class="btn-secundario">Cancelar</a>
                     <button type="submit" class="btn-primario">Registrar Atención</button>
                 </div>
             </form>
