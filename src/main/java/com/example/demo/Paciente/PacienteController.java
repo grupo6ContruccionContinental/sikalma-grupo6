@@ -50,6 +50,7 @@ public class PacienteController {
         model.addAttribute("paginaActiva" , "paciente");
 
         return "Editar-paciente";
+
     }
 
     @PostMapping("/editar")

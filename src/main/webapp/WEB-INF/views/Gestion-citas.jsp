@@ -1,13 +1,14 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri="jakarta.tags.core" prefix="c"%>
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="../images/logo-policlinico.png">
+    <link rel="icon" href="/images/logo-policlinico.png">
     <title>Gestión de Citas - SIKALMA</title>
-    <link rel="stylesheet" href="../css/admin.css">
-    <link rel="stylesheet" href="../css/gestion-citas.css">
+    <link rel="stylesheet" href="/css/admin.css">
+    <link rel="stylesheet" href="/css/gestion-citas.css">
 </head>
 <body>
     <%@ include file="navbar.jsp" %>
@@ -18,33 +19,33 @@
                 <h1>Gestión de Citas</h1>
                 <p>Administra, organiza y controla las citas médicas del policlínico</p>
             </div>
-            <a href="Registrar-cita.jsp" class="btn-primario">+ Nueva Cita</a>
+            <a href="/cita/r-citas" class="btn-primario">+ Nueva Cita</a>
         </div>
 
         <div class="estadisticas">
             <div class="estadistica">
-                <img src="../images/usuarios.png" alt="pacientes">
+                <img src="/images/usuarios.png" alt="pacientes">
                 <div>
                     <h2>7</h2>
                     <p>Pacientes</p>
                 </div>
             </div>
             <div class="estadistica">
-                <img src="../images/calendario.png" alt="citas hoy">
+                <img src="/images/calendario.png" alt="citas hoy">
                 <div>
                     <h2>6</h2>
                     <p>Citas para hoy</p>
                 </div>
             </div>
             <div class="estadistica">
-                <img src="../images/reloj.png" alt="pendientes">
+                <img src="/images/reloj.png" alt="pendientes">
                 <div>
                     <h2>4</h2>
                     <p>Pendientes</p>
                 </div>
             </div>
             <div class="estadistica">
-                <img src="../images/check.png" alt="atendidos">
+                <img src="/images/check.png" alt="atendidos">
                 <div>
                     <h2>15</h2>
                     <p>Confirmadas</p>
@@ -56,7 +57,7 @@
             <div class="tabla-encabezado">
                 
                     <h3>Listado de Citas</h3>
-                    <p>Total: 5 registros</p>
+                    <p>Total: ${citas.size()} registros</p>
                 
             </div>
             <table>
@@ -73,76 +74,23 @@
                     </tr>
                 </thead>
                 <tbody>
+
+                    <c:forEach var="cita" items="${citas}" >
                     <tr>
-                        <td>#001</td>
-                        <td>Adrial Gavidia</td>
-                        <td>Medicina General</td>
-                        <td>Dra. Fernández</td>
-                        <td>05/04/2026</td>
-                        <td>09:00 AM</td>
-                        <td><span class="estado estado-confirmado">Confirmada</span></td>
+                        <td>#00${cita.id}</td>
+                        <td>${cita.paciente.nombres}</td>
+                        <td>${cita.servicio.nombre}</td>
+                        <td>${cita.doctor.nombre}</td>
+                        <td>${cita.fecha}</td>
+                        <td>${cita.hora}</td>
+                        <td><span class="estado estado-confirmado">${cita.estado}</span></td>
                         <td class="td-acciones">
-                            <a href="Editar-cita.jsp" class="btn-editar">Editar</a>
-                            <a href="Cancelar-cita.jsp" class="btn-cancelar">Cancelar</a>
-                            <a href="Registrar-atencion.jsp" class="btn-atender">Atender</a>
+                            <a href="/cita/editar?id=${cita.id}" class="btn-editar">Editar</a>
+                            <a href="/cita/cancelar?id=${cita.id}" class="btn-cancelar">Cancelar</a>
+                            <a href="/cita/atender?id=${cita.id}" class="btn-atender">Atender</a>
                         </td>
                     </tr>
-                    <tr>
-                        <td>#002</td>
-                        <td>Naya Ramos</td>
-                        <td>Psicología</td>
-                        <td>Dra. Aracely Ramos</td>
-                        <td>06/04/2026</td>
-                        <td>09:00 AM</td>
-                        <td><span class="estado estado-pendiente">Pendiente</span></td>
-                        <td class="td-acciones">
-                            <a href="Editar-cita.jsp" class="btn-editar">Editar</a>
-                            <a href="Cancelar-cita.jsp" class="btn-cancelar">Cancelar</a>
-                            <a href="Registrar-atencion.jsp" class="btn-atender">Atender</a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>#003</td>
-                        <td>Elizabeth Huamán</td>
-                        <td>Odontología</td>
-                        <td>Dr. Viviana Sánchez</td>
-                        <td>06/04/2026</td>
-                        <td>10:00 AM</td>
-                        <td><span class="estado estado-pendiente">Pendiente</span></td>
-                        <td class="td-acciones">
-                            <a href="Editar-cita.jsp" class="btn-editar">Editar</a>
-                            <a href="Cancelar-cita.jsp" class="btn-cancelar">Cancelar</a>
-                            <a href="Registrar-atencion.jsp" class="btn-atender">Atender</a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>#004</td>
-                        <td>Elias Chavez</td>
-                        <td>Traumatología</td>
-                        <td>Dr. Marcos López</td>
-                        <td>07/04/2026</td>
-                        <td>11:30 AM</td>
-                        <td><span class="estado estado-pendiente">Pendiente</span></td>
-                        <td class="td-acciones">
-                            <a href="Editar-cita.jsp" class="btn-editar">Editar</a>
-                            <a href="Cancelar-cita.jsp" class="btn-cancelar">Cancelar</a>
-                            <a href="Registrar-atencion.jsp" class="btn-atender">Atender</a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>#005</td>
-                        <td>Luana Anaya</td>
-                        <td>Pediatría</td>
-                        <td>Dra. Carla Torres</td>
-                        <td>07/04/2026</td>
-                        <td>10:00 AM</td>
-                        <td><span class="estado estado-cancelado">Cancelada</span></td>
-                        <td class="td-acciones">
-                            <a href="Editar-cita.jsp" class="btn-editar">Editar</a>
-                            <a href="Cancelar-cita.jsp" class="btn-cancelar">Cancelar</a>
-                            <a href="Registrar-atencion.jsp" class="btn-atender">Atender</a>
-                        </td>
-                    </tr>
+                    </c:forEach>
                 </tbody>
             </table>
         </div>
