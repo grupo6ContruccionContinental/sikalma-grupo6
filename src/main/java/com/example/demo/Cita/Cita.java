@@ -31,6 +31,8 @@ public class Cita {
         this.doctor = doctor;
         this.servicio = servicio;
         this.paciente = paciente;
+        this.doctor = doctor;
+        this.servicio = servicio;
         this.fecha = fecha;
         this.hora = hora;
         this.estado = estado;
