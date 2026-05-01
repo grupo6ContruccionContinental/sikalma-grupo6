@@ -34,7 +34,7 @@ public class Atencion {
     // ── Getters ──────────────────────────────────────────────────────────────
 
     public int getId()                  { return id; }
-    public Cita geCita ()               { return cita;}
+    public Cita getCita ()               { return cita;}
     public LocalTime getHoraInicio()    { return horaInicio;}
     public LocalTime getHoraFin()       { return horaFin;}
     public String getDiagnostico()      { return diagnostico;}

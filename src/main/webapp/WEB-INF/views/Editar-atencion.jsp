@@ -32,32 +32,30 @@
             <form action="/atencion/actualizar" method="post">
 
                 <input type="hidden" name="id" value="${atencion.id}">
+                <input type="hidden" name="citaId" value="${atencion.cita.id}">
 
                 <div class="fila-form">
                     <div>
                         <label>Paciente</label>
-                        <input type="text" value="${atencion.nombrePaciente}"
+                        <input type="text" value="${atencion.cita.paciente.nombres}"
                                readonly style="background-color:#f5f0f0; color:#9a8a88;">
-                        <input type="hidden" name="nombrePaciente" value="${atencion.nombrePaciente}">
                     </div>
                     <div>
                         <label>Doctor</label>
-                        <input type="text" value="${atencion.nombreDoctor}"
+                        <input type="text" value="${atencion.cita.doctor.nombre}"
                                readonly style="background-color:#f5f0f0; color:#9a8a88;">
-                        <input type="hidden" name="nombreDoctor" value="${atencion.nombreDoctor}">
                     </div>
                 </div>
 
                 <div class="fila-form">
                     <div>
                         <label>Servicio</label>
-                        <input type="text" value="${atencion.nombreServicio}"
+                        <input type="text" value="${atencion.cita.servicio.nombre}"
                                readonly style="background-color:#f5f0f0; color:#9a8a88;">
-                        <input type="hidden" name="nombreServicio" value="${atencion.nombreServicio}">
                     </div>
                     <div>
                         <label>Fecha de atención</label>
-                        <input type="date" name="fechaAtencion" value="${atencion.fechaAtencion}">
+                        <input type="date" value="${atencion.cita.fecha}" readonly style="background-color:#f5f0f0; color:#9a8a88;">
                     </div>
                 </div>
 
@@ -65,7 +63,7 @@
                 <div class="fila-form">
                     <div>
                         <label>Hora de inicio</label>
-                        <input type="time" name="horaInicio" value="${atencion.horaInicio}">
+                        <input type="time" value="${atencion.horaInicio}" name="horaInicio" readonly >
                     </div>
                     <div>
                         <label>Hora de fin</label>
@@ -75,42 +73,28 @@
 
                 <div class="campo">
                     <label>Diagnóstico</label>
-                    <textarea name="diagnostico" rows="3"
-                              placeholder="Describa el diagnóstico del paciente...">${atencion.diagnostico}</textarea>
+                    <input type="text" value="${atencion.diagnostico}" name="diagnostico">
                 </div>
 
                 <div class="campo">
                     <label>Tratamiento indicado</label>
-                    <textarea name="tratamiento" rows="3"
-                              placeholder="Indique el tratamiento o medicación recetada...">${atencion.tratamiento}</textarea>
+                    <input type="text" value="${atencion.tratamiento}" name="tratamiento">
                 </div>
 
                 <div class="fila-form">
                     <div>
                         <label>Costo del servicio (S/)</label>
-                        <input type="number" step="0.01" name="costo" value="${atencion.costo}">
+                        <input type="text" value="${atencion.cita.servicio.costo}" readonly style="background-color:#f5f0f0; color:#9a8a88;">
                     </div>
                     <div>
                         <label>Estado de la atención</label>
                         <select name="estado">
-                            <option value="Pendiente"  ${atencion.estado == 'Pendiente'  ? 'selected' : ''}>Pendiente</option>
-                            <option value="En curso"   ${atencion.estado == 'En curso'   ? 'selected' : ''}>En curso</option>
-                            <option value="Completada" ${atencion.estado == 'Completada' ? 'selected' : ''}>Completada</option>
+                            <option value="${atencion.estado}">${atencion.estado}</option>
+                            <option  value="En curso">En curso</option>
+                            <option value="Completada">Completada</option>
                         </select>
                     </div>
                 </div>
-
-                <div class="campo">
-                    <label>Observaciones adicionales</label>
-                    <textarea name="observaciones" rows="2"
-                              placeholder="Notas adicionales (opcional)...">${atencion.observaciones}</textarea>
-                </div>
-
-                <!-- FK ocultas para que el Repository pueda preservarlas -->
-                <input type="hidden" name="idCita"     value="${atencion.idCita}">
-                <input type="hidden" name="idPaciente" value="${atencion.idPaciente}">
-                <input type="hidden" name="idDoctor"   value="${atencion.idDoctor}">
-                <input type="hidden" name="idServicio" value="${atencion.idServicio}">
 
                 <div class="form-acciones">
                     <a href="/atencion/gestion" class="btn-secundario">Cancelar</a>
