@@ -13,6 +13,8 @@ public class Servicio {
     private double costo;
     private List<Cita> citas = new ArrayList<>();
 
+    public Servicio () {}
+
     public Servicio(String nombre, String descripcion, double costo) {
         this.nombre = nombre;
         this.descripcion = descripcion;

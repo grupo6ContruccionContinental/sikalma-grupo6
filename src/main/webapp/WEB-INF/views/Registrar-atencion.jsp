@@ -18,7 +18,7 @@
                 <div class="retorno">
                     <a href="/cita/g-citas">Gestión de Citas</a>
                     <span>›</span>
-                    <a href="Gestion-atenciones.jsp">Gestión de Atenciones</a>
+                    <a href="/atencion/gestion">Gestión de Atenciones</a>
                     <span>›</span>
                     <span>Registrar Atención</span>
                 </div>

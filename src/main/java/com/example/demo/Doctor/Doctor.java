@@ -19,6 +19,8 @@ public class Doctor {
     private LocalDate fechaNacimiento;
     private List<Cita> citas = new ArrayList<>();
 
+    public Doctor () {}
+
     // Constructor con parámetros
     public Doctor(String nombre, String dni, String especialidad, String telefono, LocalDate fechaNacimiento) {
         this.nombre = nombre;
