@@ -18,6 +18,8 @@ public class Paciente {
     private LocalDate fechaNacimiento;
     private List<Cita> citas = new ArrayList<>();
 
+    public Paciente () {}
+
     public Paciente (String nombres, String dni, String telefono, LocalDate fechaNacimiento){
 
         this.nombres = nombres;
