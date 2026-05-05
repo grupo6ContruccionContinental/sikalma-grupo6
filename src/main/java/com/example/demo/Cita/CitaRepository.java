@@ -44,4 +44,26 @@ public class CitaRepository implements CitaDAO {
             }
         }
     }
+
+    @Override
+    public List<Cita> buscarPorPaciente( int idPaciente) {
+
+        List<Cita> resultado = new ArrayList<>();
+
+        List<Cita> citas = listaCitas;
+
+        for(Cita c : citas){
+
+            if(c.getPaciente().getId() == idPaciente){
+
+                resultado.add(c);
+
+            }
+
+        }
+
+        return resultado;
+
+
+    }
 }

@@ -15,4 +15,10 @@ public interface CitaService {
     void eliminar(int id);
 
     void actualizar(int id ,int pacienteId, int doctorId, int servicioId, LocalDate fecha, LocalTime hora, String estado);
+
+    List<Cita> buscarCitaPorPaciente( int idPaciente);
+
+
+    // validaciones 
+    String validarCitasExistentes(int idPaciente);
 }

@@ -285,5 +285,13 @@ textarea {
 }
 
 
-
+/* DISEÑO DE ALERTAS */
+.error {
+  padding: 0.5em;
+  text-align: center;
+  background-color: red;
+  color: white; 
+  font-weight: bold; 
+  border-radius: 1em;
+}
 

@@ -13,4 +13,7 @@ public interface CitaDAO {
     void eliminar(int id);
 
     void actualizar(Cita cita);
+
+    List<Cita> buscarPorPaciente(int idPaciente);
+
 }
