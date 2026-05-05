@@ -1,12 +1,13 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="../images/logo-policlinico.png">
+    <link rel="icon" href="/images/logo-policlinico.png">
     <title>Registrar Paciente - SIKALMA</title>
-    <link rel="stylesheet" href="../css/admin.css">
+    <link rel="stylesheet" href="/css/admin.css">
 </head>
 <body>
     <%@ include file="navbar.jsp" %>
@@ -30,12 +31,12 @@
             <form action="/paciente/registrar" method="post">
                 <div class="campo">
                     <label>Nombre completo</label>
-                    <input type="text" placeholder="Ej: María García López" name="nombres">
+                    <input type="text" placeholder="Ej: María García López" name="nombres" value="${paciente.nombres}" required>
                 </div>
 
                 <div class="campo">
                     <label>DNI</label>
-                    <input type="text" placeholder="12345678" maxlength="8" name="dni">
+                    <input type="text" placeholder="12345678" maxlength="8" name="dni" pattern="\d{8}" inputmode="numeric" value="${paciente.dni}" required>
                     <span class="indicacion">Debe contener exactamente 8 dígitos.</span>
                 </div>
 
@@ -43,14 +44,24 @@
 
                     <div>
                         <label>Teléfono</label>
-                        <input type="text" placeholder="987 654 321" name="telefono">
+                        <input type="text" placeholder="987 654 321" name="telefono" maxlength="9" pattern="9\d{8}" inputmode="numeric" value="${paciente.telefono}" required>
                     </div>
 
                     <div>
                         <label>Fecha de nacimiento</label>
-                        <input type="date" name="fechaNacimiento">
+                        <input type="date" name="fechaNacimiento" value="${paciente.fechaNacimiento}" required>
                     </div>
                 </div>
+
+                <c:if test="${not empty error}">
+
+                    <div class="error">
+
+                        ${error}
+
+                    </div>
+
+                </c:if>
 
                 <div class="form-acciones">
                     <a href="/paciente/gestion" class="btn-secundario">Cancelar</a>

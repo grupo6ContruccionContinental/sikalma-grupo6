@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -38,21 +39,32 @@
 
                 <div class="campo">
                     <label>DNI</label>
-                    <input type="text" value="${paciente.dni}" name="dni"  maxlength="8" required >
+                    <input type="text" value="${paciente.dni}" name="dni"  maxlength="8" pattern="\d{8}" inputmode="numeric" required >
                     <span class="indicacion">Debe contener exactamente 8 dígitos.</span>
                 </div>
 
                 <div class="fila-form">
                     <div>
                         <label>Teléfono</label>
-                        <input type="text" value="${paciente.telefono}" name="telefono" required >
+                        <input type="text" value="${paciente.telefono}" maxlength="9" pattern="9\d{8}" inputmode="numeric" name="telefono" required >
                     </div>
 
                     <div>
                         <label>Fecha de nacimiento</label>
-                        <input type="date" value="${paciente.fechaNacimiento}" name="fechaNacimiento" required >
+                        <input type="date" value="${paciente.fechaNacimiento}" maxlength="9" name="fechaNacimiento" required >
                     </div>
                 </div>
+
+                <c:if test="${not empty error}">
+
+                    <div class="error">
+
+                        ${error}
+
+                    </div>
+
+                    </c:if>
+
 
                 <div class="form-acciones">
                     <a href="/paciente/gestion" class="btn-secundario">Cancelar</a>

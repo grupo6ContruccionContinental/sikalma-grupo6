@@ -67,4 +67,25 @@ public class CitaServiceImpl implements CitaService {
 
         citaDAO.actualizar(c);
     }
+
+    @Override
+    public List<Cita> buscarCitaPorPaciente (int idPaciente) {
+        return citaDAO.buscarPorPaciente(idPaciente);
+    }
+
+
+    // validaciones
+    @Override
+    public String validarCitasExistentes(int idPaciente){
+
+        if(!citaDAO.buscarPorPaciente(idPaciente).isEmpty()){
+
+            return "El paciente tiene citas registradas";
+        }
+
+        return null;
+
+
+    }
+
 }

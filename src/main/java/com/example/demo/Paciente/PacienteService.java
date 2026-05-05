@@ -16,4 +16,11 @@ public interface PacienteService {
 
     List<Paciente> buscarPorDni(String dni);
 
+    //validaciones
+
+    String validarDatosRegistro(Paciente paciente);
+
+    String validarDatosEdicion(Paciente paciente);
+
+
 }
