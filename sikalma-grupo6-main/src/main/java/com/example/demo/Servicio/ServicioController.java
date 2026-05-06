@@ -1,22 +1,17 @@
 package com.example.demo.Servicio;
 
-import com.example.demo.Cita.CitaService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @Controller
 @RequestMapping("/servicio")
 public class ServicioController {
 
     private final ServicioService servicioService;
-    private final CitaService citaService;
 
-    public ServicioController(ServicioService servicioService, CitaService citaService) {
+    public ServicioController(ServicioService servicioService) {
         this.servicioService = servicioService;
-        this.citaService = citaService;
     }
 
     @GetMapping("/gestion")
@@ -32,36 +27,22 @@ public class ServicioController {
         return "Registrar-servicio";
     }
 
-    // REQ-S01, REQ-S02, REQ-S03: Validaciones al registrar
+    // REQ-S01, REQ-S02, REQ-S03: el ServiceImpl valida y lanza excepción
     @PostMapping("/registrar")
     public String registrarServicio(@RequestParam String nombre,
                                     @RequestParam String descripcion,
                                     @RequestParam double costo,
                                     Model model) {
-
-        if (nombre == null || nombre.trim().isEmpty()) {
-            model.addAttribute("errorNombre", "El nombre del servicio es obligatorio");
+        try {
+            servicioService.agregar(new Servicio(nombre, descripcion, costo));
+            return "redirect:/servicio/gestion";
+        } catch (IllegalArgumentException e) {
+            model.addAttribute("error", e.getMessage());
+            model.addAttribute("nombre", nombre);
             model.addAttribute("descripcion", descripcion);
             model.addAttribute("costo", costo);
             return "Registrar-servicio";
         }
-
-        if (descripcion == null || descripcion.trim().isEmpty()) {
-            model.addAttribute("errorDescripcion", "La descripción del servicio es obligatoria");
-            model.addAttribute("nombre", nombre);
-            model.addAttribute("costo", costo);
-            return "Registrar-servicio";
-        }
-
-        if (costo <= 0) {
-            model.addAttribute("errorCosto", "El costo debe ser mayor a S/ 0.00");
-            model.addAttribute("nombre", nombre);
-            model.addAttribute("descripcion", descripcion);
-            return "Registrar-servicio";
-        }
-
-        servicioService.agregar(new Servicio(nombre.trim(), descripcion.trim(), costo));
-        return "redirect:/servicio/gestion";
     }
 
     @GetMapping("/editar")
@@ -71,39 +52,25 @@ public class ServicioController {
         return "Editar-servicio";
     }
 
-    // REQ-S01, REQ-S02, REQ-S03: Validaciones al editar
+    // REQ-S01, REQ-S02, REQ-S03: el ServiceImpl valida y lanza excepción
     @PostMapping("/editar")
     public String cambiarServicio(@RequestParam int id,
                                   @RequestParam String nombre,
                                   @RequestParam String descripcion,
                                   @RequestParam double costo,
                                   Model model) {
-
-        Servicio servicio = servicioService.buscarPorId(id);
-
-        if (nombre == null || nombre.trim().isEmpty()) {
-            model.addAttribute("errorNombre", "El nombre del servicio es obligatorio");
-            model.addAttribute("servicio", servicio);
+        try {
+            Servicio s = servicioService.buscarPorId(id);
+            s.setNombre(nombre);
+            s.setDescripcion(descripcion);
+            s.setCosto(costo);
+            servicioService.actualizar(s);
+            return "redirect:/servicio/gestion";
+        } catch (IllegalArgumentException e) {
+            model.addAttribute("error", e.getMessage());
+            model.addAttribute("servicio", servicioService.buscarPorId(id));
             return "Editar-servicio";
         }
-
-        if (descripcion == null || descripcion.trim().isEmpty()) {
-            model.addAttribute("errorDescripcion", "La descripción del servicio es obligatoria");
-            model.addAttribute("servicio", servicio);
-            return "Editar-servicio";
-        }
-
-        if (costo <= 0) {
-            model.addAttribute("errorCosto", "El costo debe ser mayor a S/ 0.00");
-            model.addAttribute("servicio", servicio);
-            return "Editar-servicio";
-        }
-
-        servicio.setNombre(nombre.trim());
-        servicio.setDescripcion(descripcion.trim());
-        servicio.setCosto(costo);
-        servicioService.actualizar(servicio);
-        return "redirect:/servicio/gestion";
     }
 
     @GetMapping("/advertir")
@@ -112,21 +79,17 @@ public class ServicioController {
         return "Eliminar-servicio";
     }
 
-    // REQ-S04: Verificar citas asociadas antes de eliminar
+    // REQ-S04: el ServiceImpl verifica citas y lanza excepción
     @GetMapping("/eliminar")
     public String eliminarServicio(@RequestParam int id, Model model) {
-
-        boolean tieneCitas = citaService.listar().stream()
-                .anyMatch(c -> c.getServicio().getId() == id);
-
-        if (tieneCitas) {
+        try {
+            servicioService.eliminar(id);
+            return "redirect:/servicio/gestion";
+        } catch (IllegalStateException e) {
+            model.addAttribute("error", e.getMessage());
             model.addAttribute("servicio", servicioService.buscarPorId(id));
-            model.addAttribute("errorEliminar", "No se puede eliminar el servicio porque tiene citas registradas");
             return "Eliminar-servicio";
         }
-
-        servicioService.eliminar(id);
-        return "redirect:/servicio/gestion";
     }
 
     @GetMapping("/buscar")
