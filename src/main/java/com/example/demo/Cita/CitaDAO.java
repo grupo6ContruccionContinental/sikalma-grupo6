@@ -16,4 +16,6 @@ public interface CitaDAO {
 
     List<Cita> buscarPorPaciente(int idPaciente);
 
+    List<Cita> buscarPorDoctor(int idDoctor);
+
 }

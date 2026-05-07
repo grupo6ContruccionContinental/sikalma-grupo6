@@ -76,11 +76,24 @@ public class CitaServiceImpl implements CitaService {
 
     // validaciones
     @Override
-    public String validarCitasExistentes(int idPaciente){
+    public String validarCitasExistentesPaciente(int idPaciente){
 
         if(!citaDAO.buscarPorPaciente(idPaciente).isEmpty()){
 
             return "El paciente tiene citas registradas";
+        }
+
+        return null;
+
+
+    }
+
+    @Override
+    public String validarCitasExistentesDoctor(int idDoctor){
+
+        if(!citaDAO.buscarPorDoctor(idDoctor).isEmpty()){
+
+            return "El doctor tiene citas registradas";
         }
 
         return null;

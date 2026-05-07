@@ -1,6 +1,8 @@
 package com.example.demo.Doctor;
 
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -8,18 +10,18 @@ public class DoctorServiceImpl implements DoctorService {
 
     private final DoctorDAO doctorDAO;
 
-    public DoctorServiceImpl(DoctorDAO doctorDAO) {
+    public DoctorServiceImpl(DoctorDAO doctorDAO){
         this.doctorDAO = doctorDAO;
+    }
+
+    @Override
+    public void agregar(Doctor doctor) {
+        doctorDAO.save((doctor));
     }
 
     @Override
     public List<Doctor> obtenerTodos() {
         return doctorDAO.findAll();
-    }
-
-    @Override
-    public void agregar(Doctor doctor) {
-        doctorDAO.save(doctor);
     }
 
     @Override
@@ -39,6 +41,80 @@ public class DoctorServiceImpl implements DoctorService {
 
     @Override
     public List<Doctor> buscarPorDni(String dni) {
+        
         return doctorDAO.findByDni(dni);
+    }
+
+
+    // VALIDACIONES
+
+
+    @Override
+    public String validarDatosRegistro(Doctor doctor) {
+        String error = validacionesGenerales(doctor);
+
+        if (error != null) {
+            return error;
+        } else if (!doctorDAO.findByDni(doctor.getDni()).isEmpty()) {
+
+            return "Ya existe un doctor registrado con ese DNI";
+
+        } else if (!doctorDAO.findByCorreo(doctor.getCorreo()).isEmpty()) {
+            return "Ya existe un usuario registrado con ese correo";
+        }
+
+        return null;
+    }
+
+    @Override
+    public String validarDatosEdicion(Doctor doctor) {
+        String error = validacionesGenerales(doctor);
+
+        if (error != null) {
+
+            return error;
+
+        } 
+
+        return null;
+    }
+
+    public String validacionesGenerales(Doctor doctor) {
+
+        if (doctor.getNombre() == null || doctor.getNombre().trim().isEmpty()) {
+
+            return "El nombre del doctor es obligatorio";
+
+        } else if (doctor.getEspecialidad() == null || doctor.getEspecialidad().trim().isEmpty()) {
+
+            return "La especialidad es obligatoria";
+
+        } else if (doctor.getTelefono() == null || doctor.getTelefono().trim().isEmpty()) {
+
+            return "El teléfono del doctor es obligatorio";
+
+        } else if (doctor.getFechaNacimiento() == null) {
+
+            return "La fecha de nacimiento es obligatoria";
+
+        } else if (!doctor.getDni().matches("\\d{8}")) {
+
+            return "El DNI debe tener exactamente 8 dígitos numéricos";
+
+        } else if (!doctor.getTelefono().matches("9\\d{8}")) {
+
+            return "El teléfono solo debe contener números";
+
+        }   else if(doctor.getEdad() < 24 || doctor.getEdad() > 75 || doctor.getEdad() == 0){
+
+            return "La fecha de nacimiento no es válida";
+
+        }   else if( doctor.getFechaNacimiento().isAfter(LocalDate.now())){
+
+            return "La fecha de nacimiento no debería ser futura";
+
+        }
+
+        return null;
     }
 }
