@@ -6,6 +6,7 @@
     <meta charset="UTF-8">
     <title>Editar Doctor - SIKALMA</title>
     <link rel="stylesheet" href="../css/admin.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
     <%@ include file="navbar.jsp" %>
@@ -19,10 +20,10 @@
 
         <div class="formulario-card" style="position: relative;">
 
-            <c:if test="${not empty errorValidacion}">
+            <c:if test="${not empty error}">
                 <div style="display: flex; align-items: center; gap: 12px; background-color: #FFFFFF; color: #842029; padding: 15px 20px; border-radius: 8px; margin-bottom: 25px; border-left: 5px solid #dc3545; box-shadow: 0 2px 12px rgba(0,0,0,0.06); font-size: 0.95rem;">
                     <span style="color: #dc3545; font-size: 1.1rem; font-weight: bold;">⚠️</span>
-                    <span style="font-weight: 500;">${errorValidacion}</span>
+                    <span style="font-weight: 500;">${error}</span>
                 </div>
             </c:if>
             <form action="/doctor/actualizar" method="post">

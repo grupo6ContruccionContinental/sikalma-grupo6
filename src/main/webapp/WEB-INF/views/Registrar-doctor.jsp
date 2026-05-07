@@ -20,41 +20,41 @@
 
         <div class="formulario-card" style="position: relative;">
 
-            <c:if test="${not empty errorValidacion}">
+            <c:if test="${not empty error}">
                 <div style="display: flex; align-items: center; gap: 12px; background-color: #FFFFFF; color: #842029; padding: 15px 20px; border-radius: 8px; margin-bottom: 25px; border-left: 5px solid #dc3545; box-shadow: 0 2px 12px rgba(0,0,0,0.06); font-size: 0.95rem;">
                     <span style="color: #dc3545; font-size: 1.1rem; font-weight: bold;">⚠️</span>
-                    <span style="font-weight: 500;">${errorValidacion}</span>
+                    <span style="font-weight: 500;">${error}</span>
                 </div>
             </c:if>
             <form action="/doctor/guardar" method="post">
                 <div class="campo">
                     <label>Nombre Completo</label>
-                    <input type="text" name="nombre" placeholder="Ej. Juan Pérez" required>
+                    <input type="text" name="nombre" value="${doctor.nombre}" placeholder="Ej. Juan Pérez" required>
                 </div>
 
                 <div class="campo">
                     <label>Correo Electrónico</label>
-                    <input type="email" name="correo" placeholder="ejemplo@sikalma.com" required>
+                    <input type="email" name="correo" value="${doctor.correo}" placeholder="ejemplo@sikalma.com" required>
                 </div>
 
                 <div class="fila-form">
                     <div class="campo">
                         <label>DNI</label>
-                        <input type="text" name="dni" maxlength="8" placeholder="8 dígitos" required>
+                        <input type="text" name="dni" value="${doctor.dni}" maxlength="8" placeholder="8 dígitos" required>
                     </div>
                     <div class="campo">
                         <label>Especialidad</label>
-                        <input type="text" name="especialidad" placeholder="Ej. Cardiología" required>
+                        <input type="text" name="especialidad" value="${doctor.especialidad}" placeholder="Ej. Cardiología" required>
                     </div>
                 </div>
                 <div class="fila-form">
                     <div class="campo">
                         <label>Teléfono</label>
-                        <input type="text" name="telefono" placeholder="Solo números" required>
+                        <input type="text" name="telefono" value="${doctor.telefono}" placeholder="Solo números" required>
                     </div>
                     <div class="campo">
                         <label>Fecha de Nacimiento</label>
-                        <input type="date" name="fechaNacimiento" required>
+                        <input type="date" name="fechaNacimiento" value="${doctor.fechaNacimiento}" required>
                     </div>
                 </div>
                 <div class="form-acciones" style="margin-top: 30px; border-top: 1px solid #eee; padding-top: 20px;">
