@@ -2,6 +2,7 @@ package com.example.demo.Doctor;
 
 import org.springframework.format.annotation.DateTimeFormat;
 import java.time.LocalDate;
+import java.time.Period;
 
 public class Doctor {
 
@@ -43,6 +44,8 @@ public class Doctor {
 
     public String getTelefono() { return telefono; }
     public void setTelefono(String telefono) { this.telefono = telefono; }
+
+    public int getEdad(){return Period.between(this.fechaNacimiento , LocalDate.now()).getYears() ;}
 
     public String getCorreo() { return correo; }
     public void setCorreo(String correo) { this.correo = correo; }

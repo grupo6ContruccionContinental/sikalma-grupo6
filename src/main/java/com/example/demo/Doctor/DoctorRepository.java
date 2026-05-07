@@ -52,4 +52,11 @@ public class DoctorRepository implements DoctorDAO {
                 .filter(d -> d.getDni().equals(dni))
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public List<Doctor> findByCorreo(String correo){
+        return lista.stream()
+                .filter(d -> d.getCorreo().equals(correo))
+                .collect(Collectors.toList());
+    }
 }

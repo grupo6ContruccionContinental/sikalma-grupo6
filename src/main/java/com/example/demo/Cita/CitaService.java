@@ -20,5 +20,7 @@ public interface CitaService {
 
 
     // validaciones 
-    String validarCitasExistentes(int idPaciente);
+    String validarCitasExistentesPaciente(int idPaciente);
+
+    String validarCitasExistentesDoctor(int idDoctor);
 }

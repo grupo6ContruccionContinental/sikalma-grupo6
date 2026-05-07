@@ -3,13 +3,24 @@ package com.example.demo.Doctor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import java.util.List;
+
+import com.example.demo.Cita.CitaService;
+import com.example.demo.Servicio.ServicioService;
+
 
 @Controller
 @RequestMapping("/doctor")
 public class DoctorController {
 
-    private final DoctorService doctorService = new DoctorServiceImpl();
+    private final DoctorService doctorService;
+    private final CitaService citaService;
+    private final ServicioService servicioService;
+
+    public DoctorController(DoctorService doctorService , CitaService citaService, ServicioService servicioService) {
+        this.doctorService = doctorService;
+        this.citaService = citaService;
+        this.servicioService = servicioService;
+    }
 
     @GetMapping("/gestion")
     public String listar(Model model) {
@@ -19,7 +30,7 @@ public class DoctorController {
     }
 
     @GetMapping("/buscar")
-    public String buscar(@RequestParam("dni") String dni, Model model) {
+    public String buscar(@RequestParam String dni, Model model) {
         model.addAttribute("paginaActiva", "personal");
         model.addAttribute("doctores", doctorService.buscarPorDni(dni));
         return "Gestion-doctores";
@@ -28,6 +39,7 @@ public class DoctorController {
     @GetMapping("/nuevo")
     public String formularioNuevo(Model model) {
         model.addAttribute("paginaActiva", "personal");
+        model.addAttribute("servicios", servicioService.listar());
         return "Registrar-doctor";
     }
 
@@ -50,6 +62,7 @@ public class DoctorController {
     @GetMapping("/editar")
     public String editar(@RequestParam int id, Model model) {
         model.addAttribute("doctor", doctorService.buscarPorId(id));
+        model.addAttribute("servicios" , servicioService.listar());
         model.addAttribute("paginaActiva", "personal");
         return "Editar-doctor";
     }
@@ -62,6 +75,7 @@ public class DoctorController {
         if (error != null) {
             model.addAttribute("error", error);
             model.addAttribute("doctor", doctor); // Devuelve los datos
+            model.addAttribute("servicios" , servicioService.listar());
             model.addAttribute("paginaActiva", "personal");
             return "Editar-doctor";
         }
@@ -72,6 +86,16 @@ public class DoctorController {
 
     @GetMapping("/advertir")
     public String advertir(@RequestParam int id, Model model) {
+
+        String error = citaService.validarCitasExistentesDoctor(id);
+        if(error != null){
+
+            model.addAttribute("error" , error);
+
+            return "Eliminar-doctor-error-message";
+
+        }
+
         model.addAttribute("doctor", doctorService.buscarPorId(id));
         return "Eliminar-doctor";
     }

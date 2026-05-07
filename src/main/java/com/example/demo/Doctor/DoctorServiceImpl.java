@@ -1,53 +1,48 @@
 package com.example.demo.Doctor;
 
 import org.springframework.stereotype.Service;
-import java.util.ArrayList;
+
+import java.time.LocalDate;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class DoctorServiceImpl implements DoctorService {
 
-    // Usamos la lista en memoria como veníamos haciendo
-    private static List<Doctor> listaDoctores = new ArrayList<>();
-    private static int contadorId = 1;
+    private final DoctorDAO doctorDAO;
+
+    public DoctorServiceImpl(DoctorDAO doctorDAO){
+        this.doctorDAO = doctorDAO;
+    }
 
     @Override
     public void agregar(Doctor doctor) {
-        doctor.setId(contadorId++);
-        listaDoctores.add(doctor);
+        doctorDAO.save((doctor));
     }
 
     @Override
     public List<Doctor> obtenerTodos() {
-        return listaDoctores;
+        return doctorDAO.findAll();
     }
 
     @Override
     public Doctor buscarPorId(int id) {
-        return listaDoctores.stream().filter(d -> d.getId() == id).findFirst().orElse(null);
+        return doctorDAO.findById(id);
     }
 
     @Override
     public void actualizar(Doctor doctor) {
-        for (int i = 0; i < listaDoctores.size(); i++) {
-            if (listaDoctores.get(i).getId() == doctor.getId()) {
-                listaDoctores.set(i, doctor);
-                break;
-            }
-        }
+        doctorDAO.update(doctor);
     }
 
     @Override
     public void eliminar(int id) {
-        listaDoctores.removeIf(d -> d.getId() == id);
+        doctorDAO.delete(id);
     }
 
     @Override
     public List<Doctor> buscarPorDni(String dni) {
-        return listaDoctores.stream()
-                .filter(d -> d.getDni().equals(dni))
-                .collect(Collectors.toList());
+        
+        return doctorDAO.findByDni(dni);
     }
 
 
@@ -60,9 +55,11 @@ public class DoctorServiceImpl implements DoctorService {
 
         if (error != null) {
             return error;
-        } else if (listaDoctores.stream().anyMatch(d -> d.getDni().equals(doctor.getDni()))) {
+        } else if (!doctorDAO.findByDni(doctor.getDni()).isEmpty()) {
+
             return "Ya existe un doctor registrado con ese DNI";
-        } else if (listaDoctores.stream().anyMatch(d -> d.getCorreo() != null && d.getCorreo().equalsIgnoreCase(doctor.getCorreo()))) {
+
+        } else if (!doctorDAO.findByCorreo(doctor.getCorreo()).isEmpty()) {
             return "Ya existe un usuario registrado con ese correo";
         }
 
@@ -74,27 +71,48 @@ public class DoctorServiceImpl implements DoctorService {
         String error = validacionesGenerales(doctor);
 
         if (error != null) {
+
             return error;
-        } else if (listaDoctores.stream().anyMatch(d -> d.getDni().equals(doctor.getDni()) && d.getId() != doctor.getId())) {
-            return "Ya existe otro doctor registrado con ese DNI";
-        }
+
+        } 
 
         return null;
     }
 
     public String validacionesGenerales(Doctor doctor) {
+
         if (doctor.getNombre() == null || doctor.getNombre().trim().isEmpty()) {
+
             return "El nombre del doctor es obligatorio";
+
         } else if (doctor.getEspecialidad() == null || doctor.getEspecialidad().trim().isEmpty()) {
+
             return "La especialidad es obligatoria";
+
         } else if (doctor.getTelefono() == null || doctor.getTelefono().trim().isEmpty()) {
+
             return "El teléfono del doctor es obligatorio";
+
         } else if (doctor.getFechaNacimiento() == null) {
+
             return "La fecha de nacimiento es obligatoria";
+
         } else if (!doctor.getDni().matches("\\d{8}")) {
+
             return "El DNI debe tener exactamente 8 dígitos numéricos";
-        } else if (!doctor.getTelefono().matches("\\d+")) {
+
+        } else if (!doctor.getTelefono().matches("9\\d{8}")) {
+
             return "El teléfono solo debe contener números";
+
+        }   else if(doctor.getEdad() < 24 || doctor.getEdad() > 75 || doctor.getEdad() == 0){
+
+            return "La fecha de nacimiento no es válida";
+
+        }   else if( doctor.getFechaNacimiento().isAfter(LocalDate.now())){
+
+            return "La fecha de nacimiento no debería ser futura";
+
         }
 
         return null;

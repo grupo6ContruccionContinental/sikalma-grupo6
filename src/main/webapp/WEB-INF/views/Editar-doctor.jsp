@@ -46,7 +46,14 @@
                     </div>
                     <div class="campo">
                         <label>Especialidad</label>
-                        <input type="text" name="especialidad" value="${doctor.especialidad}" required>
+                        <select name="especialidad">
+                        <option value="$servicio.nombre">${doctor.especialidad}</option>
+                        <option value="">— Seleccione un servicio —</option>
+                        <c:forEach var="servicio" items="${servicios}" >
+                        <option value="${servicio.nombre}">${servicio.nombre}</option>
+                        </c:forEach>
+                        </select>
+
                     </div>
                 </div>
                 <div class="fila-form">

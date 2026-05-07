@@ -34,6 +34,7 @@
                         <th>ID</th>
                         <th>Nombre</th>
                         <th>DNI</th>
+                        <th>Edad</th>
                         <th>Especialidad</th>
                         <th>Teléfono</th>
                         <th>Acciones</th>
@@ -45,6 +46,7 @@
                             <td>#D${doc.id}</td>
                             <td>${doc.nombre}</td>
                             <td>${doc.dni}</td>
+                            <td>${doc.getEdad()}</td>
                             <td>${doc.especialidad}</td>
                             <td>${doc.telefono}</td>
                             <td class="acciones-celda">
