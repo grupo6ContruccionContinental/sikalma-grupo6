@@ -88,7 +88,7 @@ public class PacienteController {
     @GetMapping("/advertir")
     public String advertir(@RequestParam int id, Model model){
 
-        String error = citaService.validarCitasExistentes(id);
+        String error = citaService.validarCitasExistentesPaciente(id);
         if(error != null){
 
             model.addAttribute("error" ,error);

@@ -66,4 +66,26 @@ public class CitaRepository implements CitaDAO {
 
 
     }
+
+    @Override
+    public List<Cita> buscarPorDoctor( int idDoctor) {
+
+        List<Cita> resultado = new ArrayList<>();
+
+        List<Cita> citas = listaCitas;
+
+        for(Cita d : citas){
+
+            if(d.getDoctor().getId() == idDoctor){
+
+                resultado.add(d);
+
+            }
+
+        }
+
+        return resultado;
+
+
+    }
 }

@@ -9,4 +9,5 @@ public interface DoctorDAO {
     void update(Doctor d);
     void delete(int id);
     List<Doctor> findByDni(String dni);
+    List<Doctor> findByCorreo(String correo);
 }

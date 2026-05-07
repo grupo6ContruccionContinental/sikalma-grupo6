@@ -42,10 +42,19 @@
                         <label>DNI</label>
                         <input type="text" name="dni" value="${doctor.dni}" maxlength="8" placeholder="8 dígitos" required>
                     </div>
+
                     <div class="campo">
                         <label>Especialidad</label>
-                        <input type="text" name="especialidad" value="${doctor.especialidad}" placeholder="Ej. Cardiología" required>
+                        <select name="especialidad">
+                        <option value="">— Seleccione un servicio —</option>
+                        <c:forEach var="servicio" items="${servicios}" >
+                        <option value="${servicio.nombre}">${servicio.nombre}</option>
+                        </c:forEach>
+                        </select>
+
                     </div>
+
+                    
                 </div>
                 <div class="fila-form">
                     <div class="campo">
