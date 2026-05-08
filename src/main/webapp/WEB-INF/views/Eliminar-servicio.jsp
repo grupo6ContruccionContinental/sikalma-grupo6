@@ -15,7 +15,7 @@
     <h2>¿Eliminar este servicio?</h2>
     <p>
         Estás a punto de eliminar el servicio <strong>${servicio.nombre}</strong>
-        (S/ ${servicio.costo}). Si existen citas o atenciones asociadas a este servicio,
+        Si existen citas o atenciones asociadas a este servicio,
         podría afectar los registros existentes.
         <br><br>
         Esta acción no puede deshacerse.
