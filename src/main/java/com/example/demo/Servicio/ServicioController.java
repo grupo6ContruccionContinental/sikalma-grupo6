@@ -4,6 +4,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import com.example.demo.Cita.CitaService;
+
 import java.util.List;
 
 @Controller
@@ -11,9 +13,11 @@ import java.util.List;
 public class ServicioController {
 
     private final ServicioService servicioService;
+    private final CitaService citaService;
 
-    public ServicioController(ServicioService servicioService) {
+    public ServicioController(ServicioService servicioService , CitaService citaService) {
         this.servicioService = servicioService;
+        this.citaService = citaService;
     }
 
     @GetMapping("/gestion")
@@ -31,8 +35,20 @@ public class ServicioController {
     }
 
     @PostMapping("/registrar")
-    public String registrarServicio(@ModelAttribute Servicio s) {
+    public String registrarServicio(@ModelAttribute Servicio s, Model model) {
+
+        String error = servicioService.validarDatosRegistro(s);
+        if(error != null){
+
+            model.addAttribute("error", error);
+            model.addAttribute("servicio" , s);
+            model.addAttribute("paginaActiva" , "servicios");
+            return "Registrar-servicio";
+
+        } 
+
         servicioService.agregar(s);
+
         return "redirect:/servicio/gestion";
     }
 
@@ -44,14 +60,35 @@ public class ServicioController {
     }
 
     @PostMapping("/editar")
-    public String cambiarServicio(@ModelAttribute Servicio s) {
+    public String cambiarServicio(@ModelAttribute Servicio s, Model model) {
+
+        String error = servicioService.validarDatosEdicion(s);
+        if (error != null) {
+    
+            model.addAttribute("error", error);
+            model.addAttribute("servicio" , s);
+            model.addAttribute("paginaActiva" , "servicios");
+            return "Editar-servicio";
+
+        }
+
         servicioService.actualizar(s);
         return "redirect:/servicio/gestion";
     }
 
     @GetMapping("/advertir")
     public String advertir(@RequestParam int id, Model model) {
+
+        String error = citaService.validarCitasExistentesServicio(id);
+        if(error != null){
+
+            model.addAttribute("error" ,error);
+            
+            return "Eliminar-servicio-error-message";
+        }
+
         model.addAttribute("servicio", servicioService.buscarPorId(id));
+        
         return "Eliminar-servicio";
     }
 

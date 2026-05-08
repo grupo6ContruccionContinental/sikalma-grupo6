@@ -179,4 +179,17 @@ public class CitaServiceImpl implements CitaService {
 
     }
 
+    @Override
+    public String validarCitasExistentesServicio(int idServicio) {
+
+        if(!citaDAO.buscarPorServicio(idServicio).isEmpty()) {
+
+            return "El servicio tiene citas registradas";
+
+        }
+
+        return null;
+
+    }
+
 }

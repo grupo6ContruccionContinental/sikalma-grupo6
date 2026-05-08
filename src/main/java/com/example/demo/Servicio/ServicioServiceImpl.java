@@ -42,4 +42,59 @@ public class ServicioServiceImpl implements ServicioService {
         return servicioDAO.findByNombre(nombre);
     }
 
+    // validaciones
+
+    @Override
+    public String validarDatosRegistro(Servicio servicio){
+
+        String error = validacionesGenerales(servicio);
+
+        if(error != null ){
+
+            return error;
+
+        }else if(!servicioDAO.findByNombre(servicio.getNombre()).isEmpty()){
+
+            return "Ya existe un servicio con ese nombre";
+
+        }
+        
+        return null;
+        
+    }
+
+    @Override
+    public String validarDatosEdicion(Servicio servicio){
+
+        String error = validacionesGenerales(servicio);
+
+        if(error != null ){
+
+            return error;
+
+        }
+        
+        return null;
+    }
+ 
+    public String validacionesGenerales(Servicio servicio) {
+
+        if(servicio.getNombre() == null || servicio.getNombre().trim().isEmpty()){
+            
+            return "El nombre del servicio es obligatorio";
+
+        }else if(servicio.getDescripcion() == null || servicio.getDescripcion().trim().isEmpty()){
+
+            return "La descripcion del servicio es obligatorio";
+
+        }else if(servicio.getCosto() <= 0){
+
+            return "El costo debe ser mayor a S/ 0.00";
+
+        }
+
+        return null;
+
+    }
+
 }

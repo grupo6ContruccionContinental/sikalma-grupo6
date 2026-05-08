@@ -33,4 +33,6 @@ public interface CitaService {
     String validarCitasExistentesPaciente(int idPaciente);
 
     String validarCitasExistentesDoctor(int idDoctor);
+
+    String validarCitasExistentesServicio(int idServicio);
 }
