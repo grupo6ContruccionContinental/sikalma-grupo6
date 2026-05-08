@@ -6,11 +6,16 @@ public interface CitaService {
 
     List<Cita> listar();
 
-    void guardar(Cita cita);
+    /** Retorna null si no hay error, o el mensaje de error si falla alguna validación. */
+    String guardar(Cita cita);
 
     Cita buscarPorId(int id);
 
     void eliminar(int id);
 
-    void actualizar(Cita cita);
+    /** Retorna null si no hay error, o el mensaje de error si falla alguna validación. */
+    String actualizar(Cita cita);
+
+    /** REQ-C07: Marca la cita como "No asistió" si su estado es "Confirmada". */
+    String marcarNoAsistio(int id);
 }

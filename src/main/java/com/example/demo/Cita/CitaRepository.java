@@ -1,6 +1,9 @@
 package com.example.demo.Cita;
 
 import org.springframework.stereotype.Repository;
+
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,5 +48,23 @@ public class CitaRepository implements CitaDAO {
             c.setHora(cita.getHora());
             c.setEstado(cita.getEstado());
         }
+    }
+
+    /**
+     * REQ-C08: Recorre la lista buscando si el doctor ya tiene
+     * una cita en esa misma fecha y hora (ignorando la cita con idExcluir).
+     */
+    @Override
+    public boolean existeCruceHorario(int doctorId, LocalDate fecha, LocalTime hora, int idExcluir) {
+        for (Cita c : lista) {
+            if (c.getId() == idExcluir) continue;
+            if (c.getDoctor() != null
+                    && c.getDoctor().getId() == doctorId
+                    && fecha.equals(c.getFecha())
+                    && hora.equals(c.getHora())) {
+                return true;
+            }
+        }
+        return false;
     }
 }

@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -15,7 +16,7 @@
         <div class="encabezado">
             <div class="encabezado-texto">
                 <div class="retorno">
-                    <a href="Gestion-citas.jsp">Gestión de Citas</a>
+                    <a href="${pageContext.request.contextPath}/cita/g-citas">Gestión de Citas</a>
                     <span>›</span>
                     <span>Registrar Cita</span>
                 </div>
@@ -27,73 +28,71 @@
         <div class="formulario-card">
             <h2>Datos de la Cita</h2>
 
-            <form>
-                <!-- Datos del paciente -->
+            <%-- Mensaje de error (REQ-C01 al REQ-C08) --%>
+            <c:if test="${not empty error}">
+                <div class="mensaje-error">
+                    <span>&#9888;</span> ${error}
+                </div>
+            </c:if>
+
+            <form action="${pageContext.request.contextPath}/cita/guardar" method="post">
+
+                <%-- REQ-C01: Paciente obligatorio --%>
                 <div class="campo">
                     <label>Paciente</label>
-                    <select name="paciente">
+                    <select name="paciente.id" required>
                         <option value="">— Seleccione un paciente —</option>
-                        <option>María García López</option>
-                        <option>Juan Pérez Torres</option>
-                        <option>Ana Rodríguez Silva</option>
-                        <option>Carlos Mendoza Rivera</option>
-                        <option>Lucía Flores Castillo</option>
-                        <option>Roberto Vásquez Huanca</option>
-                        <option>Patricia Quispe Mamani</option>
+                        <c:forEach var="p" items="${pacientes}">
+                            <option value="${p.id}">${p.nombre}</option>
+                        </c:forEach>
                     </select>
                 </div>
 
-                <!-- Servicio y especialidad -->
+                <%-- REQ-C03 y REQ-C02: Servicio y Doctor obligatorios --%>
                 <div class="fila-form">
                     <div>
                         <label>Servicio (Especialidad)</label>
-                        <select name="servicio">
+                        <select name="servicio.id" required>
                             <option value="">— Seleccione un servicio —</option>
-                            <option>Medicina General — S/60</option>
-                            <option>Odontología — S/80</option>
-                            <option>Pediatría — S/80</option>
-                            <option>Psicología / Terapias — S/100</option>
-                            <option>Ginecología — S/90</option>
-                            <option>Traumatología — S/90</option>
+                            <c:forEach var="s" items="${servicios}">
+                                <option value="${s.id}">${s.nombre}</option>
+                            </c:forEach>
                         </select>
                     </div>
                     <div>
                         <label>Doctor Asignado</label>
-                        <select name="doctor">
+                        <select name="doctor.id" required>
                             <option value="">— Seleccione un doctor —</option>
-                            <option>Dra. Aracely Ramos — Psicología</option>
-                            <option>Dra. Viviana Sánchez — Odontología</option>
-                            <option>Dr. Marcos López — Traumatología</option>
-                            <option>Dra. Carla Torres — Pediatría</option>
-                            <option>Dra. Fernández — Medicina General</option>
+                            <c:forEach var="d" items="${doctores}">
+                                <option value="${d.id}">${d.nombre}</option>
+                            </c:forEach>
                         </select>
                     </div>
                 </div>
 
-                <!-- Fecha y hora -->
+                <%-- REQ-C04, REQ-C05, REQ-C06: Fecha y hora obligatorias y no pasadas --%>
                 <div class="fila-form">
                     <div>
                         <label>Fecha de la Cita</label>
-                        <input type="date" name="fecha">
+                        <input type="date" name="fecha" required>
                     </div>
                     <div>
                         <label>Hora de la Cita</label>
-                        <input type="time" name="hora">
+                        <input type="time" name="hora" required>
                     </div>
                 </div>
 
-                <!-- Estado inicial -->
                 <div class="campo">
                     <label>Estado Inicial</label>
                     <select name="estado">
-                        <option>Pendiente</option>
-                        <option>Confirmada</option>
+                        <option value="Pendiente">Pendiente</option>
+                        <option value="Confirmada">Confirmada</option>
                     </select>
                     <span class="indicacion">El estado puede modificarse más adelante desde Gestión de Citas.</span>
                 </div>
 
                 <div class="form-acciones">
-                    <a href="Gestion-citas.jsp" class="btn-secundario">Cancelar</a>
+                    <a href="${pageContext.request.contextPath}/cita/g-citas" class="btn-secundario">Cancelar</a>
                     <button type="submit" class="btn-primario">Registrar Cita</button>
                 </div>
             </form>
@@ -101,3 +100,4 @@
     </main>
 </body>
 </html>
+

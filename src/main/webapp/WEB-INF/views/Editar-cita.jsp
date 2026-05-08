@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -14,79 +15,89 @@
         <div class="encabezado">
             <div class="encabezado-texto">
                 <div class="retorno">
-                    <a href="Gestion-citas.jsp">Gestión de Citas</a>
+                    <a href="${pageContext.request.contextPath}/cita/g-citas">Gestión de Citas</a>
                     <span>›</span>
-                    <span>Editar Cita #002</span>
+                    <span>Editar Cita #${cita.id}</span>
                 </div>
                 <h1>Editar Cita</h1>
                 <p>Modifica los datos de la cita de forma rápida y precisa</p>
             </div>
-            <span class="estado estado-pendiente">Pendiente</span>
+            <span class="estado estado-${fn:toLowerCase(cita.estado)}">${cita.estado}</span>
         </div>
 
         <div class="formulario-card">
-            <h2>Datos del Paciente — ID Cita: #002</h2>
+            <h2>Datos del Paciente — ID Cita: #${cita.id}</h2>
 
-            <form>
+            <%-- Mensaje de error (REQ-C01 al REQ-C08) --%>
+            <c:if test="${not empty error}">
+                <div class="mensaje-error">
+                    <span>&#9888;</span> ${error}
+                </div>
+            </c:if>
+
+            <form action="${pageContext.request.contextPath}/cita/actualizar" method="post">
+                <input type="hidden" name="id" value="${cita.id}">
+
+                <%-- REQ-C01 --%>
                 <div class="campo">
                     <label>Paciente</label>
-                    <select name="paciente">
-                        <option selected>Naya Ramos</option>
-                        <option>María García López</option>
-                        <option>Juan Pérez Torres</option>
-                        <option>Ana Rodríguez Silva</option>
-                        <option>Carlos Mendoza Rivera</option>
-                        <option>Lucía Flores Castillo</option>
-                        <option>Roberto Vásquez Huanca</option>
+                    <select name="paciente.id" required>
+                        <option value="">— Seleccione un paciente —</option>
+                        <c:forEach var="p" items="${pacientes}">
+                            <option value="${p.id}" <c:if test="${cita.paciente.id == p.id}">selected</c:if>>${p.nombre}</option>
+                        </c:forEach>
                     </select>
                 </div>
 
+                <%-- REQ-C03 y REQ-C02 --%>
                 <div class="fila-form">
                     <div>
                         <label>Servicio (Especialidad)</label>
-                        <select name="servicio">
-                            <option selected>Psicología / Terapias — S/100</option>
-                            <option>Medicina General — S/60</option>
-                            <option>Odontología — S/80</option>
-                            <option>Pediatría — S/80</option>
-                            <option>Ginecología — S/90</option>
-                            <option>Traumatología — S/90</option>
+                        <select name="servicio.id" required>
+                            <option value="">— Seleccione un servicio —</option>
+                            <c:forEach var="s" items="${servicios}">
+                                <option value="${s.id}" <c:if test="${cita.servicio.id == s.id}">selected</c:if>>${s.nombre}</option>
+                            </c:forEach>
                         </select>
                     </div>
                     <div>
                         <label>Doctor Asignado</label>
-                        <select name="doctor">
-                            <option selected>Dra. Aracely Ramos — Psicología</option>
-                            <option>Dra. Viviana Sánchez — Odontología</option>
-                            <option>Dr. Marcos López — Traumatología</option>
-                            <option>Dra. Carla Torres — Pediatría</option>
-                            <option>Dra. Fernández — Medicina General</option>
+                        <select name="doctor.id" required>
+                            <option value="">— Seleccione un doctor —</option>
+                            <c:forEach var="d" items="${doctores}">
+                                <option value="${d.id}" <c:if test="${cita.doctor.id == d.id}">selected</c:if>>${d.nombre}</option>
+                            </c:forEach>
                         </select>
                     </div>
                 </div>
 
+                <%-- REQ-C04, REQ-C05, REQ-C06 --%>
                 <div class="fila-form">
                     <div>
                         <label>Fecha de la Cita</label>
-                        <input type="date" name="fecha" value="2026-04-06">
+                        <input type="date" name="fecha" value="${cita.fecha}" required>
                     </div>
                     <div>
                         <label>Hora de la Cita</label>
-                        <input type="time" name="hora" value="09:00">
+                        <input type="time" name="hora" value="${cita.hora}" required>
                     </div>
                 </div>
 
+                <%-- REQ-C07: "No asistió" aparece solo si el estado actual es "Confirmada" --%>
                 <div class="campo">
                     <label>Estado</label>
                     <select name="estado">
-                        <option selected>Pendiente</option>
-                        <option>Confirmada</option>
-                        <option>Cancelada</option>
+                        <option value="Pendiente"   <c:if test="${cita.estado == 'Pendiente'}">selected</c:if>>Pendiente</option>
+                        <option value="Confirmada"  <c:if test="${cita.estado == 'Confirmada'}">selected</c:if>>Confirmada</option>
+                        <option value="Cancelada"   <c:if test="${cita.estado == 'Cancelada'}">selected</c:if>>Cancelada</option>
+                        <c:if test="${cita.estado == 'Confirmada' || cita.estado == 'No asistió'}">
+                            <option value="No asistió" <c:if test="${cita.estado == 'No asistió'}">selected</c:if>>No asistió</option>
+                        </c:if>
                     </select>
                 </div>
 
                 <div class="form-acciones">
-                    <a href="Gestion-citas.jsp" class="btn-secundario">Cancelar</a>
+                    <a href="${pageContext.request.contextPath}/cita/g-citas" class="btn-secundario">Cancelar</a>
                     <button type="submit" class="btn-primario">Guardar Cambios</button>
                 </div>
             </form>
