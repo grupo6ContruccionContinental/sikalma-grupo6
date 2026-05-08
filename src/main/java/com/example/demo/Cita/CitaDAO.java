@@ -18,4 +18,6 @@ public interface CitaDAO {
 
     List<Cita> buscarPorDoctor(int idDoctor);
 
+    List<Cita> buscarPorServicio(int idServicio);
+
 }

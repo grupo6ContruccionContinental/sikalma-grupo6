@@ -16,4 +16,10 @@ public interface ServicioService {
 
     List<Servicio> buscarPorNombre(String nombre);
 
+    //validaciones
+
+    String validarDatosRegistro(Servicio servicio);
+
+    String validarDatosEdicion(Servicio servicio);
+
 }
