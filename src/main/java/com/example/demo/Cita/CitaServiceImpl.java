@@ -20,13 +20,13 @@ public class CitaServiceImpl implements CitaService {
     private final DoctorService doctorService;
     private final ServicioService servicioService;
 
-    public CitaServiceImpl(CitaDAO citaDAO, PacienteService pacienteService ,DoctorService doctorService ,ServicioService servicioService ){
+    public CitaServiceImpl(CitaDAO citaDAO, PacienteService pacienteService, DoctorService doctorService,
+            ServicioService servicioService) {
         this.citaDAO = citaDAO;
         this.pacienteService = pacienteService;
         this.doctorService = doctorService;
         this.servicioService = servicioService;
     }
-
 
     @Override
     public List<Cita> listar() {
@@ -40,7 +40,7 @@ public class CitaServiceImpl implements CitaService {
         Doctor d = doctorService.buscarPorId(doctorId);
         Servicio s = servicioService.buscarPorId(servicioId);
 
-        Cita c = new Cita(p,d,s,fecha, hora,estado);
+        Cita c = new Cita(p, d, s, fecha, hora, estado);
 
         citaDAO.guardar(c);
     }
@@ -56,48 +56,126 @@ public class CitaServiceImpl implements CitaService {
     }
 
     @Override
-    public void actualizar(int id ,int pacienteId, int doctorId, int servicioId, LocalDate fecha, LocalTime hora, String estado) {
+    public void actualizar(int id, int pacienteId, int doctorId, int servicioId, LocalDate fecha, LocalTime hora,
+            String estado) {
 
         Paciente p = pacienteService.buscarPorId(pacienteId);
         Doctor d = doctorService.buscarPorId(doctorId);
         Servicio s = servicioService.buscarPorId(servicioId);
 
-        Cita c = new Cita(p,d,s,fecha, hora,estado);
+        Cita c = new Cita(p, d, s, fecha, hora, estado);
         c.setId(id);
 
         citaDAO.actualizar(c);
     }
 
     @Override
-    public List<Cita> buscarCitaPorPaciente (int idPaciente) {
+    public List<Cita> buscarCitaPorPaciente(int idPaciente) {
         return citaDAO.buscarPorPaciente(idPaciente);
     }
 
-
     // validaciones
     @Override
-    public String validarCitasExistentesPaciente(int idPaciente){
+    public String validarDatosRegistro(int pacienteId, int doctorId, int servicioId, LocalDate fecha, LocalTime hora) {
 
-        if(!citaDAO.buscarPorPaciente(idPaciente).isEmpty()){
+        String error = validacionesGenerales(pacienteId, doctorId, servicioId, fecha, hora);
+
+        if (error != null) {
+
+            return error;
+
+        }
+
+        if (citaDAO.existeCitaDoctor(doctorId, fecha, hora)) {
+            return "El doctor ya tiene una cita registrada en esa fecha y hora";
+        }
+
+        return null;
+
+    }
+
+    @Override
+    public String validarDatosEdicion(int id, int pacienteId, int doctorId, int servicioId, LocalDate fecha, LocalTime hora) {
+
+        String error = validacionesGenerales(pacienteId, doctorId, servicioId, fecha, hora);
+        if (error != null) return error;
+
+        if (citaDAO.existeCitaDoctorExcluyendo(doctorId, fecha, hora, id)) {
+            return "El doctor ya tiene una cita registrada en esa fecha y hora";
+        }
+
+        return null;
+    }
+
+    @Override
+    public String validarCitasExistentesPaciente(int idPaciente) {
+
+        if (!citaDAO.buscarPorPaciente(idPaciente).isEmpty()) {
 
             return "El paciente tiene citas registradas";
         }
 
         return null;
 
-
     }
 
     @Override
-    public String validarCitasExistentesDoctor(int idDoctor){
+    public String validarCitasExistentesDoctor(int idDoctor) {
 
-        if(!citaDAO.buscarPorDoctor(idDoctor).isEmpty()){
+        if (!citaDAO.buscarPorDoctor(idDoctor).isEmpty()) {
 
             return "El doctor tiene citas registradas";
         }
 
         return null;
 
+    }
+
+    @Override
+    public void cambiarEstado(int id, String estado) {
+
+        citaDAO.cambiarEstado(id, estado);
+
+    }
+
+    @Override
+    public boolean existeCitaDoctor(int doctorId, LocalDate fecha, LocalTime hora) {
+
+        return citaDAO.existeCitaDoctor(doctorId, fecha, hora);
+
+    }
+
+    
+
+    public String validacionesGenerales(int pacienteId, int doctorId, int servicioId, LocalDate fecha, LocalTime hora) {
+
+        if (pacienteId <= 0) {
+
+            return "Debe de seleccionar un paciente";
+
+        } else if (doctorId <= 0) {
+
+            return "Debe de seleccionar un doctor";
+
+        } else if (servicioId <= 0l) {
+
+            return "Debe de seleccionar un servicio";
+
+        } else if (fecha == null) {
+
+            return "La fecha de reserva es obligatorio";
+
+        } else if (hora == null) {
+
+            return "La hora de reserva es obligatorio";
+
+        } else if (fecha.isBefore(LocalDate.now())) {
+
+            return "La fecha de la cita no puede ser anterior a hoy";
+
+        }
+
+        return null;
 
     }
 

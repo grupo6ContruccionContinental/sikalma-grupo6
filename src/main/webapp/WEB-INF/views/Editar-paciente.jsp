@@ -63,7 +63,7 @@
 
                     </div>
 
-                    </c:if>
+                </c:if>
 
 
                 <div class="form-acciones">

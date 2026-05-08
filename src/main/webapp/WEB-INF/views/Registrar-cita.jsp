@@ -40,7 +40,7 @@
                 <div class="campo">
                     <label>Paciente</label>
                     <select name="paciente">
-                        <option value="">— Seleccione un paciente —</option>
+                        <option value="0">— Seleccione un paciente —</option>
                         <c:forEach var="paciente" items="${pacientes}" >
                         <option value="${paciente.id}">${paciente.nombres}</option>
                         </c:forEach>
@@ -52,7 +52,7 @@
                     <div>
                         <label>Servicio (Especialidad)</label>
                         <select name="servicio">
-                            <option value="">— Seleccione un servicio —</option>
+                            <option value="0">— Seleccione un servicio —</option>
                             <c:forEach var="servicio" items="${servicios}" >
                             <option value="${servicio.id}">${servicio.nombre}</option>
                             </c:forEach>
@@ -61,7 +61,7 @@
                     <div>
                         <label>Doctor Asignado</label>
                         <select name="doctor">
-                            <option value="">— Seleccione un doctor —</option>
+                            <option value="0">— Seleccione un doctor —</option>
                             <c:forEach var="doctor" items="${doctores}" >
                             <option value="${doctor.id}"> ${doctor.nombre}</option>
                             </c:forEach>
