@@ -2,6 +2,7 @@ package com.example.demo.Login;
 
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -35,7 +36,26 @@ public class LoginServiceImpl implements LoginService {
         if (usuarioRepository.existsByCorreo(usuario.getCorreo())) {
             return "Ya existe un usuario registrado con ese correo";
         }
+        if (usuario.getDoctorId() > 0 && usuarioRepository.existsByDoctorId(usuario.getDoctorId())) {
+            return "Ese doctor ya tiene una credencial asignada";
+        }
+        usuario.setRol(Usuario.Rol.DOCTOR);
         usuarioRepository.save(usuario);
-        return null; // sin error
+        return null;
+    }
+
+    @Override
+    public List<Usuario> listarDoctores() {
+        return usuarioRepository.findByRol(Usuario.Rol.DOCTOR);
+    }
+
+    @Override
+    public void eliminar(int id) {
+        usuarioRepository.delete(id);
+    }
+
+    @Override
+    public boolean doctorYaTieneCredencial(int doctorId) {
+        return usuarioRepository.existsByDoctorId(doctorId);
     }
 }

@@ -3,12 +3,15 @@ package com.example.demo.Cita;
 import com.example.demo.Doctor.DoctorService;
 import com.example.demo.Paciente.PacienteService;
 import com.example.demo.Servicio.ServicioService;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.ui.Model;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.List;
 
 @Controller
 @RequestMapping("/cita")
@@ -19,8 +22,8 @@ public class CitaController {
     private final DoctorService doctorService;
     private final ServicioService servicioService;
 
-    public CitaController(CitaService citaService, PacienteService pacienteService,
-                          DoctorService doctorService, ServicioService servicioService) {
+    public CitaController(CitaService citaService, PacienteService pacienteService, DoctorService doctorService,
+            ServicioService servicioService) {
         this.citaService = citaService;
         this.pacienteService = pacienteService;
         this.doctorService = doctorService;
@@ -28,9 +31,25 @@ public class CitaController {
     }
 
     @GetMapping("/g-citas")
-    public String mostrarCitas(Model model) {
+    public String mostrarCitas(Model model, HttpSession session,
+            @RequestParam(required = false) String errorAtender) {
         model.addAttribute("paginaActiva", "citas");
-        model.addAttribute("citas", citaService.listar());
+
+        if (errorAtender != null && !errorAtender.isBlank()) {
+            model.addAttribute("errorAtender", errorAtender); // REQ-A04
+        }
+
+        String rol = (String) session.getAttribute("rolUsuario");
+        List<Cita> citas;
+
+        if ("DOCTOR".equals(rol)) {
+            Integer doctorId = (Integer) session.getAttribute("doctorIdSesion");
+            citas = (doctorId != null) ? citaService.buscarCitasPorDoctor(doctorId) : List.of();
+        } else {
+            citas = citaService.listar();
+        }
+
+        model.addAttribute("citas", citas);
         return "Gestion-citas";
     }
 
@@ -44,17 +63,16 @@ public class CitaController {
     }
 
     @PostMapping("/guardar")
-    public String guardar(@RequestParam(defaultValue = "0") int paciente,
-                          @RequestParam(defaultValue = "0") int doctor,
-                          @RequestParam(defaultValue = "0") int servicio,
-                          @RequestParam(required = false) LocalDate fecha,
-                          @RequestParam(required = false) LocalTime hora,
-                          @RequestParam String estado,
-                          Model model) {
+    public String guardar(
+            @RequestParam int paciente,
+            @RequestParam int doctor,
+            @RequestParam int servicio,
+            @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate fecha,
+            @RequestParam @DateTimeFormat(pattern = "HH:mm") LocalTime hora,
+            @RequestParam String estado,
+            Model model) {
 
-        // REQ-C01..C08: validaciones de registro
         String error = citaService.validarDatosRegistro(paciente, doctor, servicio, fecha, hora);
-
         if (error != null) {
             model.addAttribute("error", error);
             model.addAttribute("paginaActiva", "r-citas");
@@ -78,24 +96,23 @@ public class CitaController {
     }
 
     @PostMapping("/actualizar")
-    public String actualizar(@RequestParam int id,
-                             @RequestParam(defaultValue = "0") int paciente,
-                             @RequestParam(defaultValue = "0") int doctor,
-                             @RequestParam(defaultValue = "0") int servicio,
-                             @RequestParam(required = false) LocalDate fecha,
-                             @RequestParam(required = false) LocalTime hora,
-                             @RequestParam String estado,
-                             Model model) {
+    public String actualizar(
+            @RequestParam int id,
+            @RequestParam int paciente,
+            @RequestParam int doctor,
+            @RequestParam int servicio,
+            @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate fecha,
+            @RequestParam @DateTimeFormat(pattern = "HH:mm") LocalTime hora,
+            @RequestParam String estado,
+            Model model) {
 
-        // REQ-C02..C08: validaciones de edición (excluye REQ-C01 porque paciente es readonly)
         String error = citaService.validarDatosEdicion(id, paciente, doctor, servicio, fecha, hora);
-
         if (error != null) {
             model.addAttribute("error", error);
             model.addAttribute("cita", citaService.buscarPorId(id));
             model.addAttribute("servicios", servicioService.listar());
             model.addAttribute("doctores", doctorService.obtenerTodos());
-            model.addAttribute("paginaActiva", "r-citas");
+            model.addAttribute("paginaActiva", "citas");
             return "Editar-cita";
         }
 
@@ -103,34 +120,54 @@ public class CitaController {
         return "redirect:/cita/g-citas";
     }
 
-    // REQ-A04: verifica que la cita esté Confirmada antes de abrir el formulario de atención
+    // Solo DOCTOR — protegido por SessionInterceptor
     @GetMapping("/atender")
     public String atenderCita(@RequestParam int id, Model model) {
-
         Cita cita = citaService.buscarPorId(id);
-
-        if (!cita.getEstado().equals("Confirmada")) {
-            model.addAttribute("errorAtender",
-                    "Solo se puede atender una cita en estado Confirmada");
-            model.addAttribute("paginaActiva", "citas");
+        // REQ-A04: solo se puede atender una cita en estado Confirmada
+        if (cita == null || !"Confirmada".equalsIgnoreCase(cita.getEstado())) {
+            model.addAttribute("errorAtender", "Solo se puede atender una cita en estado Confirmada");
+            String rol = (String) model.getAttribute("rolUsuario");
             model.addAttribute("citas", citaService.listar());
-            return "Gestion-citas";
+            model.addAttribute("paginaActiva", "citas");
+            return "redirect:/cita/g-citas?errorAtender=Solo+se+puede+atender+una+cita+en+estado+Confirmada";
         }
-
         model.addAttribute("cita", cita);
         model.addAttribute("paginaActiva", "citas");
         return "Registrar-atencion";
     }
 
+    // Solo ADMIN — protegido por SessionInterceptor
     @GetMapping("/cancelar")
     public String cancelar(@RequestParam int id, Model model) {
         model.addAttribute("cita", citaService.buscarPorId(id));
         return "Cancelar-cita";
     }
 
+    // Solo ADMIN — protegido por SessionInterceptor
     @GetMapping("/eliminar")
     public String eliminar(@RequestParam int id) {
         citaService.eliminar(id);
+        return "redirect:/cita/g-citas";
+    }
+
+    // Solo ADMIN — protegido por SessionInterceptor
+    @GetMapping("/confirmar")
+    public String confirmarCita(@RequestParam int id) {
+        Cita cita = citaService.buscarPorId(id);
+        if (cita != null && cita.getEstado().equalsIgnoreCase("Pendiente")) {
+            citaService.cambiarEstado(id, "Confirmada");
+        }
+        return "redirect:/cita/g-citas";
+    }
+
+    // Solo ADMIN — protegido por SessionInterceptor
+    @GetMapping("/no-asistio")
+    public String marcarNoAsistio(@RequestParam int id) {
+        Cita cita = citaService.buscarPorId(id);
+        if (cita != null && cita.getEstado().equalsIgnoreCase("Confirmada")) {
+            citaService.cambiarEstado(id, "No asistió");
+        }
         return "redirect:/cita/g-citas";
     }
 }

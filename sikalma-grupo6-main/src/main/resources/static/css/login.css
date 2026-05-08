@@ -8,42 +8,127 @@ body {
     display: flex;
     height: 100vh;
     background-color: #f5f3f1;
+    font-family: Arial, sans-serif;
 }
 
+/* ═══════════════════════════════════════════════════
+   PANEL IZQUIERDO
+═══════════════════════════════════════════════════ */
 .login-izquierda {
     flex: 1;
-    background-color: #a59485;
+    background: linear-gradient(160deg, #b5a098 0%, #8f7262 100%);
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 1.5em;
+    gap: 1.4em;
     padding: 3em;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Círculo decorativo de fondo */
+.login-izquierda::before {
+    content: '';
+    position: absolute;
+    width: 28em;
+    height: 28em;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.06);
+    top: -6em;
+    right: -8em;
+}
+
+.login-izquierda::after {
+    content: '';
+    position: absolute;
+    width: 18em;
+    height: 18em;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.04);
+    bottom: -4em;
+    left: -5em;
 }
 
 .login-izquierda img {
-    width: 10em;
+    width: 8em;
     height: auto;
+    filter: drop-shadow(0 2px 8px rgba(0,0,0,0.15));
+    position: relative;
+    z-index: 1;
 }
 
 .login-izquierda h2 {
     color: white;
-    font-size: 1.3em;
+    font-size: 1.4em;
     text-align: center;
+    position: relative;
+    z-index: 1;
 }
 
-.login-izquierda p {
+.login-izquierda > p {
+    color: rgba(255,255,255,0.85);
+    text-align: center;
+    font-size: 0.88em;
+    line-height: 1.5;
+    max-width: 22em;
+    position: relative;
+    z-index: 1;
+}
+
+/* ── Tarjetas de roles ── */
+.login-roles {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75em;
+    margin-top: 0.5em;
+    width: 100%;
+    max-width: 22em;
+    position: relative;
+    z-index: 1;
+}
+
+.rol-item {
+    display: flex;
+    align-items: center;
+    gap: 0.85em;
+    background: rgba(255,255,255,0.14);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 0.6em;
+    padding: 0.7em 1em;
+}
+
+.rol-icono {
+    font-size: 1.4em;
+    flex-shrink: 0;
+}
+
+.rol-item div {
+    display: flex;
+    flex-direction: column;
+    gap: 0.1em;
+}
+
+.rol-item strong {
     color: white;
-    text-align: center;
-    font-size: 0.9em;
+    font-size: 0.88em;
 }
 
+.rol-item span {
+    color: rgba(255,255,255,0.75);
+    font-size: 0.78em;
+}
+
+/* ═══════════════════════════════════════════════════
+   PANEL DERECHO
+═══════════════════════════════════════════════════ */
 .login-derecha {
     flex: 1;
     display: flex;
     align-items: center;
     justify-content: center;
     padding: 2em;
+    background-color: #fefdfe;
 }
 
 .login {
@@ -51,25 +136,38 @@ body {
     border-radius: 1em;
     padding: 2.5em;
     width: 100%;
+    max-width: 26em;
+    border: 1px solid #f0e9e8;
+    box-shadow: 0 4px 20px rgba(162,133,117,0.08);
 }
 
-.login h1 {
+/* ── Encabezado del form ── */
+.login-header {
+    text-align: center;
+    margin-bottom: 1.8em;
+}
+
+.login-logo-small {
+    display: none; /* visible solo en móvil si se quiere */
+}
+
+.login-header h1 {
     color: #322418;
-    font-size: 1.3em;
-    
+    font-size: 1.4em;
+    margin-bottom: 0.3em;
 }
 
-.login p {
+.login-header p {
     color: #9a8a88;
     font-size: 0.88em;
-    padding: 1em 0em;
 }
 
+/* ── Campos ── */
 .campo {
     display: flex;
     flex-direction: column;
     gap: 0.4em;
-    padding: 1em 0em;
+    margin-bottom: 1.2em;
 }
 
 label {
@@ -78,35 +176,100 @@ label {
     font-weight: bold;
 }
 
-input {
-    padding: 0.65em 0.9em;
+/* Input con icono */
+.input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.input-icono {
+    position: absolute;
+    left: 0.8em;
+    font-size: 0.9em;
+    color: #b09a98;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.input-wrapper input {
+    width: 100%;
+    padding: 0.65em 0.9em 0.65em 2.4em;
     border: 1px solid #ddd5d4;
     border-radius: 0.4em;
     font-size: 0.9em;
     color: #322418;
+    background-color: #fdfbfb;
+    transition: border-color 0.15s, box-shadow 0.15s;
 }
 
+.input-wrapper input:focus {
+    outline: none;
+    border-color: #a28575;
+    box-shadow: 0 0 0 3px rgba(162,133,117,0.12);
+}
 
+/* ── Botón ── */
 .btn-login {
-    display: block;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6em;
     width: 100%;
-    padding: 0.75em;
-    background-color: #a59485;
+    padding: 0.8em;
+    background-color: #a28575;
     color: white;
+    border: none;
     border-radius: 0.4em;
     font-size: 0.95em;
+    font-weight: bold;
     cursor: pointer;
     text-align: center;
     text-decoration: none;
-    
+    margin-top: 0.5em;
+    transition: background-color 0.15s, transform 0.1s;
 }
 
-.retorno {
-    display: block;
-    text-align: center;
-    margin-top: 1.2em;
-    font-size: 0.85em;
-    color: #a28575;
-    text-decoration: none;
+.btn-login:hover {
+    background-color: #8f7262;
 }
 
+.btn-login:active {
+    transform: scale(0.99);
+}
+
+.btn-flecha {
+    font-size: 1em;
+}
+
+/* ── Mensaje de error ── */
+.error-mensaje {
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+    background-color: #fdecea;
+    border: 1px solid #f5c6c2;
+    border-radius: 0.4em;
+    padding: 0.75em 1em;
+    color: #b94a3e;
+    font-size: 0.88em;
+    margin-bottom: 1em;
+}
+
+.error-icono {
+    flex-shrink: 0;
+    font-size: 1em;
+}
+
+/* ── Footer del form ── */
+.login-footer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4em;
+    margin-top: 1.5em;
+    padding-top: 1.2em;
+    border-top: 1px solid #f0e9e8;
+    font-size: 0.78em;
+    color: #b09a98;
+}

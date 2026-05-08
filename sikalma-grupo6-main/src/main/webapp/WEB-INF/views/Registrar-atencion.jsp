@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="../images/logo-policlinico.png">
+    <link rel="icon" href="/images/logo-policlinico.png">
     <title>Registrar Atención - SIKALMA</title>
     <link rel="stylesheet" href="/css/admin.css">
     <link rel="stylesheet" href="/css/registrar-atencion.css">
@@ -98,14 +98,14 @@
                 <div class="campo">
                     <label>Diagnóstico</label>
                     <textarea name="diagnostico" rows="3"
-                              placeholder="Describa el diagnóstico del paciente..."></textarea>
+                              placeholder="Describa el diagnóstico del paciente...">${diagnostico}</textarea>
                 </div>
 
                 <%-- REQ-A02: tratamiento obligatorio --%>
                 <div class="campo">
                     <label>Tratamiento indicado</label>
                     <textarea name="tratamiento" rows="3"
-                              placeholder="Indique el tratamiento o medicación recetada..."></textarea>
+                              placeholder="Indique el tratamiento o medicación recetada...">${tratamiento}</textarea>
                 </div>
 
                 <div class="fila-form">

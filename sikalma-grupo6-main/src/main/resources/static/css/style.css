@@ -320,3 +320,45 @@ footer img {
     height: auto;
 
 }
+
+
+/* ─── Agregar al final de style.css o admin.css ──────────────────────────── */
+
+/* Área de sesión en el navbar */
+.menu-sesion {
+    margin-top: auto;
+    padding: 1em 1.2em;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em;
+}
+
+.menu-usuario {
+    font-size: 0.82em;
+    color: #e0d7d0;
+    word-break: break-all;
+}
+
+.menu-usuario small {
+    display: block;
+    font-size: 0.85em;
+    color: #c8b9ae;
+    text-transform: capitalize;
+}
+
+.btn-logout {
+    display: block;
+    padding: 0.5em 0.8em;
+    background-color: rgba(255,255,255,0.15);
+    color: white;
+    border-radius: 0.4em;
+    font-size: 0.82em;
+    text-decoration: none;
+    text-align: center;
+    transition: background-color 0.2s;
+}
+
+.btn-logout:hover {
+    background-color: rgba(255,255,255,0.28);
+}

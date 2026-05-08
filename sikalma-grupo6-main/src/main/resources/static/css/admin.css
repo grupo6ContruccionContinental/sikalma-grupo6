@@ -11,31 +11,111 @@ body {
   background-color: #fefdfe;
 }
 
-/* DISEÑO DE LA NAVEGACION */
+/* ══════════════════════════════════════════════════════
+   NAVEGACIÓN LATERAL
+══════════════════════════════════════════════════════ */
 .menu {
-  flex: 1;
+  width: 220px;
+  min-width: 220px;
   display: flex;
   flex-direction: column;
   background-color: #f5f0f0;
+  min-height: 100vh;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
 }
 
 .menu-img {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 1.2em 2em;
+  padding: 1.4em 2em 1em;
   border-bottom: 1px solid #e5dede;
 }
 
 .menu-img img {
-  width: 7em;
+  width: 6em;
   height: auto;
 }
 
+/* ── Bloque de sesión activa ── */
+.menu-sesion-info {
+  display: flex;
+  align-items: center;
+  gap: 0.75em;
+  padding: 1em 1.2em;
+  background-color: #ede8e7;
+  border-bottom: 1px solid #ddd5d4;
+}
+
+.avatar-icono {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.4em;
+  height: 2.4em;
+  border-radius: 50%;
+  font-size: 1.1em;
+  flex-shrink: 0;
+}
+
+.admin-icono  { background-color: #a28575; color: white; }
+.doctor-icono { background-color: #7bab8b; color: white; }
+
+.sesion-datos {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2em;
+  overflow: hidden;
+}
+
+.sesion-nombre {
+  font-size: 0.82em;
+  font-weight: bold;
+  color: #322418;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sesion-rol {
+  font-size: 0.7em;
+  font-weight: bold;
+  padding: 0.15em 0.5em;
+  border-radius: 0.8em;
+  display: inline-block;
+  width: fit-content;
+}
+
+.badge-admin  { background-color: #a28575; color: white; }
+.badge-doctor { background-color: #7bab8b; color: white; }
+
+/* ── Divisor ── */
+.menu-divisor {
+  height: 1px;
+  background-color: #e5dede;
+  margin: 0.4em 1em;
+}
+
+/* ── Etiqueta de sección ── */
+.menu-seccion-label {
+  list-style: none;
+  font-size: 0.68em;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #b09a98;
+  padding: 0.6em 1.5em 0.2em;
+  font-weight: bold;
+}
+
+/* ── Links de navegación ── */
 .menu ul {
   display: flex;
   flex-direction: column;
-  padding-top: 1em;
+  padding-top: 0.5em;
+  flex: 1;
 }
 
 .menu li {
@@ -43,12 +123,19 @@ body {
 }
 
 .menu li a {
-  display: block;
+  display: flex;
+  align-items: center;
+  gap: 0.6em;
   width: 100%;
   color: #8b6760;
   text-decoration: none;
-  padding: 0.85em 1.5em;
-  font-size: 0.92em;
+  padding: 0.75em 1.4em;
+  font-size: 0.88em;
+  transition: background-color 0.15s;
+}
+
+.menu li a:hover {
+  background-color: #ede8e7;
 }
 
 .menu li a.activo {
@@ -57,18 +144,55 @@ body {
   font-weight: bold;
 }
 
-/* MAIN */
+.nav-icono {
+  font-size: 0.95em;
+  width: 1.2em;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+/* ── Footer del menú (cerrar sesión) ── */
+.menu-footer {
+  padding: 1em 1.2em;
+  border-top: 1px solid #e5dede;
+  margin-top: auto;
+}
+
+.btn-logout {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+  width: 100%;
+  padding: 0.6em 1em;
+  background-color: #cb8881;
+  color: white;
+  text-decoration: none;
+  border-radius: 0.4em;
+  font-size: 0.85em;
+  font-weight: bold;
+  justify-content: center;
+  transition: background-color 0.15s;
+}
+
+.btn-logout:hover {
+  background-color: #b5716a;
+}
+
+/* ══════════════════════════════════════════════════════
+   CONTENIDO PRINCIPAL
+══════════════════════════════════════════════════════ */
 main {
-  flex: 4;
+  flex: 1;
   display: flex;
   flex-direction: column;
   gap: 1.8em;
   width: 100%;
   padding: 2em 2.5em;
   background-color: #fefdfe;
+  overflow-x: auto;
 }
 
-/* ── ENCABEZADO DE LAS SECCIONES ── */
+/* ── Encabezado de sección ── */
 .encabezado {
   display: flex;
   align-items: center;
@@ -87,7 +211,9 @@ main {
   font-size: 0.9em;
 }
 
-/* ── DISEÑO DE LAS TABLAS ── */
+/* ══════════════════════════════════════════════════════
+   TABLAS
+══════════════════════════════════════════════════════ */
 .tabla-contenedor {
   background-color: white;
   border-radius: 0.8em;
@@ -98,7 +224,6 @@ main {
 .tabla-encabezado {
   display: flex;
   flex-direction: column;
-  
   padding: 1em 1.5em;
   border-bottom: 1px solid #f0e9e8;
 }
@@ -138,14 +263,9 @@ td {
   padding: 1em 1.5em;
 }
 
-.acciones {
-  display: flex;
-  gap: 0.5em;
-}
-
-
-/* Diseño de los botones */
-
+/* ══════════════════════════════════════════════════════
+   BOTONES
+══════════════════════════════════════════════════════ */
 .btn-primario {
   display: inline-block;
   padding: 0.55em 1.5em;
@@ -156,7 +276,10 @@ td {
   font-size: 0.9em;
   border: none;
   cursor: pointer;
+  transition: background-color 0.15s;
 }
+
+.btn-primario:hover { background-color: #8f7262; }
 
 .btn-secundario {
   padding: 0.55em 1.5em;
@@ -182,15 +305,18 @@ td {
   font-size: 0.82em;
   border: none;
   cursor: pointer;
+  display: inline-block;
 }
 
 .btn-editar   { background-color: #95abb4; }
 .btn-cancelar { background-color: #cb8881; }
 .btn-atender  { background-color: #7bab8b; }
 .btn-eliminar { background-color: #cb8881; }
-.btn-ver      { background-color: #004085; }
+.btn-ver      { background-color: #a28575; }
 
-/* ── DISEÑO DE ESTADO DE LAS CITAS ── */
+/* ══════════════════════════════════════════════════════
+   ESTADOS DE CITAS
+══════════════════════════════════════════════════════ */
 .estado {
   padding: 0.25em 0.75em;
   border-radius: 1em;
@@ -203,7 +329,41 @@ td {
 .estado-cancelado  { background-color: #f8d7da; color: #721c24; }
 .estado-confirmado { background-color: #cce5ff; color: #004085; }
 
-/* ── DISEÑO DE ENLACES ── */
+/* ══════════════════════════════════════════════════════
+   MENSAJES DE ERROR / ALERTA
+══════════════════════════════════════════════════════ */
+.error {
+  padding: 0.65em 1em;
+  text-align: center;
+  background-color: #f8d7da;
+  color: #721c24;
+  font-weight: bold;
+  border-radius: 0.4em;
+  border: 1px solid #f5c6c2;
+  font-size: 0.88em;
+}
+
+.mensaje-error {
+  background-color: #fdecea;
+  border: 1px solid #f5c6c2;
+  border-radius: 0.4em;
+  padding: 0.75em 1em;
+  color: #b94a3e;
+  font-size: 0.88em;
+}
+
+.mensaje-exito {
+  background-color: #d1eddb;
+  border: 1px solid #b4dfc4;
+  border-radius: 0.4em;
+  padding: 0.75em 1em;
+  color: #155724;
+  font-size: 0.88em;
+}
+
+/* ══════════════════════════════════════════════════════
+   FORMULARIOS
+══════════════════════════════════════════════════════ */
 .retorno {
   display: flex;
   align-items: center;
@@ -219,9 +379,6 @@ td {
   font-weight: bold;
 }
 
-
-
-/* ── DISEÑO DEL FORMULARIO ── */
 .formulario-card {
   background-color: white;
   border: 1px solid #f0e9e8;
@@ -243,7 +400,7 @@ td {
   margin-bottom: 1.2em;
 }
 
-.fila-form  div,
+.fila-form div,
 .campo {
   flex: 1;
   display: flex;
@@ -274,7 +431,6 @@ textarea {
   color: #b09a98;
 }
 
-/* ── ACCIONES DEL FORMULARIO ── */
 .form-acciones {
   display: flex;
   justify-content: flex-end;
@@ -284,14 +440,14 @@ textarea {
   border-top: 1px solid #f0e9e8;
 }
 
-
-/* DISEÑO DE ALERTAS */
-.error {
-  padding: 0.5em;
-  text-align: center;
-  background-color: red;
-  color: white; 
-  font-weight: bold; 
-  border-radius: 1em;
+/* ── Barra de búsqueda ── */
+.busqueda-barra {
+  display: flex;
+  gap: 0.8em;
+  padding: 0.8em 1.5em;
+  border-bottom: 1px solid #f0e9e8;
 }
 
+.busqueda-barra input {
+  flex: 1;
+}

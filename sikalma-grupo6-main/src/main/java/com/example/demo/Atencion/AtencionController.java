@@ -1,8 +1,11 @@
 package com.example.demo.Atencion;
 
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import com.example.demo.Cita.CitaService;
 
 import java.time.LocalTime;
 import java.util.List;
@@ -12,9 +15,11 @@ import java.util.List;
 public class AtencionController {
 
     private final AtencionService atencionService;
+    private final CitaService citaService;
 
-    public AtencionController(AtencionService atencionService) {
+    public AtencionController(AtencionService atencionService, CitaService citaService) {
         this.atencionService = atencionService;
+        this.citaService = citaService;
     }
 
     @GetMapping("/gestion")
@@ -25,28 +30,21 @@ public class AtencionController {
         return "Gestion-atenciones";
     }
 
-    // REQ-A01..A03: validaciones al registrar
     @PostMapping("/nuevo")
     public String registrarAtencion(@RequestParam int citaId,
-                                    @RequestParam LocalTime horaInicio,
-                                    @RequestParam LocalTime horaFin,
-                                    @RequestParam String diagnostico,
-                                    @RequestParam String tratamiento,
-                                    @RequestParam String estado,
-                                    Model model) {
+        @RequestParam @DateTimeFormat(pattern = "HH:mm") LocalTime horaInicio,
+        @RequestParam @DateTimeFormat(pattern = "HH:mm") LocalTime horaFin,
+        @RequestParam String diagnostico,
+        @RequestParam String tratamiento,
+        @RequestParam String estado,
+        Model model) {
 
-        String error = atencionService.validarDatosRegistro(horaInicio, horaFin,
-                diagnostico, tratamiento);
+        Atencion atencion = new Atencion(null, horaInicio, horaFin, diagnostico, tratamiento, estado);
 
+        String error = atencionService.validarDatosRegistro(atencion);
         if (error != null) {
-            // REQ-A04 ya se validó en CitaController antes de abrir este formulario,
-            // pero necesitamos recargar la cita para volver al JSP con los datos
             model.addAttribute("error", error);
-            model.addAttribute("cita",
-                    // reutilizamos citaId para recargar la cita de origen
-                    new com.example.demo.Cita.Cita());
-            // Recargamos la cita completa a través del citaId guardado en el hidden
-            model.addAttribute("citaId", citaId);
+            model.addAttribute("cita", citaService.buscarPorId(citaId));
             model.addAttribute("paginaActiva", "citas");
             return "Registrar-atencion";
         }
@@ -69,20 +67,19 @@ public class AtencionController {
         return "Editar-atencion";
     }
 
-    // REQ-A01..A03: validaciones al editar
     @PostMapping("/actualizar")
     public String actualizar(@RequestParam int id,
-                             @RequestParam int citaId,
-                             @RequestParam LocalTime horaInicio,
-                             @RequestParam LocalTime horaFin,
-                             @RequestParam String diagnostico,
-                             @RequestParam String tratamiento,
-                             @RequestParam String estado,
-                             Model model) {
+        @RequestParam int citaId,
+        @RequestParam @DateTimeFormat(pattern = "HH:mm") LocalTime horaInicio,
+        @RequestParam @DateTimeFormat(pattern = "HH:mm") LocalTime horaFin,
+        @RequestParam String diagnostico,
+        @RequestParam String tratamiento,
+        @RequestParam String estado,
+        Model model) {
 
-        String error = atencionService.validarDatosEdicion(horaInicio, horaFin,
-                diagnostico, tratamiento);
+        Atencion atencion = new Atencion(null, horaInicio, horaFin, diagnostico, tratamiento, estado);
 
+        String error = atencionService.validarDatosEdicion(atencion);
         if (error != null) {
             model.addAttribute("error", error);
             model.addAttribute("atencion", atencionService.buscarPorId(id));

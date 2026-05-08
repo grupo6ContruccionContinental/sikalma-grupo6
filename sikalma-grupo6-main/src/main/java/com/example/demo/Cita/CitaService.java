@@ -18,18 +18,20 @@ public interface CitaService {
 
     List<Cita> buscarCitaPorPaciente(int idPaciente);
 
-    // Validaciones de eliminación (ya existentes)
+    List<Cita> buscarCitasPorDoctor(int idDoctor);
+
+    // validaciones
+    String validarDatosRegistro(int pacienteId, int doctorId, int servicioId, LocalDate fecha, LocalTime hora);
+
+    String validarDatosEdicion(int id, int pacienteId, int doctorId, int servicioId, LocalDate fecha, LocalTime hora);
+
+    void cambiarEstado(int id, String estado);
+
+    boolean existeCitaDoctor(int doctorId, LocalDate fecha, LocalTime hora);
+
     String validarCitasExistentesPaciente(int idPaciente);
 
     String validarCitasExistentesDoctor(int idDoctor);
 
     String validarCitasExistentesServicio(int idServicio);
-
-    // Validaciones de registro/edición (REQ-C01..C08)
-    String validarDatosRegistro(int pacienteId, int doctorId, int servicioId,
-                                LocalDate fecha, LocalTime hora);
-
-    String validarDatosEdicion(int citaId, int pacienteId, int doctorId, int servicioId,
-                               LocalDate fecha, LocalTime hora);
-
 }

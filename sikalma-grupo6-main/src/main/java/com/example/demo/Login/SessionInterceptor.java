@@ -14,12 +14,44 @@ public class SessionInterceptor implements HandlerInterceptor {
 
         HttpSession session = request.getSession(false);
 
-        if (session != null && session.getAttribute("usuarioLogueado") != null) {
-            return true; // sesión válida → continuar
+        // 1. Sin sesión → login
+        if (session == null || session.getAttribute("usuarioLogueado") == null) {
+            response.sendRedirect(request.getContextPath() + "/login");
+            return false;
         }
 
-        // Sin sesión → redirigir al login
-        response.sendRedirect(request.getContextPath() + "/login");
-        return false;
+        Usuario usuario = (Usuario) session.getAttribute("usuarioLogueado");
+        String uri = request.getRequestURI();
+        String ctx = request.getContextPath();
+
+        // Rutas exclusivas de ADMIN (no accesibles por DOCTOR)
+        boolean esRutaAdmin = uri.startsWith(ctx + "/doctor")
+                || uri.startsWith(ctx + "/paciente")
+                || uri.startsWith(ctx + "/servicio")
+                || uri.startsWith(ctx + "/credenciales")
+                || uri.startsWith(ctx + "/cita/r-citas")
+                || uri.startsWith(ctx + "/cita/guardar")
+                || uri.startsWith(ctx + "/cita/editar")
+                || uri.startsWith(ctx + "/cita/actualizar")
+                || uri.startsWith(ctx + "/cita/cancelar")
+                || uri.startsWith(ctx + "/cita/eliminar")
+                || uri.startsWith(ctx + "/cita/confirmar")
+                || uri.startsWith(ctx + "/cita/no-asistio");
+
+        // Rutas exclusivas de DOCTOR (no accesibles por ADMIN)
+        boolean esRutaDoctor = uri.startsWith(ctx + "/atencion")
+                || uri.startsWith(ctx + "/cita/atender");
+
+        if (usuario.getRol() == Usuario.Rol.DOCTOR && esRutaAdmin) {
+            response.sendRedirect(ctx + "/acceso-denegado");
+            return false;
+        }
+
+        if (usuario.getRol() == Usuario.Rol.ADMIN && esRutaDoctor) {
+            response.sendRedirect(ctx + "/acceso-denegado");
+            return false;
+        }
+
+        return true;
     }
 }
