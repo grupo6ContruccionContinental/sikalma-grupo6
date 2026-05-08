@@ -88,6 +88,19 @@
                             <a href="/cita/editar?id=${cita.id}" class="btn-editar">Editar</a>
                             <a href="/cita/cancelar?id=${cita.id}" class="btn-cancelar">Cancelar</a>
                             <a href="/cita/atender?id=${cita.id}" class="btn-atender">Atender</a>
+                            <c:if test="${cita.estado == 'Confirmada'}">
+                                <a href="/cita/no-asistio?id=${cita.id}" 
+                                    style="padding: 0.35em 1em;
+                                        text-decoration: none;
+                                        color: white;
+                                        border-radius: 0.4em;
+                                        font-size: 0.82em;
+                                        border: none;
+                                        cursor: pointer;
+                                        background-color: #95abb4">
+                                    No asistió
+                                </a>
+                            </c:if>
                         </td>
                     </tr>
                     </c:forEach>

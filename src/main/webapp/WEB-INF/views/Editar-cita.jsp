@@ -37,6 +37,7 @@
 
             <form action="/cita/actualizar" method="post" >
 
+            
                 <input type="hidden" name="id" value="${cita.id}">
                 
                 <div class="campo">
