@@ -93,6 +93,28 @@ public class CitaRepository implements CitaDAO {
     }
 
     @Override
+    public List<Cita> buscarPorServicio( int idServicio) {
+
+        List<Cita> resultado = new ArrayList<>();
+
+        List<Cita> citas = listaCitas;
+
+        for(Cita s : citas){
+
+            if(s.getDoctor().getId() == idServicio){
+
+                resultado.add(s);
+
+            }
+
+        }
+
+        return resultado;
+
+
+    }
+
+    @Override
     public void cambiarEstado(int id, String estado) {      
 
         for (Cita c : listaCitas) {
