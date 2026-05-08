@@ -17,10 +17,8 @@ public interface AtencionService {
 
     void eliminar(int id);
 
-    // Validaciones (REQ-A01..A03)
-    String validarDatosRegistro(LocalTime horaInicio, LocalTime horaFin,
-                                String diagnostico, String tratamiento);
+    // Validaciones
+    String validarDatosRegistro(Atencion atencion);
 
-    String validarDatosEdicion(LocalTime horaInicio, LocalTime horaFin,
-                               String diagnostico, String tratamiento);
+    String validarDatosEdicion(Atencion atencion);
 }

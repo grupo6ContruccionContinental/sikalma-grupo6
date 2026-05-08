@@ -18,17 +18,18 @@ public interface CitaService {
 
     List<Cita> buscarCitaPorPaciente(int idPaciente);
 
-    List<Cita> buscarCitaPorDoctor(int idDoctor);
+    // validaciones
+    String validarDatosRegistro(int pacienteId, int doctorId, int servicioId, LocalDate fecha, LocalTime hora);
+
+    String validarDatosEdicion(int id, int pacienteId, int doctorId, int servicioId, LocalDate fecha, LocalTime hora);
+
+    void cambiarEstado(int id, String estado);
+
+    boolean existeCitaDoctor(int doctorId, LocalDate fecha, LocalTime hora);
 
     String validarCitasExistentesPaciente(int idPaciente);
 
     String validarCitasExistentesDoctor(int idDoctor);
 
     String validarCitasExistentesServicio(int idServicio);
-
-    String validarDatosRegistro(int pacienteId, int doctorId, int servicioId,
-                                LocalDate fecha, LocalTime hora);
-
-    String validarDatosEdicion(int citaId, int pacienteId, int doctorId, int servicioId,
-                               LocalDate fecha, LocalTime hora);
 }

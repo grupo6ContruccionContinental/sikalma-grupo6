@@ -53,33 +53,27 @@ public class AtencionServiceImpl implements AtencionService {
     // ── Validaciones ──────────────────────────────────────────────────────────
 
     @Override
-    public String validarDatosRegistro(LocalTime horaInicio, LocalTime horaFin,
-                                       String diagnostico, String tratamiento) {
-        return validacionesGenerales(horaInicio, horaFin, diagnostico, tratamiento);
+    public String validarDatosRegistro(Atencion atencion) {
+        String error = validacionesGenerales(atencion);
+        if (error != null) return error;
+        return null;
     }
 
     @Override
-    public String validarDatosEdicion(LocalTime horaInicio, LocalTime horaFin,
-                                      String diagnostico, String tratamiento) {
-        return validacionesGenerales(horaInicio, horaFin, diagnostico, tratamiento);
+    public String validarDatosEdicion(Atencion atencion) {
+        String error = validacionesGenerales(atencion);
+        if (error != null) return error;
+        return null;
     }
 
-    private String validacionesGenerales(LocalTime horaInicio, LocalTime horaFin,
-                                         String diagnostico, String tratamiento) {
+    public String validacionesGenerales(Atencion atencion) {
 
-        // REQ-A01: diagnóstico obligatorio
-        if (diagnostico == null || diagnostico.trim().isEmpty()) {
-            return "El diagnóstico es obligatorio";
-        }
-
-        // REQ-A02: tratamiento obligatorio
-        if (tratamiento == null || tratamiento.trim().isEmpty()) {
+        if (atencion.getDiagnostico() == null || atencion.getDiagnostico().trim().isEmpty()) {
+            return "El diagnostico es obligatorio";
+        } else if (atencion.getTratamiento() == null || atencion.getTratamiento().trim().isEmpty()) {
             return "El tratamiento es obligatorio";
-        }
-
-        // REQ-A03: hora de fin debe ser mayor a hora de inicio
-        if (horaInicio != null && horaFin != null && !horaFin.isAfter(horaInicio)) {
-            return "La hora de fin debe ser mayor a la hora de inicio";
+        } else if (!atencion.getHoraFin().isAfter(atencion.getHoraInicio())) {
+            return "La hora fin debe ser mayor a la hora de inicio";
         }
 
         return null;

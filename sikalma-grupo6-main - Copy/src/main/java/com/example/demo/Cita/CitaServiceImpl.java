@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class CitaServiceImpl implements CitaService {
@@ -21,8 +20,8 @@ public class CitaServiceImpl implements CitaService {
     private final DoctorService doctorService;
     private final ServicioService servicioService;
 
-    public CitaServiceImpl(CitaDAO citaDAO, PacienteService pacienteService,
-                           DoctorService doctorService, ServicioService servicioService) {
+    public CitaServiceImpl(CitaDAO citaDAO, PacienteService pacienteService, DoctorService doctorService,
+            ServicioService servicioService) {
         this.citaDAO = citaDAO;
         this.pacienteService = pacienteService;
         this.doctorService = doctorService;
@@ -35,8 +34,7 @@ public class CitaServiceImpl implements CitaService {
     }
 
     @Override
-    public void guardar(int pacienteId, int doctorId, int servicioId,
-                        LocalDate fecha, LocalTime hora, String estado) {
+    public void guardar(int pacienteId, int doctorId, int servicioId, LocalDate fecha, LocalTime hora, String estado) {
         Paciente p = pacienteService.buscarPorId(pacienteId);
         Doctor d = doctorService.buscarPorId(doctorId);
         Servicio s = servicioService.buscarPorId(servicioId);
@@ -55,8 +53,8 @@ public class CitaServiceImpl implements CitaService {
     }
 
     @Override
-    public void actualizar(int id, int pacienteId, int doctorId, int servicioId,
-                           LocalDate fecha, LocalTime hora, String estado) {
+    public void actualizar(int id, int pacienteId, int doctorId, int servicioId, LocalDate fecha, LocalTime hora,
+            String estado) {
         Paciente p = pacienteService.buscarPorId(pacienteId);
         Doctor d = doctorService.buscarPorId(doctorId);
         Servicio s = servicioService.buscarPorId(servicioId);
@@ -70,17 +68,34 @@ public class CitaServiceImpl implements CitaService {
         return citaDAO.buscarPorPaciente(idPaciente);
     }
 
+    // ── Validaciones ──────────────────────────────────────────────────────────
+
     @Override
-    public List<Cita> buscarCitaPorDoctor(int idDoctor) {
-        return citaDAO.buscarPorDoctor(idDoctor);
+    public String validarDatosRegistro(int pacienteId, int doctorId, int servicioId, LocalDate fecha, LocalTime hora) {
+        String error = validacionesGenerales(pacienteId, doctorId, servicioId, fecha, hora);
+        if (error != null) return error;
+
+        if (citaDAO.existeCitaDoctor(doctorId, fecha, hora)) {
+            return "El doctor ya tiene una cita registrada en esa fecha y hora";
+        }
+        return null;
     }
 
-    // ── Validaciones de eliminación ───────────────────────────────────────────
+    @Override
+    public String validarDatosEdicion(int id, int pacienteId, int doctorId, int servicioId, LocalDate fecha, LocalTime hora) {
+        String error = validacionesGenerales(pacienteId, doctorId, servicioId, fecha, hora);
+        if (error != null) return error;
+
+        if (citaDAO.existeCitaDoctorExcluyendo(doctorId, fecha, hora, id)) {
+            return "El doctor ya tiene una cita registrada en esa fecha y hora";
+        }
+        return null;
+    }
 
     @Override
     public String validarCitasExistentesPaciente(int idPaciente) {
         if (!citaDAO.buscarPorPaciente(idPaciente).isEmpty()) {
-            return "No se puede eliminar al paciente porque tiene citas registradas";
+            return "El paciente tiene citas registradas";
         }
         return null;
     }
@@ -88,7 +103,7 @@ public class CitaServiceImpl implements CitaService {
     @Override
     public String validarCitasExistentesDoctor(int idDoctor) {
         if (!citaDAO.buscarPorDoctor(idDoctor).isEmpty()) {
-            return "No se puede eliminar al doctor porque tiene citas asignadas";
+            return "El doctor tiene citas registradas";
         }
         return null;
     }
@@ -96,50 +111,28 @@ public class CitaServiceImpl implements CitaService {
     @Override
     public String validarCitasExistentesServicio(int idServicio) {
         if (!citaDAO.buscarPorServicio(idServicio).isEmpty()) {
-            return "No se puede eliminar el servicio porque tiene citas registradas";
+            return "El servicio tiene citas registradas";
         }
         return null;
     }
 
-    // ── Validaciones de registro ──────────────────────────────────────────────
-
     @Override
-    public String validarDatosRegistro(int pacienteId, int doctorId, int servicioId,
-                                       LocalDate fecha, LocalTime hora) {
-        if (pacienteId == 0) return "Debe seleccionar un paciente";
-        if (doctorId == 0)   return "Debe seleccionar un doctor";
-        if (servicioId == 0) return "Debe seleccionar un servicio";
-        if (fecha == null)   return "La fecha de la cita es obligatoria";
-        if (hora == null)    return "La hora de la cita es obligatoria";
-        if (fecha.isBefore(LocalDate.now())) return "La fecha de la cita no puede ser anterior a hoy";
-
-        boolean haycruce = citaDAO.listar().stream()
-                .anyMatch(c -> c.getDoctor().getId() == doctorId
-                        && c.getFecha().equals(fecha)
-                        && c.getHora().equals(hora));
-        if (haycruce) return "El doctor ya tiene una cita registrada en esa fecha y hora";
-
-        return null;
+    public void cambiarEstado(int id, String estado) {
+        citaDAO.cambiarEstado(id, estado);
     }
 
-    // ── Validaciones de edición ───────────────────────────────────────────────
-
     @Override
-    public String validarDatosEdicion(int citaId, int pacienteId, int doctorId, int servicioId,
-                                      LocalDate fecha, LocalTime hora) {
-        if (doctorId == 0)   return "Debe seleccionar un doctor";
-        if (servicioId == 0) return "Debe seleccionar un servicio";
-        if (fecha == null)   return "La fecha de la cita es obligatoria";
-        if (hora == null)    return "La hora de la cita es obligatoria";
+    public boolean existeCitaDoctor(int doctorId, LocalDate fecha, LocalTime hora) {
+        return citaDAO.existeCitaDoctor(doctorId, fecha, hora);
+    }
+
+    public String validacionesGenerales(int pacienteId, int doctorId, int servicioId, LocalDate fecha, LocalTime hora) {
+        if (pacienteId <= 0)  return "Debe de seleccionar un paciente";
+        if (doctorId <= 0)    return "Debe de seleccionar un doctor";
+        if (servicioId <= 0)  return "Debe de seleccionar un servicio";
+        if (fecha == null)    return "La fecha de reserva es obligatorio";
+        if (hora == null)     return "La hora de reserva es obligatorio";
         if (fecha.isBefore(LocalDate.now())) return "La fecha de la cita no puede ser anterior a hoy";
-
-        boolean haycruce = citaDAO.listar().stream()
-                .anyMatch(c -> c.getId() != citaId
-                        && c.getDoctor().getId() == doctorId
-                        && c.getFecha().equals(fecha)
-                        && c.getHora().equals(hora));
-        if (haycruce) return "El doctor ya tiene una cita registrada en esa fecha y hora";
-
         return null;
     }
 }
