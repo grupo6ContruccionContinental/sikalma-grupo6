@@ -1,8 +1,11 @@
 package com.example.demo.Atencion;
 
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import com.example.demo.Cita.CitaService;
 
 import java.time.LocalTime;
 import java.util.List;
@@ -12,9 +15,11 @@ import java.util.List;
 public class AtencionController {
 
     private final AtencionService atencionService;
+    private final CitaService citaService;
 
-    public AtencionController(AtencionService atencionService) {
+    public AtencionController(AtencionService atencionService, CitaService citaService) {
         this.atencionService = atencionService;
+        this.citaService = citaService;
     }
 
     
@@ -27,7 +32,22 @@ public class AtencionController {
     }
 
     @PostMapping("/nuevo")
-    public String registrarAtencion(@RequestParam int citaId , @RequestParam LocalTime horaInicio, @RequestParam LocalTime horaFin, @RequestParam String diagnostico, @RequestParam String tratamiento, @RequestParam String estado) {
+    public String registrarAtencion(@RequestParam int citaId,
+        @RequestParam @DateTimeFormat(pattern = "HH:mm") LocalTime horaInicio,
+        @RequestParam @DateTimeFormat(pattern = "HH:mm") LocalTime horaFin,
+        @RequestParam String diagnostico,
+        @RequestParam String tratamiento,
+        @RequestParam String estado,
+        Model model) {
+
+        Atencion atencion = new Atencion(null, horaInicio, horaFin, diagnostico, tratamiento, estado);
+
+        String error = atencionService.validarDatosRegistro(atencion);
+        if (error != null) {
+            model.addAttribute("error", error);
+            model.addAttribute("cita", citaService.buscarPorId(citaId)); // ← necesitas inyectar CitaService
+            return "Registrar-atencion";
+        }
 
         atencionService.agregar(citaId,horaInicio,horaFin,diagnostico,tratamiento,estado);
 
@@ -52,10 +72,27 @@ public class AtencionController {
 
     
     @PostMapping("/actualizar")
-    public String actualizar(@RequestParam int id, @RequestParam int citaId , @RequestParam LocalTime horaInicio, @RequestParam LocalTime horaFin, @RequestParam String diagnostico, @RequestParam String tratamiento, @RequestParam String estado) {
-        atencionService.actualizar(id, citaId, horaInicio,horaFin,diagnostico,tratamiento,estado);
+    public String actualizar(@RequestParam int id,
+        @RequestParam int citaId,
+        @RequestParam @DateTimeFormat(pattern = "HH:mm") LocalTime horaInicio,
+        @RequestParam @DateTimeFormat(pattern = "HH:mm") LocalTime horaFin,
+        @RequestParam String diagnostico,
+        @RequestParam String tratamiento,
+        @RequestParam String estado,
+        Model model) {
+
+        Atencion atencion = new Atencion(null, horaInicio, horaFin, diagnostico, tratamiento, estado);
+
+        String error = atencionService.validarDatosEdicion(atencion);
+        if (error != null) {
+            model.addAttribute("error", error);
+            model.addAttribute("atencion", atencionService.buscarPorId(id));
+            return "Editar-atencion";
+        }
+
+        atencionService.actualizar(id, citaId, horaInicio, horaFin, diagnostico, tratamiento, estado);
         return "redirect:/atencion/gestion";
-    }
+        }
 
     
 }

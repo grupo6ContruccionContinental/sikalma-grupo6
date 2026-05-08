@@ -27,6 +27,14 @@
         </div>
 
         <div class="formulario-card">
+
+            <c:if test="${not empty error}">
+                <div style="display: flex; align-items: center; gap: 12px; background-color: #FFFFFF; color: #842029; padding: 15px 20px; border-radius: 8px; margin-bottom: 25px; border-left: 5px solid #dc3545; box-shadow: 0 2px 12px rgba(0,0,0,0.06); font-size: 0.95rem;">
+                    <span style="color: #dc3545; font-size: 1.1rem; font-weight: bold;">⚠️</span>
+                    <span style="font-weight: 500;">${error}</span>
+                </div>
+            </c:if>
+            
             <h2>Datos de la Atención — ID: #A0${atencion.id} / Cita origen: #${atencion.cita.id}</h2>
 
             <form action="/atencion/actualizar" method="post">
