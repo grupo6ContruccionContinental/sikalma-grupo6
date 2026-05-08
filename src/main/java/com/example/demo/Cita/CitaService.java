@@ -20,6 +20,16 @@ public interface CitaService {
 
 
     // validaciones 
+    String validarDatosRegistro(int pacienteId, int doctorId, int servicioId, LocalDate fecha, LocalTime hora);
+
+    String validarDatosEdicion(int id, int pacienteId, int doctorId, int servicioId, LocalDate fecha, LocalTime hora);
+
+    void cambiarEstado(int id, String estado);
+
+    boolean existeCitaDoctor(int doctorId, LocalDate fecha, LocalTime hora);
+
+
+
     String validarCitasExistentesPaciente(int idPaciente);
 
     String validarCitasExistentesDoctor(int idDoctor);

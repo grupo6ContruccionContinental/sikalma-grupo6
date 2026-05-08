@@ -1,5 +1,7 @@
 package com.example.demo.Cita;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 
 public interface CitaDAO {
@@ -18,6 +20,10 @@ public interface CitaDAO {
 
     List<Cita> buscarPorDoctor(int idDoctor);
 
-    List<Cita> buscarPorServicio(int idServicio);
+    void cambiarEstado(int id, String estado);
+
+    boolean existeCitaDoctor(int doctorId, LocalDate fecha, LocalTime hora);
+
+    boolean existeCitaDoctorExcluyendo(int doctorId, LocalDate fecha, LocalTime hora, int citaId);
 
 }

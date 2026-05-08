@@ -1,6 +1,9 @@
 package com.example.demo.Cita;
 
 import org.springframework.stereotype.Repository;
+
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -90,24 +93,39 @@ public class CitaRepository implements CitaDAO {
     }
 
     @Override
-    public List<Cita> buscarPorServicio( int idServicio) {
+    public void cambiarEstado(int id, String estado) {      
 
-        List<Cita> resultado = new ArrayList<>();
-
-        List<Cita> citas = listaCitas;
-
-        for(Cita s : citas){
-
-            if(s.getServicio().getId() == idServicio){
-
-                resultado.add(s);
-
+        for (Cita c : listaCitas) {
+            if (c.getId() == id) {
+                c.setEstado(estado);
+                return;
             }
+        }   
+    }
 
+    @Override
+    public boolean existeCitaDoctor(int doctorId, LocalDate fecha, LocalTime hora) {
+        for (Cita c : listaCitas) {
+            if (c.getDoctor().getId() == doctorId 
+                    && c.getFecha().equals(fecha) 
+                    && c.getHora().equals(hora)
+                    ) {
+                return true;
+            }
         }
+        return false;
+    }
 
-        return resultado;
-
-
+    @Override
+    public boolean existeCitaDoctorExcluyendo(int doctorId, LocalDate fecha, LocalTime hora, int citaId) {
+        for (Cita c : listaCitas) {
+            if (c.getDoctor().getId() == doctorId
+                    && c.getFecha().equals(fecha)
+                    && c.getHora().equals(hora)
+                    && c.getId() != citaId) { 
+                return true;
+            }
+        }
+        return false;
     }
 }

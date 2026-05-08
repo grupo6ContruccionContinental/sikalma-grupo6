@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -27,10 +28,16 @@
         <div class="formulario-card">
             <h2>Datos del Paciente — ID Cita: #00${cita.id}</h2>
 
-            
+             <c:if test="${not empty error}">
+                <div style="display: flex; align-items: center; gap: 12px; background-color: #FFFFFF; color: #842029; padding: 15px 20px; border-radius: 8px; margin-bottom: 25px; border-left: 5px solid #dc3545; box-shadow: 0 2px 12px rgba(0,0,0,0.06); font-size: 0.95rem;">
+                    <span style="color: #dc3545; font-size: 1.1rem; font-weight: bold;">⚠️</span>
+                    <span style="font-weight: 500;">${error}</span>
+                </div>
+            </c:if>
 
             <form action="/cita/actualizar" method="post" >
 
+            
                 <input type="hidden" name="id" value="${cita.id}">
                 
                 <div class="campo">
