@@ -87,7 +87,14 @@
                         <td class="td-acciones">
                             <a href="/cita/editar?id=${cita.id}" class="btn-editar">Editar</a>
                             <a href="/cita/cancelar?id=${cita.id}" class="btn-cancelar">Cancelar</a>
-                            <a href="/cita/atender?id=${cita.id}" class="btn-atender">Atender</a>
+
+
+                            <c:if test="${cita.estado == 'Confirmada'}">
+                                 <a href="/cita/atender?id=${cita.id}" class="btn-primario">Atender</a>
+                            </c:if>
+
+
+
                             <c:if test="${cita.estado == 'Confirmada'}">
                                 <a href="/cita/no-asistio?id=${cita.id}" 
                                     style="padding: 0.35em 1em;
