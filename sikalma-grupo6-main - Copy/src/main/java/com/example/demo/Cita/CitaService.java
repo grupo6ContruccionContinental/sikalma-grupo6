@@ -18,6 +18,8 @@ public interface CitaService {
 
     List<Cita> buscarCitaPorPaciente(int idPaciente);
 
+    List<Cita> buscarCitasPorDoctor(int idDoctor);
+
     // validaciones
     String validarDatosRegistro(int pacienteId, int doctorId, int servicioId, LocalDate fecha, LocalTime hora);
 

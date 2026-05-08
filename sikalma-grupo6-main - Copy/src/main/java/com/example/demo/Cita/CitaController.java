@@ -3,6 +3,7 @@ package com.example.demo.Cita;
 import com.example.demo.Doctor.DoctorService;
 import com.example.demo.Paciente.PacienteService;
 import com.example.demo.Servicio.ServicioService;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.ui.Model;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.List;
 
 @Controller
 @RequestMapping("/cita")
@@ -29,9 +31,25 @@ public class CitaController {
     }
 
     @GetMapping("/g-citas")
-    public String mostrarCitas(Model model) {
+    public String mostrarCitas(Model model, HttpSession session,
+            @RequestParam(required = false) String errorAtender) {
         model.addAttribute("paginaActiva", "citas");
-        model.addAttribute("citas", citaService.listar());
+
+        if (errorAtender != null && !errorAtender.isBlank()) {
+            model.addAttribute("errorAtender", errorAtender); // REQ-A04
+        }
+
+        String rol = (String) session.getAttribute("rolUsuario");
+        List<Cita> citas;
+
+        if ("DOCTOR".equals(rol)) {
+            Integer doctorId = (Integer) session.getAttribute("doctorIdSesion");
+            citas = (doctorId != null) ? citaService.buscarCitasPorDoctor(doctorId) : List.of();
+        } else {
+            citas = citaService.listar();
+        }
+
+        model.addAttribute("citas", citas);
         return "Gestion-citas";
     }
 
@@ -105,7 +123,16 @@ public class CitaController {
     // Solo DOCTOR — protegido por SessionInterceptor
     @GetMapping("/atender")
     public String atenderCita(@RequestParam int id, Model model) {
-        model.addAttribute("cita", citaService.buscarPorId(id));
+        Cita cita = citaService.buscarPorId(id);
+        // REQ-A04: solo se puede atender una cita en estado Confirmada
+        if (cita == null || !"Confirmada".equalsIgnoreCase(cita.getEstado())) {
+            model.addAttribute("errorAtender", "Solo se puede atender una cita en estado Confirmada");
+            String rol = (String) model.getAttribute("rolUsuario");
+            model.addAttribute("citas", citaService.listar());
+            model.addAttribute("paginaActiva", "citas");
+            return "redirect:/cita/g-citas?errorAtender=Solo+se+puede+atender+una+cita+en+estado+Confirmada";
+        }
+        model.addAttribute("cita", cita);
         model.addAttribute("paginaActiva", "citas");
         return "Registrar-atencion";
     }
@@ -121,6 +148,16 @@ public class CitaController {
     @GetMapping("/eliminar")
     public String eliminar(@RequestParam int id) {
         citaService.eliminar(id);
+        return "redirect:/cita/g-citas";
+    }
+
+    // Solo ADMIN — protegido por SessionInterceptor
+    @GetMapping("/confirmar")
+    public String confirmarCita(@RequestParam int id) {
+        Cita cita = citaService.buscarPorId(id);
+        if (cita != null && cita.getEstado().equalsIgnoreCase("Pendiente")) {
+            citaService.cambiarEstado(id, "Confirmada");
+        }
         return "redirect:/cita/g-citas";
     }
 

@@ -68,6 +68,11 @@ public class CitaServiceImpl implements CitaService {
         return citaDAO.buscarPorPaciente(idPaciente);
     }
 
+    @Override
+    public List<Cita> buscarCitasPorDoctor(int idDoctor) {
+        return citaDAO.buscarPorDoctor(idDoctor);
+    }
+
     // ── Validaciones ──────────────────────────────────────────────────────────
 
     @Override
@@ -127,12 +132,12 @@ public class CitaServiceImpl implements CitaService {
     }
 
     public String validacionesGenerales(int pacienteId, int doctorId, int servicioId, LocalDate fecha, LocalTime hora) {
-        if (pacienteId <= 0)  return "Debe de seleccionar un paciente";
-        if (doctorId <= 0)    return "Debe de seleccionar un doctor";
-        if (servicioId <= 0)  return "Debe de seleccionar un servicio";
-        if (fecha == null)    return "La fecha de reserva es obligatorio";
-        if (hora == null)     return "La hora de reserva es obligatorio";
-        if (fecha.isBefore(LocalDate.now())) return "La fecha de la cita no puede ser anterior a hoy";
+        if (pacienteId <= 0)  return "Debe seleccionar un paciente";           // REQ-C01
+        if (doctorId <= 0)    return "Debe seleccionar un doctor";              // REQ-C02
+        if (servicioId <= 0)  return "Debe seleccionar un servicio";            // REQ-C03
+        if (fecha == null)    return "La fecha de la cita es obligatoria";      // REQ-C04
+        if (hora == null)     return "La hora de la cita es obligatoria";       // REQ-C05
+        if (fecha.isBefore(LocalDate.now())) return "La fecha de la cita no puede ser anterior a hoy"; // REQ-C06
         return null;
     }
 }

@@ -34,7 +34,9 @@ public class SessionInterceptor implements HandlerInterceptor {
                 || uri.startsWith(ctx + "/cita/editar")
                 || uri.startsWith(ctx + "/cita/actualizar")
                 || uri.startsWith(ctx + "/cita/cancelar")
-                || uri.startsWith(ctx + "/cita/eliminar");
+                || uri.startsWith(ctx + "/cita/eliminar")
+                || uri.startsWith(ctx + "/cita/confirmar")
+                || uri.startsWith(ctx + "/cita/no-asistio");
 
         // Rutas exclusivas de DOCTOR (no accesibles por ADMIN)
         boolean esRutaDoctor = uri.startsWith(ctx + "/atencion")

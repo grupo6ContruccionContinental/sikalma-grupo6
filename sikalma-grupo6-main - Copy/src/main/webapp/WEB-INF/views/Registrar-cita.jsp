@@ -42,7 +42,10 @@
                     <select name="paciente">
                         <option value="0">— Seleccione un paciente —</option>
                         <c:forEach var="paciente" items="${pacientes}">
-                            <option value="${paciente.id}">${paciente.nombres}</option>
+                            <option value="${paciente.id}"
+                                <c:if test="${param.paciente == paciente.id}">selected</c:if>>
+                                ${paciente.nombres}
+                            </option>
                         </c:forEach>
                     </select>
                 </div>
@@ -53,7 +56,10 @@
                         <select name="servicio">
                             <option value="0">— Seleccione un servicio —</option>
                             <c:forEach var="servicio" items="${servicios}">
-                                <option value="${servicio.id}">${servicio.nombre}</option>
+                                <option value="${servicio.id}"
+                                    <c:if test="${param.servicio == servicio.id}">selected</c:if>>
+                                    ${servicio.nombre}
+                                </option>
                             </c:forEach>
                         </select>
                     </div>
@@ -62,7 +68,10 @@
                         <select name="doctor">
                             <option value="0">— Seleccione un doctor —</option>
                             <c:forEach var="doctor" items="${doctores}">
-                                <option value="${doctor.id}">${doctor.nombre}</option>
+                                <option value="${doctor.id}"
+                                    <c:if test="${param.doctor == doctor.id}">selected</c:if>>
+                                    ${doctor.nombre}
+                                </option>
                             </c:forEach>
                         </select>
                     </div>
@@ -71,11 +80,11 @@
                 <div class="fila-form">
                     <div>
                         <label>Fecha de la Cita</label>
-                        <input type="date" name="fecha">
+                        <input type="date" name="fecha" value="${param.fecha}">
                     </div>
                     <div>
                         <label>Hora de la Cita</label>
-                        <input type="time" name="hora">
+                        <input type="time" name="hora" value="${param.hora}">
                     </div>
                 </div>
 

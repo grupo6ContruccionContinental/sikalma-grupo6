@@ -123,17 +123,52 @@
                                         </c:choose>
                                     </td>
                                     <td class="td-acciones">
-                                        <%-- Acciones ADMIN: editar, cancelar, eliminar --%>
+
+                                        <%-- ══ Acciones ADMIN ══ --%>
                                         <c:if test="${sessionScope.rolUsuario == 'ADMIN'}">
-                                            <a href="/cita/editar?id=${cita.id}"   class="btn-editar">Editar</a>
-                                            <a href="/cita/cancelar?id=${cita.id}" class="btn-cancelar">Cancelar</a>
-                                            <a href="/cita/eliminar?id=${cita.id}" class="btn-eliminar"
-                                               onclick="return confirm('¿Eliminar esta cita?')">Eliminar</a>
+                                            <c:choose>
+
+                                                <%-- Estado: Pendiente → Editar | Cancelar | Confirmar | No asistió --%>
+                                                <c:when test="${cita.estado == 'Pendiente'}">
+                                                    <a href="/cita/editar?id=${cita.id}"   class="btn-editar">Editar</a>
+                                                    <a href="/cita/cancelar?id=${cita.id}" class="btn-cancelar">Cancelar</a>
+                                                    <a href="/cita/confirmar?id=${cita.id}" class="btn-confirmar">Confirmar</a>
+                                                    <a href="/cita/no-asistio?id=${cita.id}" class="btn-noasistio">No asistió</a>
+                                                </c:when>
+
+                                                <%-- Estado: Confirmada → No asistió | Editar | Cancelar --%>
+                                                <c:when test="${cita.estado == 'Confirmada'}">
+                                                    <a href="/cita/no-asistio?id=${cita.id}" class="btn-noasistio">No asistió</a>
+                                                    <a href="/cita/editar?id=${cita.id}"   class="btn-editar">Editar</a>
+                                                    <a href="/cita/cancelar?id=${cita.id}" class="btn-cancelar">Cancelar</a>
+                                                </c:when>
+
+                                                <%-- Otros estados (Cancelada / No asistió) → solo Eliminar --%>
+                                                <c:otherwise>
+                                                    <a href="/cita/eliminar?id=${cita.id}" class="btn-eliminar"
+                                                       onclick="return confirm('¿Eliminar esta cita?')">Eliminar</a>
+                                                </c:otherwise>
+
+                                            </c:choose>
                                         </c:if>
-                                        <%-- Acción DOCTOR: solo atender --%>
+
+                                        <%-- ══ Acción DOCTOR: solo Atender si la cita está Confirmada (REQ-A04) ══ --%>
                                         <c:if test="${sessionScope.rolUsuario == 'DOCTOR'}">
-                                            <a href="/cita/atender?id=${cita.id}" class="btn-atender">Atender</a>
+                                            <c:choose>
+                                                <c:when test="${cita.estado == 'Confirmada'}">
+                                                    <a href="/cita/atender?id=${cita.id}" class="btn-atender">Atender</a>
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <%-- REQ-A04: cita no Confirmada → botón bloqueado --%>
+                                                    <span class="btn-atender btn-disabled"
+                                                          title="Solo se puede atender una cita en estado Confirmada"
+                                                          style="opacity:0.45; cursor:not-allowed; pointer-events:none;">
+                                                        Atender
+                                                    </span>
+                                                </c:otherwise>
+                                            </c:choose>
                                         </c:if>
+
                                     </td>
                                 </tr>
                             </c:forEach>

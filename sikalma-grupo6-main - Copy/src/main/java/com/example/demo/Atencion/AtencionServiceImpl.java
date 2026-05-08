@@ -69,11 +69,11 @@ public class AtencionServiceImpl implements AtencionService {
     public String validacionesGenerales(Atencion atencion) {
 
         if (atencion.getDiagnostico() == null || atencion.getDiagnostico().trim().isEmpty()) {
-            return "El diagnostico es obligatorio";
+            return "El diagnóstico es obligatorio";                   // REQ-A01
         } else if (atencion.getTratamiento() == null || atencion.getTratamiento().trim().isEmpty()) {
-            return "El tratamiento es obligatorio";
+            return "El tratamiento es obligatorio";                   // REQ-A02
         } else if (!atencion.getHoraFin().isAfter(atencion.getHoraInicio())) {
-            return "La hora fin debe ser mayor a la hora de inicio";
+            return "La hora de fin debe ser mayor a la hora de inicio"; // REQ-A03
         }
 
         return null;
