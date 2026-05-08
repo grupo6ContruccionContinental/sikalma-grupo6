@@ -76,6 +76,37 @@ public class CitaServiceImpl implements CitaService {
 
     // validaciones
     @Override
+    public String validarDatosRegistro(int pacienteId, int doctorId, int servicioId, LocalDate fecha, LocalTime hora){
+
+        String error = validacionesGenerales(pacienteId, doctorId,servicioId, fecha, hora);
+
+        if(error != null ){
+
+            return error;
+
+        }
+        
+        return null;
+
+    }
+
+    @Override
+    public String validarDatosEdicion(int pacienteId, int doctorId, int servicioId, LocalDate fecha, LocalTime hora){
+
+        String error = validacionesGenerales(pacienteId , doctorId ,servicioId,fecha,hora);
+
+        if(error != null ){
+
+            return error;
+
+        }
+        
+        return null;
+
+    }
+
+
+    @Override
     public String validarCitasExistentesPaciente(int idPaciente){
 
         if(!citaDAO.buscarPorPaciente(idPaciente).isEmpty()){
@@ -98,6 +129,36 @@ public class CitaServiceImpl implements CitaService {
 
         return null;
 
+
+    }
+
+
+
+    public String validacionesGenerales(int pacienteId, int doctorId, int servicioId, LocalDate fecha, LocalTime hora) {
+
+        if(pacienteId <= 0){
+            
+            return "Debe de seleccionar un paciente";
+
+        }else if(doctorId <= 0 ){
+
+            return "Debe de seleccionar un doctor";
+
+        }else if(servicioId <= 0l ){
+
+            return "Debe de seleccionar un servicio";
+
+        }else if(fecha == null){
+
+            return "La fecha de reserva es obligatorio";
+
+        }else if(hora == null){
+
+            return "La hora de reserva es obligatorio";
+
+        }
+
+        return null;
 
     }
 

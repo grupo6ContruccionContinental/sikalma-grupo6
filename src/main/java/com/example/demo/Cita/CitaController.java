@@ -4,6 +4,7 @@ import com.example.demo.Doctor.DoctorService;
 import com.example.demo.Paciente.PacienteService;
 import com.example.demo.Servicio.ServicioService;
 import org.springframework.ui.Model;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -49,7 +50,17 @@ public class CitaController {
 
 
     @PostMapping("/guardar")
-    public String guardar(@RequestParam int paciente, @RequestParam int doctor, @RequestParam int servicio, @RequestParam LocalDate fecha, @RequestParam LocalTime hora, @RequestParam String estado){
+    public String guardar(@RequestParam int paciente, @RequestParam int doctor, @RequestParam int servicio, @RequestParam  @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate  fecha, @RequestParam @DateTimeFormat(pattern = "HH:mm") LocalTime hora, @RequestParam String estado, Model model){
+        
+        String error = citaService.validarDatosRegistro(paciente,doctor ,servicio,fecha,hora);
+        if (error != null) {
+    
+            model.addAttribute("error", error);
+            model.addAttribute("paginaActiva" , "citas");
+            return "Registrar-cita";
+
+        }
+
         citaService.guardar(paciente,doctor,servicio,fecha,hora,estado);
         return "redirect:/cita/g-citas";
     }
@@ -67,7 +78,16 @@ public class CitaController {
 
 
     @PostMapping("/actualizar")
-    public String actualizar(@RequestParam int id, @RequestParam int paciente, @RequestParam int doctor, @RequestParam int servicio, @RequestParam LocalDate fecha, @RequestParam LocalTime hora, @RequestParam String estado){
+    public String actualizar(@RequestParam int id,@RequestParam int paciente, @RequestParam int doctor, @RequestParam int servicio, @RequestParam  @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate  fecha, @RequestParam @DateTimeFormat(pattern = "HH:mm") LocalTime hora, @RequestParam String estado, Model model){
+
+        String error = citaService.validarDatosRegistro(paciente,doctor ,servicio,fecha,hora);
+        if (error != null) {
+    
+            model.addAttribute("error", error);
+            model.addAttribute("paginaActiva" , "citas");
+            return "Editar-cita";
+
+        }
 
         citaService.actualizar(id,paciente,doctor,servicio,fecha,hora,estado);
         return "redirect:/cita/g-citas";
