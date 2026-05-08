@@ -1,0 +1,67 @@
+/* ══════════════════════════════════════════════════════
+   ESTADÍSTICAS (solo ADMIN)
+══════════════════════════════════════════════════════ */
+.estadisticas {
+  display: flex;
+  gap: 1.2em;
+}
+
+.estadistica {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 1em;
+  padding: 1em 1.5em;
+  color: #4d413f;
+  background-color: #f6f1f0;
+  border-radius: 0.8em;
+  border-left: 4px solid #a28575;
+}
+
+.estadistica img {
+  width: 2.5em;
+  height: auto;
+}
+
+.estadistica h2 {
+  font-size: 1.6em;
+  color: #322418;
+}
+
+.estadistica p {
+  font-size: 0.8em;
+  color: #9a8a88;
+}
+
+/* ══════════════════════════════════════════════════════
+   BANNER DE VISTA DOCTOR
+══════════════════════════════════════════════════════ */
+.banner-doctor {
+  display: flex;
+  align-items: center;
+  gap: 0.9em;
+  background-color: #edf5f0;
+  border: 1px solid #b4d9c4;
+  border-left: 4px solid #7bab8b;
+  border-radius: 0.6em;
+  padding: 0.85em 1.2em;
+  color: #2d6148;
+  font-size: 0.88em;
+}
+
+.banner-doctor strong {
+  display: block;
+  font-size: 0.95em;
+  margin-bottom: 0.15em;
+  color: #1e4a36;
+}
+
+.banner-doctor span:last-child {
+  color: #4a8a68;
+  font-size: 0.85em;
+}
+
+.banner-icono {
+  font-size: 1.6em;
+  flex-shrink: 0;
+}

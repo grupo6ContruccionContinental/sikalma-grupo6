@@ -1,0 +1,12 @@
+.busqueda-barra {
+    display: flex;
+    align-items: center;
+    gap: 1em;
+    padding: 1em 1.5em;
+    border-bottom: 1px solid #f0e9e8;
+}
+
+.busqueda-barra input {
+    flex: 1;
+}
+

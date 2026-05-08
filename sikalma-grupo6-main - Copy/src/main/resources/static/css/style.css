@@ -1,0 +1,364 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box; /* Fundamental para el cálculo de tamaños */
+}
+
+body {
+    width: 100%;
+    height: 100%;
+}
+
+header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    border-bottom: 2px solid #82766c;
+}
+
+.logo,
+.iniciar-sesion {
+    flex: 1;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+
+    padding: 0px 15px;
+}
+
+.logo-img {
+    width: 5em;
+    height: auto;
+
+}
+
+.secciones {
+    flex: 4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    height: 100%;
+    
+}
+
+.secciones ul {
+    display: flex;
+    align-items: center;
+    gap: 7em;
+    
+    list-style: none;
+}
+
+.secciones a {
+    text-decoration: none;
+    color: #82766c;
+}
+
+
+.iniciar-sesion {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.iniciar-sesion a {
+    display: block;
+    padding:  0.5em 1.5em;
+
+    background-color: #82766c;
+    color: white;
+    text-decoration: none;
+
+    border-radius: 1em;
+}
+
+/* ── HERO ── */
+.hero {
+    display: flex;
+    height: 28em;
+    overflow: hidden;
+}
+
+.hero-texto {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 0.8em;
+    padding: 0 3em;
+}
+
+.hero-texto h1 {
+    font-size: 2.2em;
+    color: #a59485;
+    line-height: 1.2;
+}
+
+.hero-texto h3 {
+    font-weight: normal;
+    color: #6b6b6b;
+    font-size: 1.1em;
+}
+
+.hero-texto a {
+    display: inline-block;
+    margin-top: 0.5em;
+    padding: 0.6em 1.8em;
+    background-color: #a59485;
+    color: white;
+    text-decoration: none;
+    border-radius: 0.4em;
+    width: fit-content;
+}
+
+.hero-img {
+    flex: 1;
+    overflow: hidden;
+}
+
+.hero-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* ── DESCRIPCION ── */
+.descripcion {
+    text-align: center;
+    padding: 3.5em 8em;
+    color: #5a5050;
+    line-height: 1.7;
+    font-size: 1em;
+}
+
+/* ── SERVICIOS (home) ── */
+.servicios {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2.5em;
+    padding: 3em 6em;
+    background-color: #f5f3f1;
+}
+
+.servicios h2 {
+    color: #82766c;
+    font-size: 1.4em;
+}
+
+.servicios-contenido {
+    display: flex;
+    gap: 3em;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.servicio {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.8em;
+    text-align: center;
+    padding: 1em;
+}
+
+.servicio-img img {
+    width: 6em;
+    height: auto;
+}
+
+.servicio h2 {
+    font-size: 1em;
+    color: #5a4e4e;
+}
+
+.servicio-btn a {
+    display: inline-block;
+    padding: 0.6em 2em;
+    background-color: #82766c;
+    color: white;
+    text-decoration: none;
+    border-radius: 0.4em;
+    font-size: 0.9em;
+}
+
+/* ── DESCRIPCION 2 ── */
+.descripcion-2 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 3em 8em;
+    color: #82766c;
+    text-align: center;
+    line-height: 1.7;
+}
+
+/* ── ACCIONES (cards home) ── */
+.acciones {
+    display: flex;
+    gap: 2em;
+    padding: 3em 6em;
+    justify-content: center;
+}
+
+.accion {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.2em;
+    padding: 2.5em 2em;
+    border-radius: 1em;
+    background-color: #a59485;
+    text-align: center;
+}
+
+.accion-img {
+    padding: 1em;
+    background-color: white;
+    border-radius: 50%;
+}
+
+.accion-img img {
+    width: 4em;
+    height: auto;
+    display: block;
+}
+
+.accion-texto {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6em;
+    color: white;
+}
+
+.accion-texto h3 {
+    font-size: 1.2em;
+}
+
+.accion-texto p {
+    font-size: 0.88em;
+    line-height: 1.6;
+    opacity: 0.9;
+}
+
+.accion-btn a {
+    display: inline-block;
+    padding: 0.5em 1.8em;
+    border: 1px solid white;
+    color: white;
+    text-decoration: none;
+    border-radius: 0.4em;
+    font-size: 0.88em;
+}
+
+/* ── INFORMACION ── */
+.informacion {
+    padding: 3em;
+}
+
+.info-titulo {
+    text-align: center;
+    margin-bottom: 2em;
+    color: #2e2e2e;
+}
+
+.info-contenido {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4em;
+}
+
+.contenido-izquierda {
+    display: flex;
+    flex-direction: column;
+    gap: 2em;
+}
+
+.izquierda {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4em;
+}
+
+.izquierda h2 {
+    color: #2e2e2e;
+    font-size: 1em;
+}
+
+.izquierda p {
+    color: #6b6b6b;
+    font-size: 1em;
+}
+
+.contenido-derecha img {
+    width: 16em;
+    height: auto;
+}
+
+
+/* diseño del footer */
+
+footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 0.5em 2em;
+    background-color: #a59485;
+
+    color: #f5f3f1;
+}
+
+footer img {
+    width: 12em;
+    height: auto;
+
+}
+
+
+/* ─── Agregar al final de style.css o admin.css ──────────────────────────── */
+
+/* Área de sesión en el navbar */
+.menu-sesion {
+    margin-top: auto;
+    padding: 1em 1.2em;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em;
+}
+
+.menu-usuario {
+    font-size: 0.82em;
+    color: #e0d7d0;
+    word-break: break-all;
+}
+
+.menu-usuario small {
+    display: block;
+    font-size: 0.85em;
+    color: #c8b9ae;
+    text-transform: capitalize;
+}
+
+.btn-logout {
+    display: block;
+    padding: 0.5em 0.8em;
+    background-color: rgba(255,255,255,0.15);
+    color: white;
+    border-radius: 0.4em;
+    font-size: 0.82em;
+    text-decoration: none;
+    text-align: center;
+    transition: background-color 0.2s;
+}
+
+.btn-logout:hover {
+    background-color: rgba(255,255,255,0.28);
+}
