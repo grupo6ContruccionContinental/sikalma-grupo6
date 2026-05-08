@@ -20,6 +20,8 @@ public interface CitaDAO {
 
     List<Cita> buscarPorDoctor(int idDoctor);
 
+    List<Cita> buscarPorServicio(int idServicio);
+
     void cambiarEstado(int id, String estado);
 
     boolean existeCitaDoctor(int doctorId, LocalDate fecha, LocalTime hora);
